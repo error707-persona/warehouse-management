@@ -2,6 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 const prisma = new PrismaClient();
+import dotenv from "dotenv";
+dotenv.config();
+
+console.log("Database URL:", process.env.DATABASE_URL);
+
 
 async function deleteAllData(orderedFileNames: string[]) {
   const modelNames = orderedFileNames.map((fileName) => {
@@ -26,6 +31,7 @@ async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
   const orderedFileNames = [
+   
     "products.json",
     "expenseSummary.json",
     "sales.json",
