@@ -10,7 +10,7 @@ interface SidebarLinkProps {
   href: string;
   icon: LucideIcon;
   label: string;
-  isCollapsed: Boolean;
+  isCollapsed: boolean;
 }
 
 const SidebarLink = ({

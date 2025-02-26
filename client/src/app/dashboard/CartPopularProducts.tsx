@@ -41,7 +41,7 @@ const CartPopularProducts = () => {
                     <ShoppingBag className="w-4 h-4"/>
                   </button>
 
-                  {Math.round(product.stockQuality/1000)}k Sold
+                  {Math.round(product.stockQuantity/1000)}k Sold
                 </div>
               </div>
             ))}
