@@ -83,7 +83,7 @@ export default function StoreProvider({
 }: {
   children: React.ReactNode;
 }) {
-  // @ts-expect-error fokat ka error
+  // @ts-expect-error fokat ka error.
   const storeRef = useRef<AppStore>();
   if (!storeRef.current) {
     storeRef.current = makeStore();
