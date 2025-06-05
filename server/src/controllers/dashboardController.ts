@@ -38,7 +38,7 @@ export const getDashboardMetrics = async (
         date: "desc",
       },
     });
-    const expenseByCategorySummary = expenseByCategorySummaryRaw.map((item) =>({
+    const expenseByCategorySummary = expenseByCategorySummaryRaw.map((item: any) =>({
         ...item,
         amount: item.amount.toString(),
     }));
