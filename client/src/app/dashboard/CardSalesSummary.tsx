@@ -22,7 +22,7 @@ const CardSalesSummary = () => {
 
   const averageChangePercentage =
     salesData.reduce((acc, curr, _, array) => {
-      return acc + curr?.changePercentage! / array.length;
+      return acc + curr.changePercentage! / array.length;
     }, 0) || 0;
 
   const highestValueData = salesData.reduce((acc, curr) => {

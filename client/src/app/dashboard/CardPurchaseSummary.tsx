@@ -42,19 +42,19 @@ const CardPurchaseSummary = () => {
               {lastDataPoint && (
                 <p
                   className={`text-sm ${
-                    lastDataPoint?.changePercentage! >= 0
+                    lastDataPoint.changePercentage! >= 0
                       ? "text-green-500"
                       : "text-red-500"
                   } flex `}
                 >
-                  {lastDataPoint?.changePercentage! >= 0 ? (
+                  {lastDataPoint.changePercentage! >= 0 ? (
                     <TrendingUp className="w-4 h-5 mr-1" />
                   ) : (
                     <TrendingDown className="w-4 h-5 mr-1" />
                   )}
                 </p>
               )}
-              {Math.abs(lastDataPoint?.changePercentage!)}%
+              {Math.abs(lastDataPoint.changePercentage!)}%
             </div>
             {/* CHART */}
             <ResponsiveContainer width="100%" height={168} className="px-5">
