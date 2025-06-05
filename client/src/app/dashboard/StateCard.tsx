@@ -52,15 +52,15 @@ const StateCard = ({
                 <div className="flex items-center">
                   <detail.IconComponent
                     className={`w-4 h-4 mr-1 ${getChangeColor(
-                      detail.changePercentage
+                      detail?.changePercentage
                     )}`}
                   />
                   <span
                     className={`font-medium ${getChangeColor(
-                      detail.changePercentage
+                      detail?.changePercentage
                     )}`}
                   >
-                    {formatPercentage(detail.changePercentage)}
+                    {formatPercentage(detail?.changePercentage)}
                   </span>
                 </div>
               </div>
