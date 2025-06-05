@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "ts-node prisma/seed.ts",
-    "build": "rimraf dist && npx tsc",
+    "build": "npx rimraf dist && npx tsc",
     "start": "node dist/index.js",
     "dev": "npm run build && concurrently \"tsc --watch\" \"nodemon --exec ts-node src/index.ts\""
   },
@@ -23,7 +23,8 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "morgan": "^1.10.0",
-    "prisma": "^6.3.1"
+    "prisma": "^6.3.1",
+     "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
