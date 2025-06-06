@@ -20,6 +20,7 @@ export const getProducts = async (
     console.log(products, "backend products");
     res.status(200).json(products);
   } catch (error) {
+    console.error("Error retrieving products:", error);
     res.status(500).json({ message: "Error retreiving products" });
   }
 };

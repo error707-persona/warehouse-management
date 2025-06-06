@@ -24,6 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // routes
+app.get("/", (req, res) => {
+  res.send("Server is live ✅");
+});
 app.use("/dashboard", dashboardRoutes); //http://localhost:8000/dashboard
 app.use("/products", productRoutes); //http://localhost:8000/products
 app.use("/users",usersRoutes); //http://localhost:8000/users
