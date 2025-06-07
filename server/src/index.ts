@@ -22,7 +22,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors({
-  origin: "https://inventory-management-kappa-red.vercel.app",
+  origin: process.env.CORS_URL,
   credentials: true, 
 }));
 // app.use(cors({
