@@ -17,7 +17,6 @@ const Products = () => {
   const [isModalOpen, setisModalOpen] = useState(false);
   const {
     data: products,
-    // isLoading,
     isError,
   } = useGetProductsQuery(searchTerm);
 
@@ -99,6 +98,7 @@ const Products = () => {
         isOpen={isModalOpen}
         onClose={() => setisModalOpen(false)}
         onCreate={handleCreateProduct}
+        handleEdit={()=>{}}
       />
     </div>
   );

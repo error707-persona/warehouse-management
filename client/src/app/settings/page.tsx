@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../(components)/Header";
 
 type UserSetting = {
@@ -18,13 +18,33 @@ const mockSetting: UserSetting[] = [
 
 const Settings = () => {
   const [userSettings, setUserSettings] = useState<UserSetting[]>(mockSetting);
+   const [isDark, setIsDark] = useState(false);
+  console.log(userSettings)
   const handleToggleChange = (index: number) => {
     const settingsCopy = [...userSettings];
     settingsCopy[index].value = !settingsCopy[index].value as boolean;
+    console.log(settingsCopy[index].value, "onchange on toggle");
     setUserSettings(settingsCopy);
   };
+
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") setIsDark(true);
+  }, []);
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <Header name="User Settings" />
       <div className="overflow-x-auto mt-5 shadow-md">
         <table className="min-w-full bg-white rounded-lg">
@@ -34,7 +54,7 @@ const Settings = () => {
                 Setting
               </th>
               <th className="text-left text-white py-3 px-4 uppercase font-semibold text-sm">
-                Value
+                Value 
               </th>
             </tr>
           </thead>
@@ -47,9 +67,10 @@ const Settings = () => {
                     <label className="inline-flex relative items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        className="sr-only peer"
+                        className="sr-only peer border-2"
                         checked={settings.value as boolean}
                         onChange={() => handleToggleChange(index)}
+                         onClick={() => setIsDark(!isDark)}
                       />
                       <div
                         className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-blue-400 peer-focus:ring-4 

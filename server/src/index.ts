@@ -21,9 +21,13 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(cors({
+//   origin: "https://inventory-management-kappa-red.vercel.app",
+//   credentials: true, 
+// }));
 app.use(cors({
-  origin: "https://inventory-management-kappa-red.vercel.app",
-  credentials: true, 
+  origin: "http://localhost:3000", // or Vercel frontend URL in prod
+  credentials: true,
 }));
 app.use(cors());
 

@@ -5,6 +5,7 @@ import { Archive, CircleDollarSign, Clipboard, Layout, LucideIcon, Menu, Sliders
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import logo from "../../../../public/logo.png"
 
 interface SidebarLinkProps {
   href: string;
@@ -64,7 +65,7 @@ const Sidebar = () => {
           isSidebarCollapsed ? "px-5" : "px-8"
         }`}
       >
-        <div>logo</div>
+       
         <h1
           className={`${
             isSidebarCollapsed ? "hidden" : "block"

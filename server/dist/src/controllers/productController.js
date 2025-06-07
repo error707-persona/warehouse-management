@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createProduct = exports.getProducts = void 0;
+exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,6 +28,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(200).json(products);
     }
     catch (error) {
+        console.error("Error retrieving products:", error);
         res.status(500).json({ message: "Error retreiving products" });
     }
 });
@@ -51,3 +52,45 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.createProduct = createProduct;
+const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const { name, price, rating, stockQuantity } = req.body;
+        const product = yield prisma.products.update({
+            where: {
+                productId: id,
+            },
+            data: {
+                name,
+                price,
+                rating,
+                stockQuantity,
+            },
+        });
+        res.status(200).json(product);
+    }
+    catch (error) {
+        console.error("Update error:", error);
+        res.status(500).json({ message: "Error updating product" });
+    }
+});
+exports.updateProduct = updateProduct;
+const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const product = yield prisma.products.delete({
+            where: {
+                productId: id,
+            },
+        });
+        res.status(200).json({
+            message: "Product deleted successfully",
+            data: product,
+        });
+    }
+    catch (error) {
+        console.error("Delete error:", error);
+        res.status(500).json({ message: "Error deleting product" });
+    }
+});
+exports.deleteProduct = deleteProduct;

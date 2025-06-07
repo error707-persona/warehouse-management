@@ -4,20 +4,16 @@ import Header from "../(components)/Header";
 
 type ProductFormData = {
   name: string;
-  price: number;
-  stockQuantity: number;
-  rating: number;
+  email: string;
 };
 
 type UpdateProductFormData = {
-  productId: string;
+  userId: string;
   name: string;
-  price: number;
-  stockQuantity: number;
-  rating: number;
+  email: string;
 };
 
-type CreateProductModalProps = {
+type UpdateUserModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (formData: ProductFormData) => void;
@@ -25,31 +21,27 @@ type CreateProductModalProps = {
   handleEdit?: (formValues: UpdateProductFormData) => void;
 };
 
-const CreateProductModal = ({
+const UpdateUserModal = ({
   isOpen,
   onClose,
   onCreate,
   formValues,
-  handleEdit
-}: CreateProductModalProps) => {
+  handleEdit,
+}: UpdateUserModalProps) => {
   const [formData, setFormData] = useState({
-    productId: v4(),
+    userId: v4(),
     name: "",
-    price: 0,
-    stockQuantity: 0,
-    rating: 0,
+    email:""
   });
-
-  
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formValues  && handleEdit){
-      handleEdit(formData)
+    if (formValues && handleEdit) {
+      handleEdit(formData);
     } else {
       onCreate(formData);
     }
-    
+
     onClose();
   };
 
@@ -62,7 +54,7 @@ const CreateProductModal = ({
       setFormData(formValues);
     }
   }, [formValues]);
- 
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -73,7 +65,7 @@ const CreateProductModal = ({
           : value,
     });
   };
- if (!isOpen) return null;
+  if (!isOpen) return null;
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
@@ -81,7 +73,7 @@ const CreateProductModal = ({
         <form onSubmit={handleSubmit} className="mt-5">
           {/* product name */}
           <label htmlFor="productName" className={labelCssStyles}>
-            Product Name{" "}
+            Name{" "}
           </label>
           <input
             type="text"
@@ -94,51 +86,25 @@ const CreateProductModal = ({
           />
           {/* price  */}
           <label htmlFor="Price" className={labelCssStyles}>
-            Price{" "}
+            Email
           </label>
           <input
-            type="number"
-            name="price"
-            placeholder="Price"
+            type="email"
+            name="email"
+            placeholder="Email"
             onChange={handleChange}
-            value={formData.price}
+            value={formData.email}
             className={inputCssStyles}
             required
           />
-          {/* price  */}
-          <label htmlFor="stockQuantity" className={labelCssStyles}>
-            Stock quantity{" "}
-          </label>
-          <input
-            type="number"
-            name="stockQuantity"
-            placeholder="Stock quantity"
-            onChange={handleChange}
-            value={formData.stockQuantity}
-            className={inputCssStyles}
-            required
-          />
-          {/* rating  */}
-          <label htmlFor="rating" className={labelCssStyles}>
-            {" "}
-            Rating{" "}
-          </label>
-          <input
-            type="number"
-            name="rating"
-            placeholder="Rating"
-            onChange={handleChange}
-            value={formData.rating}
-            className={inputCssStyles}
-            required
-          />
+         
 
           {/* create actions */}
           <button
             className="px-4 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
             type="submit"
           >
-           {(formValues)?"Update":"Create"}
+            Create
           </button>
           <button
             className="ml-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
@@ -153,4 +119,4 @@ const CreateProductModal = ({
   );
 };
 
-export default CreateProductModal;
+export default UpdateUserModal;

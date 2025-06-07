@@ -55,6 +55,11 @@ export interface User {
   name: string;
   email: string;
 }
+
+export interface NewUser {
+  name: string;
+  email: string;
+}
 console.log("Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
@@ -82,13 +87,51 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+    editProduct: build.mutation<
+      Product,
+      { id: string; data: Partial<NewProduct> }
+    >({
+      query: ({ id, data }) => ({
+        url: `/products/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
+    deleteProduct: build.mutation<Product, { id: string }>({
+      query: ({ id }) => ({
+        url: `/products/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
     getusers: build.query<User[], void>({
       query: () => "/users",
       providesTags: ["Users"],
     }),
+
     getExpensesByCategory: build.query<ExpenseByCategorySummary[], void>({
       query: () => "/expenses",
       providesTags: ["Expenses"],
+    }),
+
+    editUser: build.mutation<User, { id: string; data: Partial<NewUser> }>({
+      query: ({ id, data }) => ({
+        url: `/users/edit/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
+    deleteUser: build.mutation<User, { id: string }>({
+      query: ({ id }) => ({
+        url: `/users/delete/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Users"],
     }),
   }),
 });
@@ -98,5 +141,9 @@ export const {
   useGetProductsQuery,
   useCreateProductMutation,
   useGetusersQuery,
-  useGetExpensesByCategoryQuery
+  useGetExpensesByCategoryQuery,
+  useEditProductMutation,
+  useDeleteProductMutation,
+  useEditUserMutation,
+  useDeleteUserMutation,
 } = api;
