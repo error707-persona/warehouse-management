@@ -46,18 +46,19 @@ const Users = () => {
       ),
     },
 ];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
    const handleHelper = (params: any) => {
     setisModalOpen(true);
     setvalues(params);
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
    const handleDeleteHelper = (params: any) => {
     const confirm = window.confirm("Are you sure you want to delete this?");
     if (confirm) {
       handleDelete(params); // your function to call on OK
     }
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEdit = async (params: any) => {
     console.log("entered call to api", params);
     await editUser({
@@ -69,7 +70,7 @@ const Users = () => {
     });
     console.log("call to api is done");
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
     console.log("entered DELETE call to api", params?.userId);
     await deleteUser({
@@ -112,11 +113,4 @@ const Users = () => {
 };
 
 export default Users;
-function handleDelete(row: any): void {
-  throw new Error("Function not implemented.");
-}
-
-function handleEdit(row: any): void {
-  throw new Error("Function not implemented.");
-}
 

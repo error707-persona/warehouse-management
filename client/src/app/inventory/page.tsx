@@ -67,19 +67,20 @@ const Inventory = () => {
       ),
     },
   ];
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleHelper = (params: any) => {
     setisModalOpen(true);
     setvalues(params);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDeleteHelper = (params: any) => {
     const confirm = window.confirm("Are you sure you want to delete this?");
     if (confirm) {
       handleDelete(params); // your function to call on OK
     }
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEdit = async (params: any) => {
     console.log("entered call to api", params);
     await editProduct({
@@ -93,7 +94,7 @@ const Inventory = () => {
     });
     console.log("call to api is done");
   };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
     console.log("entered DELETE call to api", params);
     await deleteProduct({

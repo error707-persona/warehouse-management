@@ -5,7 +5,6 @@ import { Archive, CircleDollarSign, Clipboard, Layout, LucideIcon, Menu, Sliders
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import logo from "../../../../public/logo.png"
 
 interface SidebarLinkProps {
   href: string;
