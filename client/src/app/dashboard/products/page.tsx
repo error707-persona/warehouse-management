@@ -2,7 +2,7 @@
 import { useCreateProductMutation, useGetProductsQuery } from "@/state/api";
 import { PlusCircleIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
-import Rating from "../(components)/Rating";
+import Rating from "../../(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
 
 type ProductFormData = {

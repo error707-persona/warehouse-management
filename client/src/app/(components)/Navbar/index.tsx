@@ -20,7 +20,7 @@ const Navbar = () => {
     dispatch(setIsDarkMode(!isDarkMode))
   }
   return (
-    <div className="flex justify-between items-center w-full mb-7">
+    <div className="flex dark:bg-slate-500 justify-between items-center w-full mb-7">
       {/* LEFT SIDE */}
       <div className="flex justify-between items-center gap-5">
         <button

@@ -1,19 +1,23 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { v4 } from "uuid";
-import Header from "../(components)/Header";
+import Header from "../../(components)/Header";
 
 type ProductFormData = {
   name: string;
-  email: string;
+  price: number;
+  stockQuantity: number;
+  rating: number;
 };
 
 type UpdateProductFormData = {
-  userId: string;
+  productId: string;
   name: string;
-  email: string;
+  price: number;
+  stockQuantity: number;
+  rating: number;
 };
 
-type UpdateUserModalProps = {
+type CreateProductModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (formData: ProductFormData) => void;
@@ -21,27 +25,31 @@ type UpdateUserModalProps = {
   handleEdit?: (formValues: UpdateProductFormData) => void;
 };
 
-const UpdateUserModal = ({
+const CreateProductModal = ({
   isOpen,
   onClose,
   onCreate,
   formValues,
-  handleEdit,
-}: UpdateUserModalProps) => {
+  handleEdit
+}: CreateProductModalProps) => {
   const [formData, setFormData] = useState({
-    userId: v4(),
+    productId: v4(),
     name: "",
-    email:""
+    price: 0,
+    stockQuantity: 0,
+    rating: 0,
   });
+
+  
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formValues && handleEdit) {
-      handleEdit(formData);
+    if (formValues  && handleEdit){
+      handleEdit(formData)
     } else {
       onCreate(formData);
     }
-
+    
     onClose();
   };
 
@@ -53,8 +61,8 @@ const UpdateUserModal = ({
     if (formValues && isOpen) {
       setFormData(formValues);
     }
-  }, [formValues]);
-
+  }, [formValues, isOpen]);
+ 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -65,7 +73,7 @@ const UpdateUserModal = ({
           : value,
     });
   };
-  if (!isOpen) return null;
+ if (!isOpen) return null;
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
@@ -73,7 +81,7 @@ const UpdateUserModal = ({
         <form onSubmit={handleSubmit} className="mt-5">
           {/* product name */}
           <label htmlFor="productName" className={labelCssStyles}>
-            Name{" "}
+            Product Name{" "}
           </label>
           <input
             type="text"
@@ -86,25 +94,51 @@ const UpdateUserModal = ({
           />
           {/* price  */}
           <label htmlFor="Price" className={labelCssStyles}>
-            Email
+            Price{" "}
           </label>
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
+            type="number"
+            name="price"
+            placeholder="Price"
             onChange={handleChange}
-            value={formData.email}
+            value={formData.price}
             className={inputCssStyles}
             required
           />
-         
+          {/* price  */}
+          <label htmlFor="stockQuantity" className={labelCssStyles}>
+            Stock quantity{" "}
+          </label>
+          <input
+            type="number"
+            name="stockQuantity"
+            placeholder="Stock quantity"
+            onChange={handleChange}
+            value={formData.stockQuantity}
+            className={inputCssStyles}
+            required
+          />
+          {/* rating  */}
+          <label htmlFor="rating" className={labelCssStyles}>
+            {" "}
+            Rating{" "}
+          </label>
+          <input
+            type="number"
+            name="rating"
+            placeholder="Rating"
+            onChange={handleChange}
+            value={formData.rating}
+            className={inputCssStyles}
+            required
+          />
 
           {/* create actions */}
           <button
             className="px-4 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
             type="submit"
           >
-            Create
+           {(formValues)?"Update":"Create"}
           </button>
           <button
             className="ml-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"
@@ -119,4 +153,4 @@ const UpdateUserModal = ({
   );
 };
 
-export default UpdateUserModal;
+export default CreateProductModal;

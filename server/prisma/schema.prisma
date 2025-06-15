@@ -15,9 +15,10 @@ datasource db {
 
 
 model Users {
-  userId String @id
+  userId String @id @default(uuid())
   name   String
   email  String
+  password String?
 }
 
 model Products {

@@ -5,7 +5,7 @@ import {
   useGetExpensesByCategoryQuery,
 } from "@/state/api";
 import { useMemo, useState } from "react";
-import Header from "../(components)/Header";
+import Header from "../../(components)/Header";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 type AggregatedData = {

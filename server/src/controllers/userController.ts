@@ -39,6 +39,31 @@ export const updateUser = async (
   }
 };
 
+export const addUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { name, email, password } = req.body;
+
+    const user = await prisma.users.create({
+      data: {
+        name,
+        email,
+        password
+      },
+    });
+
+    res.status(201).json({
+      message: "User created successfully",
+      data: user,
+    });
+  } catch (error) {
+    console.error("Create error:", error);
+    res.status(500).json({ message: "Error creating user" });
+  }
+};
+
 export const deleteUser = async (
   req: Request,
   res: Response

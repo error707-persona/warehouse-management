@@ -24,7 +24,7 @@ const CartPopularProducts = () => {
                 <div className="flex items-center gap-3">
                   <div>img</div>
                   <div className="flex flex-col justify-between gap-1">
-                    <div className="font-bold text-gray-700">
+                    <div className="font-bold text-gray-700 dark:text-white">
                       {product.name}
                     </div>
                     <div className="flex text-sm items-center">

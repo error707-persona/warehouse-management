@@ -66,6 +66,7 @@ export const api = createApi({
   reducerPath: "api",
   tagTypes: ["DashboardMetrics", "Products", "Users", "Expenses"],
   endpoints: (build) => ({
+
     getDashboardMetrics: build.query<DashboardMetrics, void>({
       query: () => "/dashboard",
       providesTags: ["DashboardMetrics"],
@@ -87,6 +88,16 @@ export const api = createApi({
       }),
       invalidatesTags: ["Products"],
     }),
+
+    createUser: build.mutation<User, NewUser>({
+      query: (newUser) => ({
+        url: "/addUser",
+        method: "POST",
+        body: newUser,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
     editProduct: build.mutation<
       Product,
       { id: string; data: Partial<NewProduct> }
@@ -146,4 +157,5 @@ export const {
   useDeleteProductMutation,
   useEditUserMutation,
   useDeleteUserMutation,
+  useCreateUserMutation
 } = api;
