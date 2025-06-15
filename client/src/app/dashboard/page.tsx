@@ -9,7 +9,7 @@ import { CheckCircle, Package, Tag, TrendingDown, TrendingUp } from "lucide-reac
 
 const Dashboard = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:overflow-auto gap-10 pb-4 custom-grid-rows">
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 pb-4 custom-grid-rows ">
       <CartPopularProducts />
       <CardSalesSummary />
       <CardPurchaseSummary />

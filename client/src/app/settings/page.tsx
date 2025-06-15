@@ -18,7 +18,8 @@ const mockSetting: UserSetting[] = [
 
 const Settings = () => {
   const [userSettings, setUserSettings] = useState<UserSetting[]>(mockSetting);
-   const [isDark, setIsDark] = useState(false);
+    const [dark, setDark] = useState(false);
+
   console.log(userSettings)
   const handleToggleChange = (index: number) => {
     const settingsCopy = [...userSettings];
@@ -29,26 +30,15 @@ const Settings = () => {
 
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
+    document.documentElement.classList.toggle('dark', dark);
+  }, [dark]);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") setIsDark(true);
-  }, []);
   return (
-    <div className="w-full ">
+    <div className="w-full dark:bg-gray-700 dark:text-white">
       <Header name="User Settings" />
       <div className="overflow-x-auto mt-5 shadow-md">
         <table className="min-w-full bg-white rounded-lg">
-          <thead className="bg-gray-800 tewxt-white">
+          <thead className="bg-gray-800 dark:bg-purple-900 ">
             <tr>
               <th className="text-left text-white py-3 px-4 uppercase font-semibold text-sm">
                 Setting
@@ -58,9 +48,9 @@ const Settings = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="dark:bg-gray-800">
             {userSettings.map((settings, index) => (
-              <tr className="hover:bg-blue-50" key={settings.label}>
+              <tr className="hover:bg-blue-50 dark:hover:bg-gray-800" key={settings.label}>
                 <td className="py-2 px-4">{settings.label}</td>
                 <td className="py-2 px-4">
                   {settings.type === "toggle" ? (
@@ -70,7 +60,7 @@ const Settings = () => {
                         className="sr-only peer border-2"
                         checked={settings.value as boolean}
                         onChange={() => handleToggleChange(index)}
-                         onClick={() => setIsDark(!isDark)}
+                         onClick={() => setDark(!dark)}
                       />
                       <div
                         className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-blue-400 peer-focus:ring-4 

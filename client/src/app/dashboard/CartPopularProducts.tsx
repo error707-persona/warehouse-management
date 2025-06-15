@@ -6,12 +6,12 @@ import Rating from "../(components)/Rating";
 const CartPopularProducts = () => {
   const { data: dashboardMetrics, isLoading } = useGetDashboardMetricsQuery();
   return (
-    <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16">
+    <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16 dark:text-white dark:bg-gray-800">
       {isLoading ? (
         <div className="m-5">Loading...</div>
       ) : (
         <div className="h-full">
-          <h3 className="text-lg font-semibold px-7 pt-5 pb-2">
+          <h3 className="text-md font-semibold px-7 pt-5 pb-2 ">
             Popular Products
           </h3>
           <hr />

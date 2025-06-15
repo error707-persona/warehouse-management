@@ -29,14 +29,14 @@ const SidebarLink = ({
         className={`cursor-pointer flex items-center ${
           isCollapsed ? "justify-center py-4" : "justify-start px-8 py-4"
         } hover:text-blue-500 hover:bg-blue-100 gap-3 transition-colors ${
-          isActive ? "bg-blue-200 text-white" : ""
+          isActive ? "bg-blue-200 text-white dark:text-white" : ""
         }`}
       >
-        <Icon className="w-6 h-6 !text-gray-700" />
+        <Icon className="w-6 h-6 !text-gray-700 dark:text-white" />
         <span
           className={`${
             isCollapsed ? "hidden" : "block"
-          } font-medium text-gray-700`}
+          } font-medium text-gray-700 dark:text-white`}
         >
           {label}
         </span>
@@ -55,7 +55,7 @@ const Sidebar = () => {
   };
   const sidebarClassName = `fixed flex flex-col ${
     isSidebarCollapsed ? "w-0 md:w-16" : "w-72 md:w-64"
-  } bg-white transition-all duration-30 overflow-hidden h-full shadow-md`;
+  } bg-white transition-all duration-30 overflow-hidden h-full shadow-md dark:bg-gray-800`;
 
   return (
     <div className={sidebarClassName}>
@@ -68,7 +68,7 @@ const Sidebar = () => {
         <h1
           className={`${
             isSidebarCollapsed ? "hidden" : "block"
-          } font-extrabold text-2xl`}
+          } font-extrabold text-2xl dark:text-white`}
         >
           EDSTOCK
         </h1>
@@ -80,7 +80,7 @@ const Sidebar = () => {
         </button>
       </div>
       {/* links */}
-      <div className="flex flex-col grow mt-8">
+      <div className="flex flex-col grow mt-8 dark:text-white">
         <SidebarLink
           href="/dashboard"
           icon={Layout}
@@ -106,21 +106,22 @@ const Sidebar = () => {
           isCollapsed={isSidebarCollapsed}
         />
         <SidebarLink
-          href="/settings"
-          icon={SlidersHorizontal}
-          label="Settings"
-          isCollapsed={isSidebarCollapsed}
-        />
-        <SidebarLink
           href="/expenses"
           icon={CircleDollarSign}
           label="Expenses"
           isCollapsed={isSidebarCollapsed}
         />
+        <SidebarLink
+          href="/settings"
+          icon={SlidersHorizontal}
+          label="Settings"
+          isCollapsed={isSidebarCollapsed}
+        />
+        
       </div>
       {/* footer */}
       <div className={`${isSidebarCollapsed?"hidden":"block"} mb-10`}>
-        <p className="text-center text-xs text-gray-500">&copy; 2024 Edstock</p>
+        <p className="text-center text-xs text-gray-500 dark:text-white">&copy; 2024 Edstock</p>
       </div>
     </div>
   );
