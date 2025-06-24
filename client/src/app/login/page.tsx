@@ -3,7 +3,8 @@ import Image from "next/image";
 import React from "react";
 import loginPic from "../../../public/stock images/Illustration.png";
 import { useForm } from "react-hook-form";
-import { useCreateUserMutation } from "@/state/api";
+import { useGetOneUserMutation } from "@/state/api";
+import { useRouter } from "next/navigation";
 
 type LoginFormInputs = {
   email: string;
@@ -16,18 +17,28 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
-  //   const [createUser] = useCreateUserMutation();
-  const onSubmit = async (data: LoginFormInputs) => {
-    console.log("Login Data:", data);
-    // await createUser(data);
+  const router = useRouter();
+  const [getOneUser, {data, isLoading}] = useGetOneUserMutation();
+  const onSubmit = async (inputData: LoginFormInputs) => {
+    try {
+      const result = await getOneUser(inputData).unwrap();
+      if (result && result.message==="Login user successfully") {
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      alert(
+        "Something went wrong when you were trying to login, Please try again later!"
+      );
+      console.log(error);
+    }
   };
 
   return (
-    <div className="h-[100vh] flex">
-      <div className="w-1/2 h-full p-32 bg-purple-500">
+    <div className="h-[100vh] flex flex-col md:flex-row border-2 ">
+      <div className="hidden lg:block lg:w-1/2 h-full p-32 bg-purple-500">
         <Image src={loginPic} alt="" />
       </div>
-      <div className="w-1/2 h-full bg-white  flex flex-col justify-center items-center">
+      <div className="w-full lg:w-1/2 mt-10 md:mt-0 h-full bg-white  flex flex-col justify-center items-center">
         <div className="font-bold text-2xl mb-16">Welcome back to EDSTOCK</div>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -78,7 +89,7 @@ const Login = () => {
             Login
           </button>
           <div className="text-center">
-            Don't have an account? <a href="/signIn">Sign In</a>
+            Don't have an account? <a href="/signin">Sign In</a>
           </div>
         </form>
         <div className="mt-2">© 2025 EDSTOCK. All rights reserved. </div>

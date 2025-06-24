@@ -19,8 +19,8 @@ const Users = () => {
      const [deleteUser] = useDeleteUserMutation();
    const columns: GridColDef[] = [
   { field: "userId", headerName: "ID", width: 300 },
-  { field: "name", headerName: "Name", width: 200 },
-  { field: "email", headerName: "Email", width: 450 },
+  { field: "name", headerName: "Name", width: 170 },
+  { field: "email", headerName: "Email", width: 250 },
     {
       field: 'actions',
       headerName: 'Actions',

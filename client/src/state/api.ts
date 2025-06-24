@@ -54,6 +54,7 @@ export interface User {
   userId: string;
   name: string;
   email: string;
+  password?: string;
 }
 
 export interface NewUser {
@@ -66,7 +67,6 @@ export const api = createApi({
   reducerPath: "api",
   tagTypes: ["DashboardMetrics", "Products", "Users", "Expenses"],
   endpoints: (build) => ({
-
     getDashboardMetrics: build.query<DashboardMetrics, void>({
       query: () => "/dashboard",
       providesTags: ["DashboardMetrics"],
@@ -91,7 +91,7 @@ export const api = createApi({
 
     createUser: build.mutation<User, NewUser>({
       query: (newUser) => ({
-        url: "/addUser",
+        url: "/users/addUser",
         method: "POST",
         body: newUser,
       }),
@@ -123,6 +123,16 @@ export const api = createApi({
       providesTags: ["Users"],
     }),
 
+    getOneUser: build.mutation<User, { email: string, password: string }>({
+      query: (data) => ({ 
+        url: `/users/getOneUser`,
+        method:"POST",
+        body: data
+      
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
     getExpensesByCategory: build.query<ExpenseByCategorySummary[], void>({
       query: () => "/expenses",
       providesTags: ["Expenses"],
@@ -144,6 +154,14 @@ export const api = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    logout: build.mutation<void, void>({
+      query: () => ({
+        url: `/users/logout/`,
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
@@ -157,5 +175,7 @@ export const {
   useDeleteProductMutation,
   useEditUserMutation,
   useDeleteUserMutation,
-  useCreateUserMutation
+  useCreateUserMutation,
+  useGetOneUserMutation,
+  useLogoutMutation
 } = api;

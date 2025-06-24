@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser"
 
 // ROUTE IMPORTS
 import dashboardRoutes from "./routes/dashboardRoutes";
@@ -15,21 +16,28 @@ import expenseRoutes from "./routes/expenseRoutes";
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(helmet());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+const allowedOrigins = [
+  "https://inventory-management-kappa-red.vercel.app",
+  "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: process.env.CORS_URL,
-  credentials: true, 
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 }));
-// app.use(cors({
-//   origin: "http://localhost:3000", // or Vercel frontend URL in prod
-//   credentials: true,
-// }));
-app.use(cors());
 
 // routes
 app.get("/", (req, res) => {

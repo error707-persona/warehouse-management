@@ -1,13 +1,17 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
+import { useLogoutMutation } from "@/state/api";
 import { Bell, Menu, Moon, Settings, Sun } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 // import Image from "next/image";
  
 const Navbar = () => {
   const dispatch = useAppDispatch();
+  const [triggerLogout] = useLogoutMutation();
+  const router = useRouter();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
   );
@@ -18,6 +22,10 @@ const Navbar = () => {
   };
   const toggleDarkMode = () => {
     dispatch(setIsDarkMode(!isDarkMode))
+  }
+  const handleLogout = async () => {
+    await triggerLogout().unwrap();
+     router.push("/login");
   }
   return (
     <div className="flex dark:bg-slate-500 justify-between items-center w-full mb-7">
@@ -72,7 +80,7 @@ const Navbar = () => {
             height={50}
             className="rounded-full h-full object-cover"
           /> */}
-            <span className="font-semibold">Ed Roh</span>
+            <span className="font-semibold">Ed Roh  <button className="ml-2 text-red-600" onClick={handleLogout}>Logout</button></span>
           </div>
         </div>
         <Link href="/settings">
