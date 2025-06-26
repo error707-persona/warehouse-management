@@ -24,7 +24,7 @@ const SignIn = () => {
   const onSubmit = async (data: SignInFormInputs) => {
     console.log("SignUp Data:", data);
     const result = await createUser(data);
-    if (result.data.message==="User created successfully") {
+    if (result && result.data && result.data.message==="User created successfully") {
       router.push("/dashboard");
     }
   };
