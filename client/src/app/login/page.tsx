@@ -91,7 +91,7 @@ const Login = () => {
             {isLoading ? <Loader /> : "Login"}
           </button>
           <div className="text-center">
-            Don't have an account? <a href="/signin">Sign In</a>
+            Dont have an account? <a href="/signin">Sign In</a>
           </div>
         </form>
         <div className="mt-2">© 2025 EDSTOCK. All rights reserved. </div>
