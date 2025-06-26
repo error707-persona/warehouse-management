@@ -5,6 +5,7 @@ import loginPic from "../../../public/stock images/Illustration.png";
 import { useForm } from "react-hook-form";
 import { useGetOneUserMutation } from "@/state/api";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 type LoginFormInputs = {
   email: string;
@@ -18,11 +19,11 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginFormInputs>();
   const router = useRouter();
-  const [getOneUser, {data, isLoading}] = useGetOneUserMutation();
+  const [getOneUser, { isLoading }] = useGetOneUserMutation();
   const onSubmit = async (inputData: LoginFormInputs) => {
     try {
       const result = await getOneUser(inputData).unwrap();
-      if (result && result.message==="Login user successfully") {
+      if (result && result.message === "Login user successfully") {
         router.push("/dashboard");
       }
     } catch (error) {
@@ -84,9 +85,10 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full hover:bg-purple-900 bg-purple-700 text-white py-2 px-4 rounded transition"
+            className="w-full flex justify-center items-center hover:bg-purple-900 bg-purple-700 text-white py-2 px-4 rounded transition"
           >
-            Login
+            {" "}
+            {isLoading ? <Loader /> : "Login"}
           </button>
           <div className="text-center">
             Don't have an account? <a href="/signin">Sign In</a>
