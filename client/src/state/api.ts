@@ -55,6 +55,7 @@ export interface User {
   name: string;
   email: string;
   password?: string;
+  message?: string;
 }
 
 export interface NewUser {
