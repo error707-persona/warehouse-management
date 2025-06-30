@@ -42,7 +42,7 @@ const Products = () => {
   return (
     <div className="mx-auto pb-5 w-full">
       <div className="flex  justify-center gap-10 w-full items-center mb-6">
-        <div className="w-full border-2 flex gap-10 items-center rounded">
+        <div className="w-full border-2 flex gap-10 items-center rounded bg-white">
           <SearchIcon className="w-5 h-5 text-gray-500 m-2" />
           <input
             type="text"
