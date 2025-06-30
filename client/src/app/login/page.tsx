@@ -23,7 +23,7 @@ const Login = () => {
   const onSubmit = async (inputData: LoginFormInputs) => {
     try {
       const result = await getOneUser(inputData).unwrap();
-      if (result && result.message === "Login user successfully") {
+      if (result && result.data && result.message === "Login user successfully") {
         localStorage.setItem("username", result.data.name);
         localStorage.setItem("email", result.data.email);
         router.push("/dashboard");

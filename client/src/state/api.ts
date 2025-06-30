@@ -56,6 +56,10 @@ export interface User {
   email: string;
   password?: string;
   message?: string;
+   data?: {
+    name: string;
+    email: string;
+  };
 }
 
 export interface NewUser {

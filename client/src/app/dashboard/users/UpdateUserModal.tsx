@@ -53,7 +53,7 @@ const UpdateUserModal = ({
     if (formValues && isOpen) {
       setFormData(formValues);
     }
-  }, [formValues]);
+  }, [formValues, isOpen]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

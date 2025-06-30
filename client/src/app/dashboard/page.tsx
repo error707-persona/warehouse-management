@@ -7,7 +7,7 @@ import CardExpenseSummary from "./CardExpenseSummary";
 import StateCard from "./StateCard";
 import { CheckCircle, Package, Tag, TrendingDown, TrendingUp } from "lucide-react";
 // import jwt from "jsonwebtoken";
-import { redirect } from "next/navigation";
+
 // import { cookies } from "next/headers";
 
 const Dashboard = () => {
