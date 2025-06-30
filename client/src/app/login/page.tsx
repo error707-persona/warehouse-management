@@ -24,6 +24,8 @@ const Login = () => {
     try {
       const result = await getOneUser(inputData).unwrap();
       if (result && result.message === "Login user successfully") {
+        localStorage.setItem("username", result.data.name);
+        localStorage.setItem("email", result.data.email);
         router.push("/dashboard");
       }
     } catch (error) {
@@ -33,6 +35,7 @@ const Login = () => {
       console.log(error);
     }
   };
+  
 
   return (
     <div className="h-[100vh] flex flex-col md:flex-row border-2 ">

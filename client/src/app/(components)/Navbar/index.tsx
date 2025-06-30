@@ -27,6 +27,7 @@ const Navbar = () => {
     await triggerLogout().unwrap();
      router.push("/login");
   }
+  const username = localStorage.getItem("username");
   return (
     <div className="flex dark:bg-slate-500 justify-between items-center w-full mb-7">
       {/* LEFT SIDE */}
@@ -80,7 +81,7 @@ const Navbar = () => {
             height={50}
             className="rounded-full h-full object-cover"
           /> */}
-            <span className="font-semibold">Ed Roh  <button className="ml-2 text-red-600" onClick={handleLogout}>Logout</button></span>
+            <span className="font-semibold">Hi, {username}<button className="ml-2 text-red-600" onClick={handleLogout}>Logout</button></span>
           </div>
         </div>
         <Link href="/settings">

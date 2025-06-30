@@ -6,8 +6,25 @@ import CardPurchaseSummary from "./CardPurchaseSummary";
 import CardExpenseSummary from "./CardExpenseSummary";
 import StateCard from "./StateCard";
 import { CheckCircle, Package, Tag, TrendingDown, TrendingUp } from "lucide-react";
+// import jwt from "jsonwebtoken";
+import { redirect } from "next/navigation";
+// import { cookies } from "next/headers";
 
 const Dashboard = () => {
+  // const token = cookies().get("token")?.value;
+
+  // if (!token) {
+  //   redirect("/login");
+  // }
+
+  
+  // try {
+  //   const user = jwt.verify(token, process.env.JWT_SECRET!);
+  // } catch (err) {
+  //   redirect("/login");
+  // }
+ 
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 pb-4 custom-grid-rows ">
       <CartPopularProducts />

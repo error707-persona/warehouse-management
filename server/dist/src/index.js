@@ -41,6 +41,7 @@ app.use((0, cors_1.default)({
     },
     credentials: true
 }));
+// Use this before your routes
 // routes
 app.get("/", (req, res) => {
     res.send("Server is live ✅");

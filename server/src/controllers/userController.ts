@@ -44,8 +44,9 @@ export const getOneUsers = async (
         res.status(401).json({ message: "Invalid credentials!" }); // ✅ return
         return;
       }
+      
     }
-
+    
     const token = jwt.sign(
       { id: user?.userId, email: user.email },
       JWT_SECRET,

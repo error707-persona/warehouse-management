@@ -6,6 +6,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser"
 
+
 // ROUTE IMPORTS
 import dashboardRoutes from "./routes/dashboardRoutes";
 import productRoutes from "./routes/productRoutes";
@@ -38,11 +39,13 @@ app.use(cors({
   },
   credentials: true
 }));
+// Use this before your routes
 
 // routes
 app.get("/", (req, res) => {
   res.send("Server is live ✅");
 });
+
 app.use("/dashboard", dashboardRoutes); //http://localhost:8000/dashboard
 app.use("/products", productRoutes); //http://localhost:8000/products
 app.use("/users",usersRoutes); //http://localhost:8000/users

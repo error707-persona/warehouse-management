@@ -4,13 +4,16 @@ import Header from "../../(components)/Header";
 
 type UserSetting = {
   label: string;
-  value: string | boolean;
+  value: string | boolean | null;
   type: "text" | "toggle";
 };
 
+const username = localStorage.getItem("username");
+const email = localStorage.getItem("email");
+
 const mockSetting: UserSetting[] = [
-  { label: "Username", value: "John_doe", type: "text" },
-  { label: "Email", value: "john.doe@example.com", type: "text" },
+  { label: "Username", value: username, type: "text" },
+  { label: "Email", value: email, type: "text" },
   { label: "Notification", value: true, type: "toggle" },
   { label: "Dark Mode", value: false, type: "toggle" },
   { label: "Language", value: "English", type: "text" },

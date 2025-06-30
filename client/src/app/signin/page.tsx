@@ -44,21 +44,21 @@ const SignIn = () => {
           <h2 className="text-2xl font-semibold text-center text-blue-300">
             Sign In
           </h2>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm mb-0 font-medium text-gray-700">
               Name
             </label>
             <input
               type="text"
-              
               placeholder="Luna Baker"
               {...register("name", { required: "Name is required" })}
-              className=" block mb-5 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
+              className=" block -mt-5  w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
             />
           <div>
             
             <label className="block text-sm font-medium text-gray-700">
               Email
             </label>
+            
             <input
               type="email"
          
