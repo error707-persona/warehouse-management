@@ -25,6 +25,8 @@ const SignIn = () => {
     console.log("SignUp Data:", data);
     const result = await createUser(data);
     if (result && result.data && result.data.message==="User created successfully") {
+       localStorage.setItem("username", result.data.name);
+       localStorage.setItem("email", result.data.email);
       router.push("/dashboard");
     }
   };

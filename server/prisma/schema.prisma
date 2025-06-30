@@ -24,6 +24,7 @@ model Users {
 model Products {
   productId     String      @id
   name          String
+  imgUrl        String?           
   price         Float
   rating        Float?
   stockQuantity Int

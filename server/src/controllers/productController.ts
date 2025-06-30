@@ -14,6 +14,7 @@ export const getProducts = async (
       where: {
         name: {
           contains: search,
+          mode: "insensitive", 
         },
       },
     });

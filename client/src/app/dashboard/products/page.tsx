@@ -47,7 +47,7 @@ const Products = () => {
           <input
             type="text"
             className="w-full outline-none rounded bg-white"
-            placeholder="Search products..."
+            placeholder="Search products...this search is case sensitive"
             value={searchTerm}
             onChange={(e) => setsearchTerm(e.target.value)}
           />
