@@ -22,7 +22,7 @@ model Users {
 }
 
 model Products {
-  productId     String      @id
+  productId     String      @id @default(uuid())
   name          String
   imgUrl        String?           
   price         Float
@@ -33,17 +33,17 @@ model Products {
 }
 
 model Sales {
-  saleId      String   @id
+  saleId      String   @id @default(uuid())
   productId   String
-  timestamp   DateTime
-  quantity    Int
+  timestamp   DateTime?
+  quantity    Int?
   unitPrice   Float
-  totalAmount Float
+  totalAmount Float?
   product     Products @relation(fields: [productId], references: [productId])
 }
 
 model Purchases {
-  purchaseId String   @id
+  purchaseId String   @id @default(uuid())
   productId  String
   timestamp  DateTime
   quantity   Int

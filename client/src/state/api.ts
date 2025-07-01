@@ -13,6 +13,7 @@ export interface NewProduct {
   price: number;
   rating?: number;
   stockQuantity: number;
+  imgUrl?: string;
 }
 
 export interface SalesSummary {
@@ -87,7 +88,7 @@ export const api = createApi({
     // post put update delete -> mutation
     createProduct: build.mutation<Product, NewProduct>({
       query: (newProduct) => ({
-        url: "/products",
+        url: "/products/createProduct",
         method: "POST",
         body: newProduct,
       }),
@@ -108,8 +109,8 @@ export const api = createApi({
       { id: string; data: Partial<NewProduct> }
     >({
       query: ({ id, data }) => ({
-        url: `/products/${id}`,
-        method: "POST",
+        url: `/products/updateProduct/${id}`,
+        method: "PUT",
         body: data,
       }),
       invalidatesTags: ["Products"],
@@ -117,7 +118,7 @@ export const api = createApi({
 
     deleteProduct: build.mutation<Product, { id: string }>({
       query: ({ id }) => ({
-        url: `/products/${id}`,
+        url: `/products/deleteProduct/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Products"],

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Header from "../../(components)/Header";
+import { Decimal } from "@prisma/client/runtime/library";
 
 type ProductFormData = {
   name: string;
@@ -10,9 +11,8 @@ type ProductFormData = {
 };
 
 type UpdateProductFormData = {
-  productId: string;
   name: string;
-  price: number;
+  price: Decimal;
   stockQuantity: number;
   rating: number;
 };
@@ -30,26 +30,34 @@ const CreateProductModal = ({
   onClose,
   onCreate,
   formValues,
-  handleEdit
+  handleEdit,
 }: CreateProductModalProps) => {
   const [formData, setFormData] = useState({
-    productId: v4(),
+
     name: "",
-    price: 0,
+    price: 0.0,
     stockQuantity: 0,
+    imgUrl: "",
     rating: 0,
   });
 
-  
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formValues  && handleEdit){
-      handleEdit(formData)
+    console.log(formData);
+    if (formValues && handleEdit) {
+      handleEdit(formData);
     } else {
       onCreate(formData);
     }
-    
+
+    setFormData({
+      name: "",
+      price: 0.0,
+      stockQuantity: 0,
+      imgUrl: "",
+      rating: 0,
+    });
+
     onClose();
   };
 
@@ -62,7 +70,7 @@ const CreateProductModal = ({
       setFormData(formValues);
     }
   }, [formValues, isOpen]);
- 
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -73,7 +81,7 @@ const CreateProductModal = ({
           : value,
     });
   };
- if (!isOpen) return null;
+  if (!isOpen) return null;
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
@@ -99,6 +107,7 @@ const CreateProductModal = ({
           <input
             type="number"
             name="price"
+            step="any"
             placeholder="Price"
             onChange={handleChange}
             value={formData.price}
@@ -126,19 +135,29 @@ const CreateProductModal = ({
           <input
             type="number"
             name="rating"
+            max={5}
             placeholder="Rating"
             onChange={handleChange}
             value={formData.rating}
             className={inputCssStyles}
             required
           />
+          <div>
+            <input
+              type="file"
+              name="imgUrl"
+              accept="image/png, image/jpeg"
+              onChange={handleChange}
+              className="file:px-4 file:py-2 file:border-0 file:rounded-md file:bg-black file:text-white file:cursor-pointer hover:file:bg-gray-600 file:mr-2 w-full my-3  rounded"
+            />
+          </div>
 
           {/* create actions */}
           <button
             className="px-4 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
             type="submit"
           >
-           {(formValues)?"Update":"Create"}
+            {formValues ? "Update" : "Create"}
           </button>
           <button
             className="ml-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"

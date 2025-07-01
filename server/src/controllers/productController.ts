@@ -9,12 +9,12 @@ export const getProducts = async (
 ): Promise<void> => {
   try {
     const search = req.query.search?.toString();
-    console.log("inside api")
+    console.log("inside api");
     const products = await prisma.products.findMany({
       where: {
         name: {
           contains: search,
-          mode: "insensitive", 
+          mode: "insensitive",
         },
       },
     });
@@ -31,22 +31,30 @@ export const createProduct = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { productId, name, price, rating, stockQuantity } = req.body;
+    const { name, price, rating, stockQuantity, imgUrl } = req.body;
+    
+    // ✅ Input validation with early return
+    // if (!name || price === undefined || stockQuantity === undefined) {
+    //    res.status(400).json({ message: "Missing required fields" });
+    // }
+
     const product = await prisma.products.create({
       data: {
-        productId,
         name,
         price,
         rating,
         stockQuantity,
+        imgUrl,
       },
     });
-    res.status(201).json(product);
-  } catch (error) {
-    res.status(500).json({ message: error });
+
+    res.status(201).json(product); // ✅ Always return after sending response
+  } catch (error: any) {
+    console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
+    res.status(500).json({ message: error.message || "Internal server error" });
+  
   }
 };
-
 
 export const updateProduct = async (
   req: Request,

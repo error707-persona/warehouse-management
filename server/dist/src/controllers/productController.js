@@ -21,6 +21,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             where: {
                 name: {
                     contains: search,
+                    mode: "insensitive",
                 },
             },
         });
@@ -35,20 +36,25 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getProducts = getProducts;
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { productId, name, price, rating, stockQuantity } = req.body;
+        const { name, price, rating, stockQuantity, imgUrl } = req.body;
+        // ✅ Input validation with early return
+        // if (!name || price === undefined || stockQuantity === undefined) {
+        //    res.status(400).json({ message: "Missing required fields" });
+        // }
         const product = yield prisma.products.create({
             data: {
-                productId,
                 name,
                 price,
                 rating,
                 stockQuantity,
+                imgUrl,
             },
         });
-        res.status(201).json(product);
+        res.status(201).json(product); // ✅ Always return after sending response
     }
     catch (error) {
-        res.status(500).json({ message: error });
+        console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
+        res.status(500).json({ message: error.message || "Internal server error" });
     }
 });
 exports.createProduct = createProduct;

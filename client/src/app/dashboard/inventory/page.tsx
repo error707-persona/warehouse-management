@@ -83,6 +83,7 @@ const Inventory = () => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEdit = async (params: any) => {
     console.log("entered call to api", params);
+    console.log("imgUrl being sent: ", params?.imgUrl.split("\\")[-1])
     await editProduct({
       id: params?.productId,
       data: {
@@ -90,6 +91,7 @@ const Inventory = () => {
         price: params?.price,
         rating: params?.rating,
         stockQuantity: params?.stockQuantity,
+        imgUrl: params?.imgUrl.split("\\")[-1]
       },
     });
     console.log("call to api is done");
