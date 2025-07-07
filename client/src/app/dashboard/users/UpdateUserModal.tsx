@@ -31,7 +31,7 @@ const UpdateUserModal = ({
   const [formData, setFormData] = useState({
     userId: v4(),
     name: "",
-    email:""
+    email: "",
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -69,39 +69,47 @@ const UpdateUserModal = ({
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <Header name="Create New Product" />
+        <Header name="Create User" />
         <form onSubmit={handleSubmit} className="mt-5">
           {/* product name */}
-          <label htmlFor="productName" className={labelCssStyles}>
-            Name{" "}
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            onChange={handleChange}
-            value={formData.name}
-            className={inputCssStyles}
-            required
-          />
-          {/* price  */}
-          <label htmlFor="Price" className={labelCssStyles}>
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            value={formData.email}
-            className={inputCssStyles}
-            required
-          />
-         
-
+          <div className="flex flex-col">
+            <label htmlFor="productName" className={labelCssStyles}>
+              Name{" "}
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              onChange={handleChange}
+              value={formData.name}
+              className={inputCssStyles}
+              required
+            />
+            {/* price  */}
+            <label htmlFor="Price" className={labelCssStyles}>
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              value={formData.email}
+              className={inputCssStyles}
+              required
+            />
+            <label htmlFor="Price" className={labelCssStyles}>
+              Role
+            </label>
+            <select name="roles" id="roles" className="p-3 w-full outline-none my-3 border-2 rounded border-gray-600">
+              <option value="inventory clerk">inventory clerk</option>
+              <option value="Admin">Admin</option>
+              <option value="manager">manager</option>
+            </select>
+          </div>
           {/* create actions */}
           <button
-            className="px-4 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            className="px-4 mb-3 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
             type="submit"
           >
             Create

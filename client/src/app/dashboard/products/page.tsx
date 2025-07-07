@@ -1,7 +1,7 @@
 "use client";
 import { useCreateProductMutation, useGetProductsQuery } from "@/state/api";
 import { PlusCircleIcon, SearchIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Rating from "../../(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
 import { Decimal } from "@prisma/client/runtime/binary";
@@ -12,7 +12,7 @@ type ProductFormData = {
   price: Decimal;
   stockQuantity: number;
   rating: number;
-  imgUrl: string | null;
+  imgUrl?: string | null;
 };
 
 const Products = () => {
@@ -21,6 +21,7 @@ const Products = () => {
   const { data: products, isError } = useGetProductsQuery(searchTerm);
 
   const [createProduct] = useCreateProductMutation();
+  var imageMap = new Map();
   const handleCreateProduct = async (
     productData: ProductFormData,
     selectedFileName: string | null,
@@ -40,16 +41,21 @@ const Products = () => {
     const filePath = `products/${product_id}/${selectedFileName}`; // Optional: folder per product ID
 
     if (selectedFile !== null) {
-      const { data, error } = await supabase.storage
-        .from("product-images") // your storage bucket name
-        .upload(filePath, selectedFile);
-      
-      if (error) throw error;
+      const user = await supabase.auth.getUser();
+      if (user) {
+        const { data, error } = await supabase.storage
+          .from("product-images") // your storage bucket name
+          .upload(filePath, selectedFile);
 
-      await supabase.from("products").update({
-        image_path: filePath
-      }).eq("id", product_id);
+        if (error) throw error;
 
+        await supabase
+          .from("products")
+          .update({
+            image_path: filePath,
+          })
+          .eq("id", product_id);
+      }
     }
   };
 
@@ -66,6 +72,23 @@ const Products = () => {
       </div>
     );
   }
+
+  if (products) {
+    for (const product of products) {
+      if (product.imgUrl) {
+        const filePath = `products/${product.productId}/${product?.imgUrl}`;
+
+        const { data: urlData } = supabase.storage
+          .from("product-images")
+          .getPublicUrl(filePath);
+
+        imageMap.set(product.productId, urlData.publicUrl);
+      }
+    }
+    console.log("imageMap: ", imageMap);
+  }
+
+  console.log("products: ", products);
 
   return (
     <div className="mx-auto pb-5 w-full">
@@ -103,7 +126,11 @@ const Products = () => {
               className="border shadow rounded-md p-4 max-w-full w-full mx-auto"
             >
               <div className="flex flex-col items-center">
-                img
+                {product.imgUrl ? (
+                  <img src={imageMap.get(product.productId)} alt="" width={200} height={200} className="w-56 h-56"/>
+                ) : (
+                  "img"
+                )}
                 <h3 className="text-lg text-gray-900 font-semibold">
                   {product.name}
                 </h3>

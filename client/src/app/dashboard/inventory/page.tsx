@@ -20,32 +20,32 @@ const Inventory = () => {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [values, setvalues] = useState();
   const columns: GridColDef[] = [
-    { field: "productId", headerName: "ID", width: 300 },
-    { field: "name", headerName: "Product Name", width: 300 },
+    { field: "productId", headerName: "ID", width: 270 },
+    { field: "name", headerName: "Product Name", width: 170 },
     {
       field: "price",
       headerName: "Price",
-      width: 110,
+      width: 70,
       type: "number",
       valueGetter: (value, row) => `${row.price}`,
     },
     {
       field: "rating",
       headerName: "Rating",
-      width: 110,
+      width: 70,
       type: "number",
       valueGetter: (value, row) => (row.rating ? row.rating : "N/A"),
     },
     {
       field: "stockQuantity",
       headerName: "Stock Quantity",
-      width: 150,
+      width: 100,
       type: "number",
     },
     {
       field: "actions",
       headerName: "Actions",
-      width: 200,
+      width: 220,
       renderCell: (params) => (
         <Box className="flex justify-center items-center h-full w-full">
           <Button
@@ -67,7 +67,7 @@ const Inventory = () => {
       ),
     },
   ];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleHelper = (params: any) => {
     setisModalOpen(true);
     setvalues(params);
@@ -80,8 +80,12 @@ const Inventory = () => {
       handleDelete(params); // your function to call on OK
     }
   };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleEdit = async (params: any, selectedFileName: string | null, selectedFile: File | null) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleEdit = async (
+    params: any,
+    selectedFileName: string | null,
+    selectedFile: File | null
+  ) => {
     console.log("entered call to api", params);
     console.log("selectedFile: ", selectedFileName);
     await editProduct({
@@ -91,12 +95,12 @@ const Inventory = () => {
         price: params?.price,
         rating: params?.rating,
         stockQuantity: params?.stockQuantity,
-        imgUrl: selectedFileName?.split("\\")[-1]
+        imgUrl: selectedFileName?.split("\\")[-1],
       },
     });
     console.log("call to api is done");
   };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
     console.log("entered DELETE call to api", params);
     await deleteProduct({

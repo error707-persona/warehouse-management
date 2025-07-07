@@ -9,6 +9,7 @@ type ProductFormData = {
   price: Decimal;
   stockQuantity: number;
   rating: number;
+  imgUrl?: string | null;
 };
 
 type UpdateProductFormData = {

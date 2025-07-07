@@ -1,6 +1,10 @@
 "use client";
 
-import { useDeleteUserMutation, useEditUserMutation, useGetusersQuery } from "@/state/api";
+import {
+  useDeleteUserMutation,
+  useEditUserMutation,
+  useGetusersQuery,
+} from "@/state/api";
 import Header from "../../(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
@@ -8,22 +12,35 @@ import { PencilIcon, Trash } from "lucide-react";
 import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
 
-
-
-
 const Users = () => {
   const { data: users, isError, isLoading } = useGetusersQuery();
-   const [isModalOpen, setisModalOpen] = useState(false);
-   const [values, setvalues] = useState();
-     const [editUser] = useEditUserMutation();
-     const [deleteUser] = useDeleteUserMutation();
-   const columns: GridColDef[] = [
-  { field: "userId", headerName: "ID", width: 300 },
-  { field: "name", headerName: "Name", width: 170 },
-  { field: "email", headerName: "Email", width: 250 },
+  const [isModalOpen, setisModalOpen] = useState(false);
+  const [values, setvalues] = useState();
+  const [editUser] = useEditUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
+  const columns: GridColDef[] = [
+    { field: "userId", headerName: "ID", width: 300 },
+    { field: "name", headerName: "Name", width: 100 },
+    { field: "email", headerName: "Email", width: 220 },
     {
-      field: 'actions',
-      headerName: 'Actions',
+      field: "stockQuantity",
+      headerName: "Stock Quantity",
+      width: 100,
+      type: "number",
+      renderCell: (params) => (
+        <Box className="flex justify-center items-center h-full w-full">
+          <select name="roles" id="roles" className="p-3 w-fit">
+            <option value="inventory clerk">inventory clerk</option>
+            <option value="Admin">Admin</option>
+            <option value="manager">manager</option>
+            
+          </select>
+        </Box>
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "Actions",
       width: 200,
       renderCell: (params) => (
         <Box className="flex items-center h-full w-full">
@@ -33,44 +50,44 @@ const Users = () => {
             style={{ marginRight: 8 }}
             className=""
           >
-            <PencilIcon className="w-6 h-6"/>
+            <PencilIcon className="w-6 h-6" />
           </Button>
           <Button
             color="error"
             size="small"
             onClick={() => handleDeleteHelper(params.row)}
           >
-            <Trash className="w-6 h-6"/>
+            <Trash className="w-6 h-6" />
           </Button>
         </Box>
       ),
     },
-];
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-   const handleHelper = (params: any) => {
+  ];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleHelper = (params: any) => {
     setisModalOpen(true);
     setvalues(params);
   };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-   const handleDeleteHelper = (params: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDeleteHelper = (params: any) => {
     const confirm = window.confirm("Are you sure you want to delete this?");
     if (confirm) {
       handleDelete(params); // your function to call on OK
     }
   };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEdit = async (params: any) => {
     console.log("entered call to api", params);
     await editUser({
       id: params?.userId,
       data: {
         name: params?.name,
-        email: params?.email
+        email: params?.email,
       },
     });
     console.log("call to api is done");
   };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
     console.log("entered DELETE call to api", params?.userId);
     await deleteUser({
@@ -78,7 +95,6 @@ const Users = () => {
     });
     console.log("call to delete api is done");
   };
-
 
   console.log(users, "users");
   if (isLoading) {
@@ -101,7 +117,7 @@ const Users = () => {
         checkboxSelection
         className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700"
       />
-       <UpdateUserModal
+      <UpdateUserModal
         isOpen={isModalOpen}
         onClose={() => setisModalOpen(false)}
         onCreate={() => {}}
@@ -113,4 +129,3 @@ const Users = () => {
 };
 
 export default Users;
-
