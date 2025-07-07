@@ -1,11 +1,12 @@
 "use client";
 import { useCreateProductMutation, useGetProductsQuery } from "@/state/api";
 import { PlusCircleIcon, SearchIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Rating from "../../(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
 import { Decimal } from "@prisma/client/runtime/binary";
 import { supabase } from "../../utils/supabaseClient";
+import Image from "next/image";
 
 type ProductFormData = {
   name: string;
@@ -21,7 +22,7 @@ const Products = () => {
   const { data: products, isError } = useGetProductsQuery(searchTerm);
 
   const [createProduct] = useCreateProductMutation();
-  var imageMap = new Map();
+  const imageMap = new Map();
   const handleCreateProduct = async (
     productData: ProductFormData,
     selectedFileName: string | null,
@@ -43,7 +44,7 @@ const Products = () => {
     if (selectedFile !== null) {
       const user = await supabase.auth.getUser();
       if (user) {
-        const { data, error } = await supabase.storage
+        const { error } = await supabase.storage
           .from("product-images") // your storage bucket name
           .upload(filePath, selectedFile);
 
@@ -127,7 +128,7 @@ const Products = () => {
             >
               <div className="flex flex-col items-center">
                 {product.imgUrl ? (
-                  <img src={imageMap.get(product.productId)} alt="" width={200} height={200} className="w-56 h-56"/>
+                  <Image src={imageMap.get(product.productId)} alt="" width={200} height={200} className="w-56 h-56"/>
                 ) : (
                   "img"
                 )}

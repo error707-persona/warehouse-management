@@ -2,7 +2,7 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface Product {
-  imgUrl: any;
+  imgUrl: string;
   productId: string;
   name: string;
   price: number;

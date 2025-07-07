@@ -2,8 +2,8 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
 import { useLogoutMutation } from "@/state/api";
-import { Bell, Menu, Moon, Settings, Sun } from "lucide-react";
-import Link from "next/link";
+import { Bell, Menu, Moon, Sun } from "lucide-react";
+// import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
 // import Image from "next/image";

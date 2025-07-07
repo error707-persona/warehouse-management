@@ -27,7 +27,7 @@ const Users = () => {
       headerName: "Stock Quantity",
       width: 100,
       type: "number",
-      renderCell: (params) => (
+      renderCell: () => (
         <Box className="flex justify-center items-center h-full w-full">
           <select name="roles" id="roles" className="p-3 w-fit">
             <option value="inventory clerk">inventory clerk</option>

@@ -80,11 +80,12 @@ const Inventory = () => {
       handleDelete(params); // your function to call on OK
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  
   const handleEdit = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: any,
     selectedFileName: string | null,
-    selectedFile: File | null
+    // selectedFile: File | null
   ) => {
     console.log("entered call to api", params);
     console.log("selectedFile: ", selectedFileName);
