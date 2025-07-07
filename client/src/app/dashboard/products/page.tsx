@@ -6,7 +6,6 @@ import Rating from "../../(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
 import { Decimal } from "@prisma/client/runtime/binary";
 import { supabase } from "../../utils/supabaseClient";
-import Image from "next/image";
 
 type ProductFormData = {
   name: string;
@@ -128,7 +127,7 @@ const Products = () => {
             >
               <div className="flex flex-col items-center">
                 {product.imgUrl ? (
-                  <Image src={imageMap.get(product.productId)} alt="" width={200} height={200} className="w-56 h-56"/>
+                  <img src={imageMap.get(product.productId)} alt="" width={200} height={200} className="w-56 h-56"/>
                 ) : (
                   "img"
                 )}
