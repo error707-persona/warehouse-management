@@ -4,25 +4,53 @@ import { PlusCircleIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import Rating from "../../(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
+import { Decimal } from "@prisma/client/runtime/binary";
+import { supabase } from "../../utils/supabaseClient";
 
 type ProductFormData = {
   name: string;
-  price: number;
+  price: Decimal;
   stockQuantity: number;
   rating: number;
+  imgUrl: string | null;
 };
 
 const Products = () => {
   const [searchTerm, setsearchTerm] = useState("");
   const [isModalOpen, setisModalOpen] = useState(false);
-  const {
-    data: products,
-    isError,
-  } = useGetProductsQuery(searchTerm);
+  const { data: products, isError } = useGetProductsQuery(searchTerm);
 
   const [createProduct] = useCreateProductMutation();
-  const handleCreateProduct = async (productData: ProductFormData) => {
-    await createProduct(productData);
+  const handleCreateProduct = async (
+    productData: ProductFormData,
+    selectedFileName: string | null,
+    selectedFile: File | null
+  ) => {
+    console.log(
+      "productData: ",
+      productData,
+      "selectedFileName: ",
+      selectedFileName,
+      "selectedFile: ",
+      selectedFile
+    );
+    productData.imgUrl = selectedFileName;
+    const result = await createProduct(productData);
+    const product_id = result.data?.productId;
+    const filePath = `products/${product_id}/${selectedFileName}`; // Optional: folder per product ID
+
+    if (selectedFile !== null) {
+      const { data, error } = await supabase.storage
+        .from("product-images") // your storage bucket name
+        .upload(filePath, selectedFile);
+      
+      if (error) throw error;
+
+      await supabase.from("products").update({
+        image_path: filePath
+      }).eq("id", product_id);
+
+    }
   };
 
   if (!products) {
@@ -42,7 +70,7 @@ const Products = () => {
   return (
     <div className="mx-auto pb-5 w-full">
       <div className="flex  justify-center gap-10 w-full items-center mb-6">
-        <div className="w-full border-2 flex gap-10 items-center rounded bg-white">
+        <div className="w-full border-2 flex gap-2 items-center rounded bg-white">
           <SearchIcon className="w-5 h-5 text-gray-500 m-2" />
           <input
             type="text"
@@ -52,9 +80,9 @@ const Products = () => {
             onChange={(e) => setsearchTerm(e.target.value)}
           />
         </div>
-      
-      <div className="flex w-72 justify-between items-center">
-        {/* <Header name="Products"> */}
+
+        <div className="flex w-72 justify-between items-center">
+          {/* <Header name="Products"> */}
           <button
             className="flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold py-2 ml-auto px-4 rounded"
             onClick={() => setisModalOpen(true)}
@@ -62,8 +90,8 @@ const Products = () => {
             <PlusCircleIcon className="w-5 h-5 mr-2 !text-gray-200" />
             Create Product
           </button>
-        {/* </Header> */}
-      </div>
+          {/* </Header> */}
+        </div>
       </div>
       <div className="grid grid-col-1 sm:grid-cols-2 lg-grid-cols-3 gap-10 justify-between">
         {!products ? (
@@ -98,7 +126,7 @@ const Products = () => {
         isOpen={isModalOpen}
         onClose={() => setisModalOpen(false)}
         onCreate={handleCreateProduct}
-        handleEdit={()=>{}}
+        handleEdit={() => {}}
       />
     </div>
   );

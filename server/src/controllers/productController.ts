@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: ["query", "info", "warn", "error"], // ✅ Enable detailed logs
+});
 
 export const getProducts = async (
   req: Request,
@@ -32,27 +34,20 @@ export const createProduct = async (
 ): Promise<void> => {
   try {
     const { name, price, rating, stockQuantity, imgUrl } = req.body;
-    
-    // ✅ Input validation with early return
-    // if (!name || price === undefined || stockQuantity === undefined) {
-    //    res.status(400).json({ message: "Missing required fields" });
-    // }
-
     const product = await prisma.products.create({
       data: {
         name,
-        price,
-        rating,
-        stockQuantity,
+        price: parseInt(price),
+        stockQuantity: parseInt(stockQuantity),
+        rating: parseFloat(rating),
         imgUrl,
       },
     });
-
-    res.status(201).json(product); // ✅ Always return after sending response
+    console.log("after product creation");
+    res.status(201).json(product);
   } catch (error: any) {
     console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
     res.status(500).json({ message: error.message || "Internal server error" });
-  
   }
 };
 

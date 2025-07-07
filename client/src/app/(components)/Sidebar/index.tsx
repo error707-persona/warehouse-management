@@ -111,12 +111,12 @@ const Sidebar = () => {
           label="Expenses"
           isCollapsed={isSidebarCollapsed}
         />
-        <SidebarLink
+        {/* <SidebarLink
           href="/dashboard/settings"
           icon={SlidersHorizontal}
           label="Settings"
           isCollapsed={isSidebarCollapsed}
-        />
+        /> */}
         
       </div>
       {/* footer */}

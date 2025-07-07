@@ -1,3 +1,4 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface Product {
@@ -10,10 +11,10 @@ export interface Product {
 
 export interface NewProduct {
   name: string;
-  price: number;
+  price: Decimal;
   rating?: number;
   stockQuantity: number;
-  imgUrl?: string;
+  imgUrl?: string | null;
 }
 
 export interface SalesSummary {

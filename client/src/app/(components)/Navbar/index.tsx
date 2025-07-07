@@ -84,9 +84,9 @@ const Navbar = () => {
             <span className="font-semibold">Hi, {username}<button className="ml-2 text-red-600" onClick={handleLogout}>Logout</button></span>
           </div>
         </div>
-        <Link href="/settings">
+        {/* <Link href="/settings">
           <Settings className="cursor-pointer text-gray-500" size={24} />
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

@@ -15,8 +15,8 @@ const mockSetting: UserSetting[] = [
   { label: "Username", value: username, type: "text" },
   { label: "Email", value: email, type: "text" },
   { label: "Notification", value: true, type: "toggle" },
-  { label: "Dark Mode", value: false, type: "toggle" },
-  { label: "Language", value: "English", type: "text" },
+  // { label: "Dark Mode", value: false, type: "toggle" },
+  // { label: "Language", value: "English", type: "text" },
 ];
 
 const Settings = () => {

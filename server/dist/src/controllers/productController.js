@@ -11,7 +11,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = void 0;
 const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
+const prisma = new client_1.PrismaClient({
+    log: ["query", "info", "warn", "error"], // ✅ Enable detailed logs
+});
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -37,20 +39,17 @@ exports.getProducts = getProducts;
 const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, price, rating, stockQuantity, imgUrl } = req.body;
-        // ✅ Input validation with early return
-        // if (!name || price === undefined || stockQuantity === undefined) {
-        //    res.status(400).json({ message: "Missing required fields" });
-        // }
         const product = yield prisma.products.create({
             data: {
                 name,
-                price,
-                rating,
-                stockQuantity,
+                price: parseInt(price),
+                stockQuantity: parseInt(stockQuantity),
+                rating: parseFloat(rating),
                 imgUrl,
             },
         });
-        res.status(201).json(product); // ✅ Always return after sending response
+        console.log("after product creation");
+        res.status(201).json(product);
     }
     catch (error) {
         console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
