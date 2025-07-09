@@ -1,7 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
-import { Archive, CircleDollarSign, Clipboard, Layout, LucideIcon, Menu, User } from "lucide-react";
+import { Archive, ArrowLeft, CircleDollarSign, Clipboard, Cross, Layout, LucideIcon, Menu, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -53,7 +53,7 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
   };
-  const sidebarClassName = `fixed flex flex-col ${
+  const sidebarClassName = `fixed flex flex-col z-50 ${
     isSidebarCollapsed ? "w-0 md:w-16" : "w-72 md:w-64"
   } bg-white transition-all duration-30 overflow-hidden h-full shadow-md dark:bg-gray-800`;
 
@@ -76,7 +76,7 @@ const Sidebar = () => {
           className="md:hidden px-3 bg-gray-100 rounded-full hover:bg-blue-100"
           onClick={toggleSidebar}
         >
-          <Menu className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-9" />
         </button>
       </div>
       {/* links */}

@@ -2,23 +2,24 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Header from "../../(components)/Header";
 
-type ProductFormData = {
+type UserFormData = {
   name: string;
   email: string;
 };
 
-type UpdateProductFormData = {
+type UpdateUserFormData = {
   userId: string;
   name: string;
   email: string;
+  role?: string | undefined;
 };
 
 type UpdateUserModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (formData: ProductFormData) => void;
-  formValues?: UpdateProductFormData;
-  handleEdit?: (formValues: UpdateProductFormData) => void;
+  onCreate: (formData: UserFormData) => void;
+  formValues?: UpdateUserFormData;
+  handleEdit?: (formValues: UpdateUserFormData) => void;
 };
 
 const UpdateUserModal = ({
@@ -32,6 +33,7 @@ const UpdateUserModal = ({
     userId: v4(),
     name: "",
     email: "",
+    role: "",
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -59,10 +61,7 @@ const UpdateUserModal = ({
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]:
-        name === "price" || name === "stockQuantity" || name === "rating"
-          ? parseFloat(value)
-          : value,
+      [name]: value,
     });
   };
   if (!isOpen) return null;
@@ -101,10 +100,14 @@ const UpdateUserModal = ({
             <label htmlFor="Price" className={labelCssStyles}>
               Role
             </label>
-            <select name="roles" id="roles" className="p-3 w-full outline-none my-3 border-2 rounded border-gray-600">
-              <option value="inventory clerk">inventory clerk</option>
+            <select
+              name="role"
+              id="role"
+              className="p-3 w-full outline-none my-3 border-2 rounded border-gray-600"
+            >
+              <option value="Inventory Clerk">Inventory Clerk</option>
               <option value="Admin">Admin</option>
-              <option value="manager">manager</option>
+              <option value="manager">Manager</option>
             </select>
           </div>
           {/* create actions */}

@@ -57,6 +57,7 @@ export interface User {
   userId: string;
   name: string;
   email: string;
+  role?:string;
   password?: string;
   message?: string;
    data?: {
@@ -68,6 +69,7 @@ export interface User {
 export interface NewUser {
   name: string;
   email: string;
+  role?:string;
 }
 console.log("Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 export const api = createApi({

@@ -13,18 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Users {
-  userId String @id @default(uuid())
-  name   String
-  email  String @unique
+  userId   String  @id @default(uuid())
+  name     String
+  email    String  @unique
   password String?
+  role     String  @default("Inventory Clerk")
 }
 
 model Products {
   productId     String      @id @default(uuid())
   name          String
-  imgUrl        String?           
+  imgUrl        String?
   price         Float
   rating        Float?
   stockQuantity Int
@@ -33,13 +33,13 @@ model Products {
 }
 
 model Sales {
-  saleId      String   @id @default(uuid())
+  saleId      String    @id @default(uuid())
   productId   String
   timestamp   DateTime?
   quantity    Int?
   unitPrice   Float
   totalAmount Float?
-  product     Products @relation(fields: [productId], references: [productId])
+  product     Products  @relation(fields: [productId], references: [productId])
 }
 
 model Purchases {

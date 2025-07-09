@@ -14,6 +14,7 @@ import UpdateUserModal from "./UpdateUserModal";
 
 const Users = () => {
   const { data: users, isError, isLoading } = useGetusersQuery();
+  const cleanedUsers = users?.map(({ password, ...rest }) => rest);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [values, setvalues] = useState();
   const [editUser] = useEditUserMutation();
@@ -23,17 +24,19 @@ const Users = () => {
     { field: "name", headerName: "Name", width: 100 },
     { field: "email", headerName: "Email", width: 220 },
     {
-      field: "stockQuantity",
-      headerName: "Stock Quantity",
+      field: "role",
+      headerName: "role",
       width: 100,
       type: "number",
-      renderCell: () => (
-        <Box className="flex justify-center items-center h-full w-full">
-          <select name="roles" id="roles" className="p-3 w-fit">
-            <option value="inventory clerk">inventory clerk</option>
+      renderCell: (params) => (
+        <Box
+          className="flex justify-center items-center h-full w-full"
+          onClick={() => handleHelper(params.row)}
+        >
+          <select name="role" id="role" className="p-3 w-fit" disabled>
+            <option value="Inventory Clerk">Inventory Clerk</option>
             <option value="Admin">Admin</option>
-            <option value="manager">manager</option>
-            
+            <option value="manager">Manager</option>
           </select>
         </Box>
       ),
@@ -66,7 +69,9 @@ const Users = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleHelper = (params: any) => {
     setisModalOpen(true);
+    console.log("params 1-2: ", params);
     setvalues(params);
+    console.log("onchange: ", values);
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDeleteHelper = (params: any) => {
@@ -83,6 +88,7 @@ const Users = () => {
       data: {
         name: params?.name,
         email: params?.email,
+        role: params?.role,
       },
     });
     console.log("call to api is done");
@@ -111,7 +117,7 @@ const Users = () => {
     <div className="flex flex-col">
       <Header name="Users" />
       <DataGrid
-        rows={users}
+        rows={cleanedUsers}
         columns={columns}
         getRowId={(row) => row.userId}
         checkboxSelection

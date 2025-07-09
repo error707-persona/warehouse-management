@@ -79,7 +79,7 @@ export const updateUser = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { name, email } = req.body;
+    const { name, email, role } = req.body;
     const user = await prisma.users.update({
       where: {
         userId: id,
@@ -87,6 +87,7 @@ export const updateUser = async (
       data: {
         name,
         email,
+        role
       },
     });
 
