@@ -1,12 +1,12 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
-import { setIsDarkMode, setIsSidebarCollapsed } from "@/state";
+import {  setIsSidebarCollapsed } from "@/state";
 import { useLogoutMutation } from "@/state/api";
-import { Bell, Menu, Moon, Sun } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 // import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+// import Link from "next/link";
 // import Image from "next/image";
 //  import { Settings } from "lucide-react";
  
@@ -17,14 +17,14 @@ const Navbar = () => {
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
   );
-  const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+  // const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   const toggleSidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
   };
-  const toggleDarkMode = () => {
-    dispatch(setIsDarkMode(!isDarkMode))
-  }
+  // const toggleDarkMode = () => {
+  //   dispatch(setIsDarkMode(!isDarkMode))
+  // }
   const handleLogout = async () => {
     await triggerLogout().unwrap();
      router.push("/login");

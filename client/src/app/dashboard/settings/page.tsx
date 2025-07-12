@@ -21,9 +21,9 @@ const mockSetting: UserSetting[] = [
 
 const Settings = () => {
   const [userSettings, setUserSettings] = useState<UserSetting[]>(mockSetting);
-    const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(false);
 
-  console.log(userSettings)
+  console.log(userSettings);
   const handleToggleChange = (index: number) => {
     const settingsCopy = [...userSettings];
     settingsCopy[index].value = !settingsCopy[index].value as boolean;
@@ -31,9 +31,8 @@ const Settings = () => {
     setUserSettings(settingsCopy);
   };
 
-
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', dark);
+    document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
 
   return (
@@ -47,13 +46,16 @@ const Settings = () => {
                 Setting
               </th>
               <th className="text-left text-white py-3 px-4 uppercase font-semibold text-sm">
-                Value 
+                Value
               </th>
             </tr>
           </thead>
           <tbody className="dark:bg-gray-800">
             {userSettings.map((settings, index) => (
-              <tr className="hover:bg-blue-50 dark:hover:bg-gray-800" key={settings.label}>
+              <tr
+                className="hover:bg-blue-50 dark:hover:bg-gray-800"
+                key={settings.label}
+              >
                 <td className="py-2 px-4">{settings.label}</td>
                 <td className="py-2 px-4">
                   {settings.type === "toggle" ? (
@@ -63,7 +65,11 @@ const Settings = () => {
                         className="sr-only peer border-2 "
                         checked={settings.value as boolean}
                         onChange={() => handleToggleChange(index)}
-                         onClick={() => {settings.label === "Dark Mode" ? setDark(!dark): ""}}
+                        onClick={() => () => {
+                          if (settings.label === "Dark Mode") {
+                            setDark(!dark);
+                          }
+                        }}
                       />
                       <div
                         className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-blue-400 peer-focus:ring-4 

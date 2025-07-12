@@ -14,6 +14,7 @@ import UpdateUserModal from "./UpdateUserModal";
 
 const Users = () => {
   const { data: users, isError, isLoading } = useGetusersQuery();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cleanedUsers = users?.map(({ password, ...rest }) => rest);
   const [isModalOpen, setisModalOpen] = useState(false);
   const [values, setvalues] = useState();

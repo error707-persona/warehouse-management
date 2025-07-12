@@ -42,9 +42,9 @@ const UpdateUserModal = ({
     if (formValues && handleEdit) {
       handleEdit(formData);
     } 
-    // else {
-    //   onCreate(formData);
-    // }
+    else {
+      onCreate(formData);
+    }
     onClose();
   };
 

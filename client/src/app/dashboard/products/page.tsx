@@ -133,6 +133,7 @@ const Products = () => {
             >
               <div className="flex flex-col items-center ">
                 {product.imgUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={imageMap.get(product.productId)}
                     alt=""

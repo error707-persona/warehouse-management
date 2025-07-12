@@ -164,7 +164,7 @@ const Inventory = () => {
       </div>
     );
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSales = async (params: any) => {
     const orders = orderedMap[params?.productId];
     console.log("product id: ", params?.productId);
