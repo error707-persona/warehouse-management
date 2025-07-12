@@ -70,9 +70,9 @@ const CreateProductModal = ({
     onClose();
   };
 
-  const labelCssStyles = "block mt-5 text-sm font-medium text-gray-700";
+  const labelCssStyles = "block mt-5 text-sm font-medium text-gray-700 dark:text-white";
   const inputCssStyles =
-    "block w-full p-2 my-2 border-gray-500 border-2 rounded-md";
+    "block w-full p-2 my-2 border-gray-500 border-2 rounded-md dark:bg-slate-700 dark:text-white dark:border-none";
 
   useEffect(() => {
     if (formValues && isOpen) {
@@ -94,7 +94,7 @@ const CreateProductModal = ({
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-slate-900">
         <Header name="Create New Product" />
         <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
           {/* product name */}
@@ -185,7 +185,7 @@ const CreateProductModal = ({
 
           {/* create actions */}
           <button
-            className="px-4 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            className="px-4 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 dark:bg-purple-800 dark:hover:bg-purple-900"
             type="submit"
           >
             {formValues ? "Update" : "Create"}

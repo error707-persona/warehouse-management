@@ -29,7 +29,7 @@ const UpdateUserModal = ({
   formValues,
   handleEdit,
 }: UpdateUserModalProps) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<UpdateUserFormData>({
     userId: v4(),
     name: "",
     email: "",
@@ -38,18 +38,19 @@ const UpdateUserModal = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("formData: ",formData);
     if (formValues && handleEdit) {
       handleEdit(formData);
-    } else {
-      onCreate(formData);
-    }
-
+    } 
+    // else {
+    //   onCreate(formData);
+    // }
     onClose();
   };
 
-  const labelCssStyles = "block mt-5 text-sm font-medium text-gray-700";
+  const labelCssStyles = "block mt-5 text-sm font-medium text-gray-700 dark:text-white";
   const inputCssStyles =
-    "block w-full p-2 my-2 border-gray-500 border-2 rounded-md";
+    "block w-full p-2 my-2 border-gray-500 border-2 rounded-md dark:bg-gray-600 dark:text-white dark:border-none";
 
   useEffect(() => {
     if (formValues && isOpen) {
@@ -67,11 +68,11 @@ const UpdateUserModal = ({
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
-      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+      <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-slate-800">
         <Header name="Create User" />
         <form onSubmit={handleSubmit} className="mt-5">
           {/* product name */}
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             <label htmlFor="productName" className={labelCssStyles}>
               Name{" "}
             </label>
@@ -103,7 +104,7 @@ const UpdateUserModal = ({
             <select
               name="role"
               id="role"
-              className="p-3 w-full outline-none my-3 border-2 rounded border-gray-600"
+              className="p-3 w-full outline-none my-3 border-2 dark:border-none rounded border-gray-600 dark:bg-gray-600 dark:border-gray-400 dark:text-white"
             >
               <option value="Inventory Clerk">Inventory Clerk</option>
               <option value="Admin">Admin</option>

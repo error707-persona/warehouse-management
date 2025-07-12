@@ -43,7 +43,7 @@ const CardExpenseSummary = () => {
   const formattedTotalExpenses = totalExpenses.toFixed(2);
   const expenseSummary = dashboardMetrics?.expenseSummary[0];
   return (
-    <div className="shadow-md border-2 bg-white dark:text-white dark:bg-gray-800 flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 shadow-mf rounded-2xl">
+    <div className="shadow-md border-2 bg-white dark:text-white dark:border-none dark:bg-gray-800 flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 shadow-mf rounded-2xl">
       {isLoading ? (
         <div className="m-5">Loading...</div>
       ) : (

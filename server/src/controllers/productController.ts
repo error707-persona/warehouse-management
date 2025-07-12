@@ -100,3 +100,38 @@ export const deleteProduct = async (
     res.status(500).json({ message: "Error deleting product" });
   }
 };
+
+export const updateSales = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    console.log("req.body: ", req.body);
+    const { id } = req.params;
+    const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
+    console.log("req.body: ", req.body);
+    await prisma.products.update({
+      where: {
+        productId: id,
+      },
+      data: {
+        stockQuantity: parseInt(stockQuantity),
+      },
+    });
+
+    const sales = await prisma.sales.create({
+      data: {
+        timestamp: new Date(),
+        productId: id,
+        quantity: parseInt(quantity) ?? 0,
+        unitPrice: parseFloat(unitPrice) ?? 0,
+        totalAmount: parseFloat(totalAmount) ?? 0,
+      },
+    });
+
+    res.status(200).json(sales);
+  } catch (error) {
+    console.error("Update Sales error:", error);
+    res.status(500).json({ message: "Error updating Sales" });
+  }
+};

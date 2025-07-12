@@ -30,7 +30,7 @@ const Users = () => {
       type: "number",
       renderCell: (params) => (
         <Box
-          className="flex justify-center items-center h-full w-full"
+          className="flex justify-center items-center h-full w-full "
           onClick={() => handleHelper(params.row)}
         >
           <select name="role" id="role" className="p-3 w-fit" disabled>
@@ -121,7 +121,7 @@ const Users = () => {
         columns={columns}
         getRowId={(row) => row.userId}
         checkboxSelection
-        className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700"
+        className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800 dark:text-white"
       />
       <UpdateUserModal
         isOpen={isModalOpen}

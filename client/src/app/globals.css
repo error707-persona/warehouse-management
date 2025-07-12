@@ -16,7 +16,7 @@ body,
   height: 100%;
   width: 100%;
   @apply text-sm;
-  @apply bg-white;
+  @apply bg-slate-900;
   @apply text-gray-900;
 }
 
@@ -52,4 +52,10 @@ body,
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.MuiDataGrid-cell:focus,
+.MuiDataGrid-cell:focus-within {
+  outline: none !important;
+  border: none !important;
 }

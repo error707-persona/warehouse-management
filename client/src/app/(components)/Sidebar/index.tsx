@@ -1,7 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
-import { Archive, ArrowLeft, CircleDollarSign, Clipboard, Cross, Layout, LucideIcon, Menu, User } from "lucide-react";
+import { Archive, ArrowLeft, CircleDollarSign, Clipboard, Cross, Layout, LucideIcon, Menu, SlidersHorizontal, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -28,8 +28,8 @@ const SidebarLink = ({
       <div
         className={`cursor-pointer flex items-center ${
           isCollapsed ? "justify-center py-4" : "justify-start px-8 py-4"
-        } hover:text-blue-500 hover:bg-blue-100 gap-3 transition-colors ${
-          isActive ? "bg-blue-200 text-white dark:text-white" : ""
+        } hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-purple-900 gap-3 transition-colors ${
+          isActive ? "bg-blue-200 text-white dark:bg-purple-900 border-2 dark:border-none dark:text-white" : ""
         }`}
       >
         <Icon className="w-6 h-6 !text-gray-700 dark:text-white" />

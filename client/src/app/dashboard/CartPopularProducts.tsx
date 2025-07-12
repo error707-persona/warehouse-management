@@ -2,9 +2,25 @@ import { useGetDashboardMetricsQuery } from "@/state/api";
 import { ShoppingBag } from "lucide-react";
 import React from "react";
 import Rating from "../(components)/Rating";
+import { supabase } from "../utils/supabaseClient";
 
 const CartPopularProducts = () => {
+  const imageMap = new Map();
   const { data: dashboardMetrics, isLoading } = useGetDashboardMetricsQuery();
+  if (dashboardMetrics?.popularProducts) {
+    for (const product of dashboardMetrics?.popularProducts) {
+      if (product.imgUrl) {
+        const filePath = `products/${product.productId}/${product?.imgUrl}`;
+
+        const { data: urlData } = supabase.storage
+          .from("product-images")
+          .getPublicUrl(filePath);
+
+        imageMap.set(product.productId, urlData.publicUrl);
+      }
+    }
+    console.log("imageMap: ", imageMap);
+  }
   return (
     <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16 dark:text-white dark:bg-gray-800">
       {isLoading ? (
@@ -22,7 +38,9 @@ const CartPopularProducts = () => {
                 className="flex items-center justify-between gap-3 px-5 py-7 border-b"
               >
                 <div className="flex items-center gap-3">
-                  <div>img</div>
+                  <div>
+                    <img src={imageMap.get(product.productId)} className="w-50" alt="img"></img>
+                  </div>
                   <div className="flex flex-col justify-between gap-1">
                     <div className="font-bold text-gray-700 dark:text-white">
                       {product.name}
@@ -32,16 +50,15 @@ const CartPopularProducts = () => {
                         ${product.price}
                       </span>
                       <span className="mx-2">|</span>
-                      <Rating rating={product.rating || 0}/>
+                      <Rating rating={product.rating || 0} />
                     </div>
                   </div>
                 </div>
                 <div className="text0xs flx items-center">
                   <button className="p-2 rounded-full bg-blue-100 text-blue-600 mr-2">
-                    <ShoppingBag className="w-4 h-4"/>
+                    <ShoppingBag className="w-4 h-4" />
                   </button>
-
-                  {Math.round(product.stockQuantity/1000)}k Sold
+                  {Math.round(product.stockQuantity / 1000)}k Sold
                 </div>
               </div>
             ))}

@@ -19,22 +19,23 @@ const Products = () => {
   const [searchTerm, setsearchTerm] = useState("");
   const [isModalOpen, setisModalOpen] = useState(false);
   const { data: products, isError } = useGetProductsQuery(searchTerm);
-
+  const updatedProducts = products?.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
   const [createProduct] = useCreateProductMutation();
   const imageMap = new Map();
+  
   const handleCreateProduct = async (
     productData: ProductFormData,
     selectedFileName: string | null,
     selectedFile: File | null
   ) => {
-    console.log(
-      "productData: ",
-      productData,
-      "selectedFileName: ",
-      selectedFileName,
-      "selectedFile: ",
-      selectedFile
-    );
+    // console.log(
+    //   "productData: ",
+    //   productData,
+    //   "selectedFileName: ",
+    //   selectedFileName,
+    //   "selectedFile: ",
+    //   selectedFile
+    // );
     productData.imgUrl = selectedFileName;
     const result = await createProduct(productData);
     const product_id = result.data?.productId;
@@ -91,51 +92,62 @@ const Products = () => {
   console.log("products: ", products);
 
   return (
-    <div className="mx-auto pb-5 w-full">
-      <div className="flex  justify-center gap-10 w-full items-center mb-6">
-        <div className="w-full border-2 flex gap-2 items-center rounded bg-white">
-          <SearchIcon className="w-5 h-5 text-gray-500 m-2" />
+    <div className="mx-auto pb-5 md:w-full dark:bg-slate-800">
+      <div className="flex md:justify-center gap-10 w-15 md:w-full items-center mb-6">
+        <div className="w-full flex gap-2 md:items-center rounded bg-white border-2 dark:bg-slate-900">
+          <SearchIcon className="w-5 h-5 text-gray-500 m-2 dark:text-white" />
           <input
             type="text"
-            className="w-full outline-none rounded bg-white"
-            placeholder="Search products...this search is case sensitive"
+            className="w-full outline-none rounded bg-white dark:bg-slate-900 dark:text-white"
+            placeholder="Search products..."
             value={searchTerm}
             onChange={(e) => setsearchTerm(e.target.value)}
           />
         </div>
 
-        <div className="flex w-72 justify-between items-center">
+        <div className="flex lg:w-72  justify-between items-center">
           {/* <Header name="Products"> */}
           <button
-            className="flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold py-2 ml-auto px-4 rounded"
+            className="flex items-center justify-center bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold py-2 ml-auto px-2 md:px-4 rounded"
             onClick={() => setisModalOpen(true)}
           >
-            <PlusCircleIcon className="w-5 h-5 mr-2 !text-gray-200" />
-            Create Product
+            <div className="hidden md:flex">
+              <PlusCircleIcon className="w-5 h-5 md:mr-2 !text-gray-200" />
+              Create Product
+            </div>
+            <div className="md:hidden">
+              <PlusCircleIcon className="w-5 h-5 md:mr-2 !text-gray-200" />
+            </div>
           </button>
           {/* </Header> */}
         </div>
       </div>
       <div className="grid grid-col-1 sm:grid-cols-2 lg-grid-cols-3 gap-10 justify-between">
-        {!products ? (
+        {!updatedProducts ? (
           <div>Loading...</div>
         ) : (
-          products?.map((product) => (
+          updatedProducts?.map((product) => (
             <div
               key={product.productId}
-              className="border shadow rounded-md p-4 max-w-full w-full mx-auto"
+              className="border shadow rounded-md p-4 max-w-full w-full mx-auto dark:border-none  dark:bg-slate-900"
             >
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center ">
                 {product.imgUrl ? (
-                  <img src={imageMap.get(product.productId)} alt="" width={200} height={200} className="w-56 h-56"/>
+                  <img
+                    src={imageMap.get(product.productId)}
+                    alt=""
+                    width={200}
+                    height={200}
+                    className="w-56 h-56"
+                  />
                 ) : (
                   "img"
                 )}
-                <h3 className="text-lg text-gray-900 font-semibold">
+                <h3 className="text-lg text-gray-900 font-semibold dark:text-white">
                   {product.name}
                 </h3>
-                <p className="text-gray-800">${product.price.toFixed(2)}</p>
-                <div className="text-sm text-gray-600 mt-1">
+                <p className="text-gray-800 dark:text-white">${product.price.toFixed(2)}</p>
+                <div className="text-sm text-gray-600 mt-1 dark:text-white">
                   Stock : {product.stockQuantity}
                 </div>
                 {product.rating && (

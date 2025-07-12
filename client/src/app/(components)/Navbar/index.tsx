@@ -6,7 +6,9 @@ import { Bell, Menu, Moon, Sun } from "lucide-react";
 // import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 // import Image from "next/image";
+//  import { Settings } from "lucide-react";
  
 const Navbar = () => {
   const dispatch = useAppDispatch();
@@ -29,39 +31,35 @@ const Navbar = () => {
   }
   const username = localStorage.getItem("username");
   return (
-    <div className="flex dark:bg-slate-500 justify-between items-center w-full mb-7">
+    <div className="flex dark:bg-slate-800 justify-between items-center w-full mb-7">
       {/* LEFT SIDE */}
       <div className="flex justify-between items-center gap-5">
         <button
-          className="px-3 py-3 bg-gray-100 rounded-full hover:bg-blue-100"
+          className="px-3 py-3 bg-gray-100 dark:bg-slate-700 rounded-full hover:bg-blue-100"
           onClick={toggleSidebar}
         >
-          <Menu className="w-4 h-4" />
+          <Menu className="w-4 h-4 dark:text-white " />
         </button>
 
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-non">
-            <Bell className="text-gray-500" size={20} />
-          </div>
-        </div>
+        
       </div>
 
       {/* RIGHT SIDE */}
       <div className="flex justify-between items-center gap-5">
         <div className="hidden md:flex justify-between items-center gap-5">
           <div>
-            <button
+            {/* <button
             onClick={toggleDarkMode}
             >
               {isDarkMode ? (
-              <Sun className="cursor-pointer text-gray-500" size={24} />
+              <Sun className="cursor-pointer text-gray-500 dark:text-white" size={24} />
             ) : (
-              <Moon className="cursor-pointer text-gray-500" size={24} />
+              <Moon className="cursor-pointer text-gray-500 dark:text-white" size={24} />
             )}
-            </button>
+            </button> */}
           </div>
           <div className="relative">
-            <Bell className="cursor-pointer text-gray-500" size={24} />
+            <Bell className="cursor-pointer text-gray-500 dark:text-white" size={24} />
             <span className="absolute -top-2 -right-2 inline-flex items-center justify-center px-[0.4rem] py-1 text-xs font-semibold leading-none text-red-100 bg-red-400 rounded-full">
               3
             </span>
@@ -75,11 +73,11 @@ const Navbar = () => {
             height={50}
             className="rounded-full h-full object-cover"
           /> */}
-            <span className="font-semibold">Hi, {username}<button className="ml-2 text-red-600" onClick={handleLogout}>Logout</button></span>
+            <span className="font-semibold dark:text-white">Hi, {username}<button className="ml-2 text-red-600" onClick={handleLogout}>Logout</button></span>
           </div>
         </div>
         {/* <Link href="/settings">
-          <Settings className="cursor-pointer text-gray-500" size={24} />
+          <Settings className="cursor-pointer text-gray-500 dark:text-white" size={24} />
         </Link> */}
       </div>
     </div>

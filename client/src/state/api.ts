@@ -18,6 +18,16 @@ export interface NewProduct {
   imgUrl?: string | null;
 }
 
+interface UpdateSalesPayload {
+  id: string;
+  data: {
+    stockQuantity: number;
+    quantity: number;
+    unitPrice: number;
+    totalAmount: number;
+  };
+}
+
 export interface SalesSummary {
   salesSummaryId: string;
   totalValue: number;
@@ -57,10 +67,10 @@ export interface User {
   userId: string;
   name: string;
   email: string;
-  role?:string;
+  role?: string;
   password?: string;
   message?: string;
-   data?: {
+  data?: {
     name: string;
     email: string;
   };
@@ -69,7 +79,7 @@ export interface User {
 export interface NewUser {
   name: string;
   email: string;
-  role?:string;
+  role?: string;
 }
 console.log("Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 export const api = createApi({
@@ -133,12 +143,20 @@ export const api = createApi({
       providesTags: ["Users"],
     }),
 
-    getOneUser: build.mutation<User, { email: string, password: string }>({
-      query: (data) => ({ 
+    updateSales: build.mutation<Product, UpdateSalesPayload>({
+      query: ({id, data}) => ({
+        url: `/products/updateSales/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Products"],
+    }),
+
+    getOneUser: build.mutation<User, { email: string; password: string }>({
+      query: (data) => ({
         url: `/users/getOneUser`,
-        method:"POST",
-        body: data
-      
+        method: "POST",
+        body: data,
       }),
       invalidatesTags: ["Users"],
     }),
@@ -187,5 +205,6 @@ export const {
   useDeleteUserMutation,
   useCreateUserMutation,
   useGetOneUserMutation,
-  useLogoutMutation
+  useLogoutMutation,
+  useUpdateSalesMutation,
 } = api;

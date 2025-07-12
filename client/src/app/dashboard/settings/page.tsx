@@ -15,7 +15,7 @@ const mockSetting: UserSetting[] = [
   { label: "Username", value: username, type: "text" },
   { label: "Email", value: email, type: "text" },
   { label: "Notification", value: true, type: "toggle" },
-  // { label: "Dark Mode", value: false, type: "toggle" },
+  { label: "Dark Mode", value: false, type: "toggle" },
   // { label: "Language", value: "English", type: "text" },
 ];
 
@@ -27,7 +27,7 @@ const Settings = () => {
   const handleToggleChange = (index: number) => {
     const settingsCopy = [...userSettings];
     settingsCopy[index].value = !settingsCopy[index].value as boolean;
-    console.log(settingsCopy[index].value, "onchange on toggle");
+    // console.log(settingsCopy[index].value, "onchange on toggle");
     setUserSettings(settingsCopy);
   };
 
@@ -37,7 +37,7 @@ const Settings = () => {
   }, [dark]);
 
   return (
-    <div className="w-full dark:bg-gray-700 dark:text-white">
+    <div className="w-full dark:bg-gray-900 dark:text-white">
       <Header name="User Settings" />
       <div className="overflow-x-auto mt-5 shadow-md">
         <table className="min-w-full bg-white rounded-lg">
@@ -60,10 +60,10 @@ const Settings = () => {
                     <label className="inline-flex relative items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        className="sr-only peer border-2"
+                        className="sr-only peer border-2 "
                         checked={settings.value as boolean}
                         onChange={() => handleToggleChange(index)}
-                         onClick={() => setDark(!dark)}
+                         onClick={() => {settings.label === "Dark Mode" ? setDark(!dark): ""}}
                       />
                       <div
                         className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-blue-400 peer-focus:ring-4 
@@ -76,7 +76,7 @@ const Settings = () => {
                   ) : (
                     <input
                       type="text"
-                      className="px-4 py-2 border- rounded-lh text-gray-500 foocus-outline-none focus:border-blue-500"
+                      className="px-4 py-2 border dark:text-white dark:bg-slate-700 dark:border-none rounded-lh text-gray-500 foocus-outline-none focus:border-blue-500"
                       value={settings.value as string}
                       onChange={(e) => {
                         const settingsCopy = [...userSettings];

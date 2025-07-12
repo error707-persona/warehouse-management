@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = void 0;
+exports.updateSales = exports.deleteProduct = exports.updateProduct = exports.createProduct = exports.getProducts = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient({
     log: ["query", "info", "warn", "error"], // ✅ Enable detailed logs
@@ -99,3 +99,35 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteProduct = deleteProduct;
+const updateSales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b, _c;
+    try {
+        console.log("req.body: ", req.body);
+        const { id } = req.params;
+        const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
+        console.log("req.body: ", req.body);
+        yield prisma.products.update({
+            where: {
+                productId: id,
+            },
+            data: {
+                stockQuantity: parseInt(stockQuantity),
+            },
+        });
+        const sales = yield prisma.sales.create({
+            data: {
+                timestamp: new Date(),
+                productId: id,
+                quantity: (_a = parseInt(quantity)) !== null && _a !== void 0 ? _a : 0,
+                unitPrice: (_b = parseFloat(unitPrice)) !== null && _b !== void 0 ? _b : 0,
+                totalAmount: (_c = parseFloat(totalAmount)) !== null && _c !== void 0 ? _c : 0,
+            },
+        });
+        res.status(200).json(sales);
+    }
+    catch (error) {
+        console.error("Update Sales error:", error);
+        res.status(500).json({ message: "Error updating Sales" });
+    }
+});
+exports.updateSales = updateSales;
