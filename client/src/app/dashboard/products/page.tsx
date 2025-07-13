@@ -78,7 +78,9 @@ const Products = () => {
 
   if (products) {
     console.log("supabase: ", supabase);
+
     for (const product of products) {
+      console.log("product.Url: ", product.imgUrl);
       if (product.imgUrl) {
         const filePath = `products/${product.productId}/${product?.imgUrl}`;
         console.log("filePath: ", filePath);
