@@ -135,3 +135,4 @@ export const updateSales = async (
     res.status(500).json({ message: "Error updating Sales" });
   }
 };
+

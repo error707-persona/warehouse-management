@@ -9,7 +9,15 @@ import {
 import Header from "../../(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
-import { Minus, PencilIcon, Plus, SearchIcon, Trash } from "lucide-react";
+import {
+  Minus,
+  PencilIcon,
+  Plus,
+  SearchIcon,
+  ShoppingCart,
+  Trash,
+  Undo2,
+} from "lucide-react";
 
 import { useState } from "react";
 import CreateProductModal from "../products/CreateProductModal";
@@ -22,11 +30,13 @@ const Inventory = () => {
   const [isModalOpen, setisModalOpen] = useState(false);
   const [values, setvalues] = useState();
   const [searchTerm, setSearchTerm] = useState("");
-  const updatedProducts = products?.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const updatedProducts = products?.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   const [orderedMap, setOrderedMap] = useState<{ [productId: string]: number }>(
     { 0: 0 }
   );
-  console.log(products)
+  console.log(products);
   const increase = (productId: string) => {
     setOrderedMap((prev) => ({
       ...prev,
@@ -40,7 +50,7 @@ const Inventory = () => {
       [productId]: Math.max((prev[productId] || 0) - 1, 0),
     }));
   };
-  
+
   const columns: GridColDef[] = [
     { field: "productId", headerName: "ID", width: 270 },
     { field: "name", headerName: "Product Name", width: 170 },
@@ -70,6 +80,7 @@ const Inventory = () => {
       width: 220,
       renderCell: (params) => {
         const ordered = orderedMap[params.row.productId] || 0;
+
         return (
           <Box className="flex justify-center gap-1 items-center h-full w-full">
             <button
@@ -84,27 +95,30 @@ const Inventory = () => {
             >
               <Trash className="w-6 h-6" />
             </button>
-            <div className="flex ">
-              <div className=""></div>
-              <div className="flex justify-center items-center gap-3 ">
-                <Minus
-                  className="w-5 h-5 hover:bg-black-100 cursor-pointer"
-                  onClick={() => decrease(params.row.productId)}
-                />
-                {ordered}
-                <Plus
-                  className="w-5 h-5 hover:bg-black-100 cursor-pointer"
-                  onClick={() => increase(params.row.productId)}
-                />
+            <div className="flex ml-5">
+              <div className="flex">
+                <div className="flex justify-center items-center gap-3 ">
+                  <Minus
+                    className="w-5 h-5 hover:bg-black-100 cursor-pointer"
+                    onClick={() => decrease(params.row.productId)}
+                  />
+                  {ordered}
+                  <Plus
+                    className="w-5 h-5 hover:bg-black-100 cursor-pointer"
+                    onClick={() => increase(params.row.productId)}
+                  />
+                </div>
+                <button
+                  onClick={() => handleSales(params.row, true)}
+                  className="p-2"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                </button>
+
+                <button onClick={() => handleSales(params.row, false)}>
+                  <Undo2 className="w-5 h-5" />
+                </button>
               </div>
-              <Button
-                size="small"
-                id={params.row.productId}
-                className="flex flex-col hover:bg-slate-300 "
-                onClick={() => handleSales(params.row)}
-              >
-                Orders
-              </Button>
             </div>
           </Box>
         );
@@ -165,7 +179,7 @@ const Inventory = () => {
     );
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSales = async (params: any) => {
+  const handleSales = async (params: any, isOrder: Boolean) => {
     const orders = orderedMap[params?.productId];
     console.log("product id: ", params?.productId);
     console.log(
@@ -175,13 +189,27 @@ const Inventory = () => {
       params?.price,
       orders * params?.price
     );
+
+    let stockQuantity = 0;
+    let unitPrice = Number(params?.unitPrice);
+    let totalAmount = 0;
+    if (isOrder) {
+      stockQuantity = params?.stockQuantity - orders;
+      unitPrice = Number(params?.unitPrice);
+      totalAmount = orders * params?.price;
+    } else {
+      stockQuantity = params?.stockQuantity + orders;
+      unitPrice = -Number(params?.unitPrice);
+      totalAmount = -(orders * params?.price);
+    }
+
     await updateSales({
       id: params?.productId,
       data: {
-        stockQuantity: params?.stockQuantity - orders,
+        stockQuantity: stockQuantity,
         quantity: orders,
-        unitPrice: Number(params?.unitPrice) || 0,
-        totalAmount: orders * params?.price,
+        unitPrice: unitPrice || 0,
+        totalAmount: totalAmount,
       },
     });
   };

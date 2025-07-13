@@ -35,12 +35,12 @@ const CartPopularProducts = () => {
             {dashboardMetrics?.popularProducts.map((product) => (
               <div
                 key={product.productId}
-                className="flex items-center justify-between gap-3 px-5 py-7 border-b"
+                className="flex items-center justify-between gap-3 py-2 px-2  border-b"
               >
                 <div className="flex items-center gap-3">
-                  <div>
+                  <div className="h-full">
                    {  // eslint-disable-next-line @next/next/no-img-element
-                    <img src={imageMap.get(product.productId)} className="w-50" alt="img"></img>
+                    <img src={imageMap.get(product.productId)} className="object-cover max-h-50" width={100} height={300} alt="img"></img>
                    }
                   </div>
                   <div className="flex flex-col justify-between gap-1">
@@ -56,7 +56,7 @@ const CartPopularProducts = () => {
                     </div>
                   </div>
                 </div>
-                <div className="text0xs flx items-center">
+                <div className="text0xs flex flex-col justify-center items-center text-sm">
                   <button className="p-2 rounded-full bg-blue-100 text-blue-600 mr-2">
                     <ShoppingBag className="w-4 h-4" />
                   </button>
