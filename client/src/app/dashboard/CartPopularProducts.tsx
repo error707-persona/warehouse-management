@@ -38,9 +38,9 @@ const CartPopularProducts = () => {
                 className="flex items-center justify-between gap-3 py-2 px-2  border-b"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-full">
+                  <div>
                    {  // eslint-disable-next-line @next/next/no-img-element
-                    <img src={imageMap.get(product.productId)} className="object-cover max-h-50" width={100} height={300} alt="img"></img>
+                    <img src={imageMap.get(product.productId)} className="object-cover max-h-50" width={100} height={100} alt="img"></img>
                    }
                   </div>
                   <div className="flex flex-col justify-between gap-1">
