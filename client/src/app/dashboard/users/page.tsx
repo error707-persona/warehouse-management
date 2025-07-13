@@ -17,13 +17,19 @@ const Users = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cleanedUsers = users?.map(({ password, ...rest }) => rest);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setisModalOpen] = useState(false);
+  const [values, setvalues] = useState();
   const updatedUsers = cleanedUsers?.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const [isModalOpen, setisModalOpen] = useState(false);
-  const [values, setvalues] = useState();
-  const [editUser] = useEditUserMutation();
-  const [deleteUser] = useDeleteUserMutation();
+
+  const handleHelper = (params: any) => {
+    setisModalOpen(true);
+    console.log("params 1-2: ", params);
+    setvalues(params);
+    console.log("onchange: ", values);
+  };
+
   const columns: GridColDef[] = [
     { field: "userId", headerName: "ID", width: 300 },
     { field: "name", headerName: "Name", width: 100 },
@@ -38,7 +44,13 @@ const Users = () => {
           className="flex justify-center items-center h-full w-full "
           onClick={() => handleHelper(params.row)}
         >
-          <select name="role" id="role" className="p-3 w-fit" disabled value={params.row.role}>
+          <select
+            name="role"
+            id="role"
+            className="p-3 w-fit"
+            disabled
+            value={params.row.role}
+          >
             <option value="Inventory Clerk">Inventory Clerk</option>
             <option value="Admin">Admin</option>
             <option value="manager">Manager</option>
@@ -71,13 +83,9 @@ const Users = () => {
       ),
     },
   ];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleHelper = (params: any) => {
-    setisModalOpen(true);
-    console.log("params 1-2: ", params);
-    setvalues(params);
-    console.log("onchange: ", values);
-  };
+  const [editUser] = useEditUserMutation();
+  const [deleteUser] = useDeleteUserMutation();
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDeleteHelper = (params: any) => {
     const confirm = window.confirm("Are you sure you want to delete this?");

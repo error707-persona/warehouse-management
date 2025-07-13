@@ -84,13 +84,13 @@ const Inventory = () => {
           <Box className="flex justify-center gap-1 items-center h-full w-full">
             <button
               className="text-blue-600 hover:bg-blue-100 p-2 rounded"
-              onClick={() => handleHelper(params.row)}
+              onClick={() => handleHelper(params.row)} title="Edit product details"
             >
               <PencilIcon className="w-5 h-5" />
             </button>
             <button
               className="text-red-600 hover:bg-red-100 p-2 rounded"
-              onClick={() => handleDeleteHelper(params.row)}
+              onClick={() => handleDeleteHelper(params.row)} title="Delete product"
             >
               <Trash className="w-6 h-6" />
             </button>
@@ -109,12 +109,12 @@ const Inventory = () => {
                 </div>
                 <button
                   onClick={() => handleSales(params.row, true)}
-                  className="p-2"
+                  className="p-2" title="Execute orders"
                 >
                   <ShoppingCart className="w-5 h-5" />
                 </button>
 
-                <button onClick={() => handleSales(params.row, false)}>
+                <button onClick={() => handleSales(params.row, false)} title="Return orders">
                   <Undo2 className="w-5 h-5" />
                 </button>
               </div>

@@ -16,7 +16,7 @@ import expenseRoutes from "./routes/expenseRoutes";
 
 dotenv.config();
 const app = express();
-app.use(express.json());
+
 app.use(cookieParser());
 app.use(helmet());
 app.use(helmet());
@@ -40,7 +40,7 @@ app.use(cors({
   credentials: true
 }));
 // Use this before your routes
-
+app.use(express.json());
 // routes
 app.get("/", (req, res) => {
   res.send("Server is live ✅");
