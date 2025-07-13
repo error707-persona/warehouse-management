@@ -22,7 +22,8 @@ const Users = () => {
   const updatedUsers = cleanedUsers?.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleHelper = (params: any) => {
     setisModalOpen(true);
     console.log("params 1-2: ", params);

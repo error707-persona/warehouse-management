@@ -11,7 +11,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const [triggerLogout] = useLogoutMutation();
   const router = useRouter();
-  const [notifyOpen, setNotifyOpen] = useState<Boolean>(false);
+  const [notifyOpen, setNotifyOpen] = useState<boolean>(false);
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
   );

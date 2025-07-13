@@ -8,7 +8,7 @@ import {
 } from "@/state/api";
 import Header from "../../(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import {
   Minus,
   PencilIcon,
@@ -178,7 +178,7 @@ const Inventory = () => {
     );
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSales = async (params: any, isOrder: Boolean) => {
+  const handleSales = async (params: any, isOrder: boolean) => {
     const orders = orderedMap[params?.productId];
     console.log("product id: ", params?.productId);
     console.log(
