@@ -19,10 +19,12 @@ const Products = () => {
   const [searchTerm, setsearchTerm] = useState("");
   const [isModalOpen, setisModalOpen] = useState(false);
   const { data: products, isError } = useGetProductsQuery(searchTerm);
-  const updatedProducts = products?.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const updatedProducts = products?.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   const [createProduct] = useCreateProductMutation();
   const imageMap = new Map();
-  
+
   const handleCreateProduct = async (
     productData: ProductFormData,
     selectedFileName: string | null,
@@ -75,14 +77,21 @@ const Products = () => {
   }
 
   if (products) {
+    console.log("supabase: ", supabase);
     for (const product of products) {
       if (product.imgUrl) {
         const filePath = `products/${product.productId}/${product?.imgUrl}`;
+        console.log("filePath: ", filePath);
 
         const { data: urlData } = supabase.storage
           .from("product-images")
           .getPublicUrl(filePath);
-
+        console.log(
+          "product id: ",
+          product.productId,
+          "url: ",
+          urlData.publicUrl
+        );
         imageMap.set(product.productId, urlData.publicUrl);
       }
     }
@@ -145,7 +154,9 @@ const Products = () => {
                 <h3 className="text-lg text-gray-900 font-semibold dark:text-white">
                   {product.name}
                 </h3>
-                <p className="text-gray-800 dark:text-white">${product.price.toFixed(2)}</p>
+                <p className="text-gray-800 dark:text-white">
+                  ${product.price.toFixed(2)}
+                </p>
                 <div className="text-sm text-gray-600 mt-1 dark:text-white">
                   Stock : {product.stockQuantity}
                 </div>
