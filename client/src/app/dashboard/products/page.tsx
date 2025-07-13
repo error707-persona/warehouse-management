@@ -78,7 +78,7 @@ const Products = () => {
 
   if (products) {
     console.log("supabase: ", supabase);
-
+    console.log("products: ",products)
     for (const product of products) {
       console.log("product.Url: ", product.imgUrl);
       if (product.imgUrl) {
