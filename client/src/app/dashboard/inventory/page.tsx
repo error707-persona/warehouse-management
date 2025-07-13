@@ -36,7 +36,6 @@ const Inventory = () => {
   const [orderedMap, setOrderedMap] = useState<{ [productId: string]: number }>(
     { 0: 0 }
   );
-  console.log(products);
   const increase = (productId: string) => {
     setOrderedMap((prev) => ({
       ...prev,

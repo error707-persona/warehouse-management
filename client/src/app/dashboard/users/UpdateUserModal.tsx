@@ -38,17 +38,17 @@ const UpdateUserModal = ({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("formData: ",formData);
+    // console.log("formData: ", formData);
     if (formValues && handleEdit) {
       handleEdit(formData);
-    } 
-    else {
+    } else {
       onCreate(formData);
     }
     onClose();
   };
 
-  const labelCssStyles = "block mt-5 text-sm font-medium text-gray-700 dark:text-white";
+  const labelCssStyles =
+    "block mt-5 text-sm font-medium text-gray-700 dark:text-white";
   const inputCssStyles =
     "block w-full p-2 my-2 border-gray-500 border-2 rounded-md dark:bg-gray-600 dark:text-white dark:border-none";
 
@@ -58,8 +58,11 @@ const UpdateUserModal = ({
     }
   }, [formValues, isOpen]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    console.log("name: ", name, "value: ", value);
     setFormData({
       ...formData,
       [name]: value,
@@ -104,6 +107,7 @@ const UpdateUserModal = ({
             <select
               name="role"
               id="role"
+              onChange={handleChange}
               className="p-3 w-full outline-none my-3 border-2 dark:border-none rounded border-gray-600 dark:bg-gray-600 dark:border-gray-400 dark:text-white"
             >
               <option value="Inventory Clerk">Inventory Clerk</option>

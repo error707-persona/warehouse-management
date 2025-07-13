@@ -8,7 +8,7 @@ import {
 import Header from "../../(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
-import { PencilIcon, Trash } from "lucide-react";
+import { PencilIcon, SearchIcon, Trash } from "lucide-react";
 import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
 
@@ -16,6 +16,10 @@ const Users = () => {
   const { data: users, isError, isLoading } = useGetusersQuery();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const cleanedUsers = users?.map(({ password, ...rest }) => rest);
+  const [searchTerm, setSearchTerm] = useState("");
+  const updatedUsers = cleanedUsers?.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   const [isModalOpen, setisModalOpen] = useState(false);
   const [values, setvalues] = useState();
   const [editUser] = useEditUserMutation();
@@ -34,7 +38,7 @@ const Users = () => {
           className="flex justify-center items-center h-full w-full "
           onClick={() => handleHelper(params.row)}
         >
-          <select name="role" id="role" className="p-3 w-fit" disabled>
+          <select name="role" id="role" className="p-3 w-fit" disabled value={params.row.role}>
             <option value="Inventory Clerk">Inventory Clerk</option>
             <option value="Admin">Admin</option>
             <option value="manager">Manager</option>
@@ -103,7 +107,6 @@ const Users = () => {
     console.log("call to delete api is done");
   };
 
-  console.log(users, "users");
   if (isLoading) {
     return <div className="py-4">Loading...</div>;
   }
@@ -117,8 +120,18 @@ const Users = () => {
   return (
     <div className="flex flex-col">
       <Header name="Users" />
+      <div className="w-full flex gap-2 mt-2 md:items-center rounded bg-white border-2 dark:bg-slate-900">
+        <SearchIcon className="w-5 h-5 text-gray-500 m-2 dark:text-white" />
+        <input
+          type="text"
+          className="w-full outline-none rounded bg-white dark:bg-slate-900 dark:text-white"
+          placeholder="Search Users..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <DataGrid
-        rows={cleanedUsers}
+        rows={updatedUsers}
         columns={columns}
         getRowId={(row) => row.userId}
         checkboxSelection

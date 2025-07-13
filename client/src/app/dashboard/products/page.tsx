@@ -89,8 +89,6 @@ const Products = () => {
     console.log("imageMap: ", imageMap);
   }
 
-  console.log("products: ", products);
-
   return (
     <div className="mx-auto pb-5 md:w-full dark:bg-slate-800">
       <div className="flex md:justify-center gap-10 w-15 md:w-full items-center mb-6">
