@@ -19,15 +19,15 @@ const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInFormInputs>();
-  const [createUser, { isLoading, data }] = useCreateUserMutation();
+  const [createUser, { isLoading }] = useCreateUserMutation();
   const router = useRouter();
 
   const onSubmit = async (data: SignInFormInputs) => {
     console.log("SignUp Data:", data);
     const result = await createUser(data);
-    // @ts-ignore
+
     console.log("rtk query result: ", result);
-    // @ts-ignore
+  
     if ("error" in result) {
       alert("User already exists.");
     }
@@ -38,7 +38,7 @@ const SignIn = () => {
     ) {
       localStorage.setItem("username", result.data.name);
       localStorage.setItem("email", result.data.email);
-      // @ts-ignore
+      // @ts-expect-error result type is unknown
       localStorage.setItem("role", result.data.role);
       router.push("/dashboard");
     }

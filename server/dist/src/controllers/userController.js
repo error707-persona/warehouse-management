@@ -136,7 +136,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         console.error("Create error:", error);
         res.status(500).json({
             message: "An error occurred while creating the user in the database.",
-            // @ts-ignore
+            // @ts-expect-error error can be undefined
             error: error.message,
         });
     }

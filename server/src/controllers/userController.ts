@@ -139,7 +139,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     console.error("Create error:", error);
     res.status(500).json({
       message: "An error occurred while creating the user in the database.",
-      // @ts-ignore
+      // @ts-expect-error error can be undefined
       error: error.message,
     });
   }
