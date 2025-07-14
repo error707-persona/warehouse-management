@@ -71,6 +71,7 @@ export interface User {
   password?: string;
   message?: string;
   data?: {
+    role: string;
     name: string;
     email: string;
   };

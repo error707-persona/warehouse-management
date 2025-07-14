@@ -26,6 +26,7 @@ const Login = () => {
       if (result && result.data && result.message === "Login user successfully") {
         localStorage.setItem("username", result.data.name);
         localStorage.setItem("email", result.data.email);
+        localStorage.setItem("role", result.data?.role);
         router.push("/dashboard");
       }
     } catch (error) {
@@ -91,7 +92,7 @@ const Login = () => {
             className="w-full flex justify-center items-center hover:bg-purple-900 bg-purple-700 text-white py-2 px-4 rounded transition"
           >
             {" "}
-            {isLoading ? <Loader /> : "Login"}
+            {isLoading ? <Loader className="animate-spin" /> : "Login"}
           </button>
           <div className="text-center">
             Dont have an account? <a href="/signin">Sign In</a>

@@ -7,7 +7,6 @@ dotenv.config();
 
 console.log("Database URL:", process.env.DATABASE_URL);
 
-
 async function deleteAllData(orderedFileNames: string[]) {
   const modelNames = orderedFileNames.map((fileName) => {
     const modelName = path.basename(fileName, path.extname(fileName));
@@ -30,18 +29,17 @@ async function deleteAllData(orderedFileNames: string[]) {
 async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
-const orderedFileNames = [
-  "users.json",                // Independent
-  "expenses.json",             // Independent
-  "expenseSummary.json",       // Parent of ExpenseByCategory
-  "expenseByCategory.json",    // Depends on ExpenseSummary
-  "products.json",             // Parent of Sales & Purchases
-  "sales.json",                // Depends on Products
-  "salesSummary.json",         // Independent summary
-  "purchases.json",            // Depends on Products
-  "purchaseSummary.json",      // Independent summary
-];
-
+  const orderedFileNames = [
+    "users.json", // Independent
+    "expenses.json", // Independent
+    "salesSummary.json", // Independent summary
+    "purchaseSummary.json", // Independent summary
+    "expenseByCategory.json", // Depends on ExpenseSummary
+    "expenseSummary.json", // Parent of ExpenseByCategory
+    "sales.json", // Depends on Products
+    "purchases.json", // Depends on Products
+    "products.json", // Parent of Sales & Purchases
+  ];
 
   await deleteAllData(orderedFileNames);
 

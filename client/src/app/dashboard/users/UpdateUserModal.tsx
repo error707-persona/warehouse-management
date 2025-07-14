@@ -76,7 +76,7 @@ const UpdateUserModal = ({
         <form onSubmit={handleSubmit} className="mt-5">
           {/* product name */}
           <div className="flex flex-col ">
-            <label htmlFor="productName" className={labelCssStyles}>
+            <label htmlFor="Name" className={labelCssStyles}>
               Name{" "}
             </label>
             <input
@@ -89,7 +89,7 @@ const UpdateUserModal = ({
               required
             />
             {/* price  */}
-            <label htmlFor="Price" className={labelCssStyles}>
+            <label htmlFor="Email" className={labelCssStyles}>
               Email
             </label>
             <input
@@ -100,8 +100,9 @@ const UpdateUserModal = ({
               value={formData.email}
               className={inputCssStyles}
               required
+              disabled
             />
-            <label htmlFor="Price" className={labelCssStyles}>
+            <label htmlFor="Role" className={labelCssStyles}>
               Role
             </label>
             <select

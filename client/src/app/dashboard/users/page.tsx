@@ -11,6 +11,7 @@ import { Box, Button } from "@mui/material";
 import { PencilIcon, SearchIcon, Trash } from "lucide-react";
 import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
+import { redirect } from "next/navigation";
 
 const Users = () => {
   const { data: users, isError, isLoading } = useGetusersQuery();
@@ -22,7 +23,13 @@ const Users = () => {
   const updatedUsers = cleanedUsers?.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+  const email = localStorage.getItem("email");
+  const role = localStorage.getItem("role");
+
+  if (!email || role != "Admin") {
+    redirect("/login");
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleHelper = (params: any) => {
     setisModalOpen(true);

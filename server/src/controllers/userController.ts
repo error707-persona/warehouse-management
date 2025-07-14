@@ -34,7 +34,7 @@ export const getOneUsers = async (
       return;
     }
     if (user && user.password) {
-       let isMatch = false;
+      let isMatch = false;
       if (user.password.startsWith("$2")) {
         isMatch = await bcrypt.compare(password, user.password); // hashed comparison
       } else {
@@ -44,9 +44,8 @@ export const getOneUsers = async (
         res.status(401).json({ message: "Invalid credentials!" }); // ✅ return
         return;
       }
-      
     }
-    
+
     const token = jwt.sign(
       { id: user?.userId, email: user.email },
       JWT_SECRET,
@@ -61,6 +60,7 @@ export const getOneUsers = async (
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
+      path: "/login",
     });
 
     res.status(200).json({
@@ -87,7 +87,7 @@ export const updateUser = async (
       data: {
         name,
         email,
-        role
+        role,
       },
     });
 
@@ -105,6 +105,21 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, password } = req.body;
     console.log(name, email, password);
+
+    const isUserExists = await prisma.users.findUnique({
+      where: {
+        email: email as string,
+      },
+    });
+
+    if (isUserExists) {
+      res.status(401).json({
+        message: "User already exists",
+        data: isUserExists,
+      });
+      return;
+    }
+
     // password encrypt
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.users.create({
@@ -112,6 +127,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
         name,
         email,
         password: hashedPassword,
+        role: "Admin",
       },
     });
 
@@ -121,7 +137,11 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error) {
     console.error("Create error:", error);
-    res.status(500).json({ message: "Error creating user" });
+    res.status(500).json({
+      message: "An error occurred while creating the user in the database.",
+      // @ts-ignore
+      error: error.message,
+    });
   }
 };
 
@@ -148,7 +168,7 @@ export const deleteUser = async (
   }
 };
 
-const verifyToken = (req: Request, res: Response, next: any) => {
+export const verifyToken = (req: Request, res: Response, next: any) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 

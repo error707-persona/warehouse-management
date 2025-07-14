@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.deleteUser = exports.addUser = exports.updateUser = exports.getOneUsers = exports.getUsers = void 0;
+exports.logout = exports.verifyToken = exports.deleteUser = exports.addUser = exports.updateUser = exports.getOneUsers = exports.getUsers = void 0;
 const client_1 = require("@prisma/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -63,6 +63,7 @@ const getOneUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
             maxAge: 24 * 60 * 60 * 1000, // 1 day
+            path: "/login",
         });
         res.status(200).json({
             message: "Login user successfully",
@@ -86,7 +87,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             data: {
                 name,
                 email,
-                role
+                role,
             },
         });
         res.status(200).json({
@@ -104,6 +105,18 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password } = req.body;
         console.log(name, email, password);
+        const isUserExists = yield prisma.users.findUnique({
+            where: {
+                email: email,
+            },
+        });
+        if (isUserExists) {
+            res.status(401).json({
+                message: "User already exists",
+                data: isUserExists,
+            });
+            return;
+        }
         // password encrypt
         const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
         const user = yield prisma.users.create({
@@ -111,6 +124,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 name,
                 email,
                 password: hashedPassword,
+                role: "Admin",
             },
         });
         res.status(200).json({
@@ -120,7 +134,11 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.error("Create error:", error);
-        res.status(500).json({ message: "Error creating user" });
+        res.status(500).json({
+            message: "An error occurred while creating the user in the database.",
+            // @ts-ignore
+            error: error.message,
+        });
     }
 });
 exports.addUser = addUser;
@@ -157,6 +175,7 @@ const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: "Invalid token" });
     }
 };
+exports.verifyToken = verifyToken;
 const logout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         res.clearCookie("token");

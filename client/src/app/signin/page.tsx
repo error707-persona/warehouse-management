@@ -4,7 +4,8 @@ import React from "react";
 import loginPic from "../../../public/stock images/Illustration.png";
 import { useForm } from "react-hook-form";
 import { useCreateUserMutation } from "@/state/api";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 type SignInFormInputs = {
   name: string;
@@ -17,20 +18,31 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormInputs>(); 
-  const [createUser] = useCreateUserMutation();
+  } = useForm<SignInFormInputs>();
+  const [createUser, { isLoading, data }] = useCreateUserMutation();
   const router = useRouter();
 
   const onSubmit = async (data: SignInFormInputs) => {
     console.log("SignUp Data:", data);
     const result = await createUser(data);
-    if (result && result.data && result.data.message==="User created successfully") {
-       localStorage.setItem("username", result.data.name);
-       localStorage.setItem("email", result.data.email);
+    // @ts-ignore
+    console.log("rtk query result: ", result);
+    // @ts-ignore
+    if ("error" in result) {
+      alert("User already exists.");
+    }
+    if (
+      result &&
+      result.data &&
+      result.data.message === "User created successfully"
+    ) {
+      localStorage.setItem("username", result.data.name);
+      localStorage.setItem("email", result.data.email);
+      // @ts-ignore
+      localStorage.setItem("role", result.data.role);
       router.push("/dashboard");
     }
   };
- 
 
   return (
     <div className="h-[100vh] flex flex-col md:flex-row">
@@ -38,7 +50,7 @@ const SignIn = () => {
         <Image src={loginPic} alt="" />
       </div>
       <div className="w-full lg:w-1/2 bg-white h-full  flex flex-col justify-center items-center">
-     <div className="font-bold text-2xl mb-5">Welcome back to EDSTOCK</div>
+        <div className="font-bold text-2xl mb-5">Welcome back to EDSTOCK</div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="bg-white p-8 gap-5 flex flex-col rounded-lg shadow-md w-full max-w-sm"
@@ -47,31 +59,27 @@ const SignIn = () => {
             Sign In
           </h2>
           <label className="block text-sm mb-0 font-medium text-gray-700">
-              Name
-            </label>
-            <input
-              type="text"
-              placeholder="Luna Baker"
-              {...register("name", { required: "Name is required" })}
-              className=" block -mt-5  w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
-            />
+            Name
+          </label>
+          <input
+            type="text"
+            placeholder="Luna Baker"
+            {...register("name", { required: "Name is required" })}
+            className=" block -mt-5  w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
+          />
           <div>
-            
             <label className="block text-sm font-medium text-gray-700">
               Email
             </label>
-            
+
             <input
               type="email"
-         
               placeholder="abc@hotmail.com"
               {...register("email", { required: "Email is required" })}
               className=" block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm ">
-                {errors.email.message}
-              </p>
+              <p className="text-red-500 text-sm ">{errors.email.message}</p>
             )}
           </div>
 
@@ -86,22 +94,19 @@ const SignIn = () => {
               className=" block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500"
             />
             {errors.password && (
-              <p className="text-red-500 text-sm ">
-                {errors.password.message}
-              </p>
+              <p className="text-red-500 text-sm ">{errors.password.message}</p>
             )}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-300 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+            className="w-full bg-blue-300 text-white py-2 px-4 rounded flex justify-center items-center hover:bg-blue-700 transition"
           >
-            Sign In
+            {isLoading ? <Loader className="animate-spin" /> : "Sign In"}
           </button>
           <div className="text-center">
             Already have an account? <a href="/login">Login</a>
           </div>
-          
         </form>
         <div className="mt-2">© 2025 EDSTOCK. All rights reserved. </div>
       </div>

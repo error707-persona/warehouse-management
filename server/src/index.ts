@@ -50,6 +50,8 @@ app.use("/dashboard", dashboardRoutes); //http://localhost:8000/dashboard
 app.use("/products", productRoutes); //http://localhost:8000/products
 app.use("/users",usersRoutes); //http://localhost:8000/users
 app.use("/expenses",expenseRoutes); //http://localhost:8000/expenses
+
+
 // server
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
