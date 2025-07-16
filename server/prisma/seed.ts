@@ -16,7 +16,7 @@ async function deleteAllData(orderedFileNames: string[]) {
   for (const modelName of modelNames) {
     const model: any = prisma[modelName as keyof typeof prisma];
     if (model) {
-      // await model.deleteMany({});
+      await model.deleteMany({});
       console.log(`Cleared data from ${modelName}`);
     } else {
       console.error(
@@ -30,11 +30,15 @@ async function main() {
   const dataDirectory = path.join(__dirname, "seedData");
 
   const orderedFileNames = [
-    "expenseSummary.json", // Parent of ExpenseByCategory
+    "users.json", // Independent
+    "expenses.json", // Independent
+    "salesSummary.json", // Independent summary
+    "purchaseSummary.json", // Independent summary
     "expenseByCategory.json", // Depends on ExpenseSummary
-    "products.json", // Parent of Sales & Purchases
+    "expenseSummary.json", // Parent of ExpenseByCategory
     "sales.json", // Depends on Products
     "purchases.json", // Depends on Products
+    "products.json", // Parent of Sales & Purchases
   ];
 
   await deleteAllData(orderedFileNames);
