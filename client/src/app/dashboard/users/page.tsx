@@ -23,11 +23,11 @@ const Users = () => {
   const updatedUsers = cleanedUsers?.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const email = localStorage.getItem("email");
+  // const email = localStorage.getItem("email");
   const role = localStorage.getItem("role");
 
-  if (!email || role != "Admin") {
-    redirect("/login");
+  if (role != "Admin") {
+    redirect("/dashboard");
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -150,7 +150,8 @@ const Users = () => {
         rows={updatedUsers}
         columns={columns}
         getRowId={(row) => row.userId}
-        checkboxSelection
+        // checkboxSelection
+        disableRowSelectionOnClick={false}
         className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800 dark:text-white"
       />
       <UpdateUserModal

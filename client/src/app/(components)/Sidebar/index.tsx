@@ -20,8 +20,8 @@ const SidebarLink = ({
   isCollapsed,
 }: SidebarLinkProps) => {
   const pathname = usePathname();
-  const isActive =
-    pathname === href || (pathname === "/" && href === "/dashboard");
+  const isActive = pathname === href || (pathname === "/" && href === "/dashboard");
+
 
   return (
     <Link href={href}>
@@ -45,6 +45,9 @@ const SidebarLink = ({
   );
 };
 const Sidebar = () => {
+
+  const email = localStorage.getItem("email");
+  const role = localStorage.getItem("role");
   const dispatch = useAppDispatch();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
@@ -99,12 +102,12 @@ const Sidebar = () => {
           label="Products"
           isCollapsed={isSidebarCollapsed}
         />
-        <SidebarLink
+        { (email && role && role === "Admin")? <SidebarLink
           href="/dashboard/users"
           icon={User}
           label="Users"
           isCollapsed={isSidebarCollapsed}
-        />
+        />:""}
         <SidebarLink
           href="/dashboard/expenses"
           icon={CircleDollarSign}

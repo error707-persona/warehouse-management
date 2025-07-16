@@ -231,7 +231,8 @@ const Inventory = () => {
         rows={updatedProducts}
         columns={columns}
         getRowId={(row) => row.productId}
-        checkboxSelection
+        // checkboxSelection
+        disableRowSelectionOnClick={false}
         className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800"
       />
       <CreateProductModal
