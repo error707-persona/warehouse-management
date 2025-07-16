@@ -13,12 +13,13 @@ import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
 import { redirect } from "next/navigation";
 import dynamic from "next/dynamic";
+import Loader from "@/app/(components)/Loader";
 
 const DataGrid = dynamic(() =>
   import('@mui/x-data-grid').then((mod) => mod.DataGrid),
   {
     ssr: false,
-    loading: () => <p>Loading DataGrid...</p>,
+    loading: () => <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>,
   }
 );
 
@@ -133,7 +134,7 @@ const Users = () => {
   };
 
   if (isLoading) {
-    return <div className="py-4">Loading...</div>;
+    return <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>;
   }
   if (isError || !users) {
     return (

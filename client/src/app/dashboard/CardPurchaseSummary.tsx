@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import Loader from "../(components)/Loader";
 
 const CardPurchaseSummary = () => {
   const { data, isLoading } = useGetDashboardMetricsQuery();
@@ -18,7 +19,7 @@ const CardPurchaseSummary = () => {
   return (
     <div className="shadow-md bg-white dark:text-white dark:bg-gray-800 flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 shadow-mf rounded-2xl">
       {isLoading ? (
-        <div className="m-5">Loading...</div>
+        <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>
       ) : (
         <>
           {/* HEADER */}

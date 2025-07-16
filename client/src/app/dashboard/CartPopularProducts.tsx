@@ -3,6 +3,7 @@ import { ShoppingBag } from "lucide-react";
 import React from "react";
 import Rating from "../(components)/Rating";
 import { supabase } from "../utils/supabaseClient";
+import Loader from "../(components)/Loader";
 
 const CartPopularProducts = () => {
   const imageMap = new Map();
@@ -24,7 +25,7 @@ const CartPopularProducts = () => {
   return (
     <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16 dark:text-white dark:bg-gray-800">
       {isLoading ? (
-        <div className="m-5">Loading...</div>
+        <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>
       ) : (
         <div className="h-full">
           <h3 className="text-md font-semibold px-7 pt-5 pb-2 ">

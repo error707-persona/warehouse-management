@@ -6,6 +6,7 @@ import Rating from "../../(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
 import { Decimal } from "@prisma/client/runtime/binary";
 import { supabase } from "../../utils/supabaseClient";
+import Loader from "@/app/(components)/Loader";
 
 type ProductFormData = {
   name: string;
@@ -64,7 +65,7 @@ const Products = () => {
 
   if (!products) {
     console.log(isError, "isError");
-    return <div className="py-4"> Loading...</div>;
+    return <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>;
   }
 
   if (isError || !products) {
@@ -133,7 +134,7 @@ const Products = () => {
       </div>
       <div className="grid grid-col-1 sm:grid-cols-2 lg-grid-cols-3 gap-10 justify-between">
         {!updatedProducts ? (
-          <div>Loading...</div>
+          <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>
         ) : (
           updatedProducts?.map((product) => (
             <div

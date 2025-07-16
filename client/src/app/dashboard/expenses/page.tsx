@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import Header from "../../(components)/Header";
 import { Cell, Legend, Pie, ResponsiveContainer, Tooltip } from "recharts";
 import dynamic from "next/dynamic";
+import Loader from "@/app/(components)/Loader";
 
 const PieChart = dynamic(() =>
   import('recharts').then((mod) => mod.PieChart),
@@ -77,7 +78,7 @@ const Expenses = () => {
       "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gay-300 focus:ring-indigo-500 sm:text-sm rounded-md dark:text-white dark:bg-slate-700",
   };
   if (isLoading) {
-    return <div className="py-4">Loading...</div>;
+    return <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>;
   }
   if (isError || !expenseData) {
     return (
