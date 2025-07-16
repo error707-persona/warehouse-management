@@ -6,7 +6,16 @@ import {
 } from "@/state/api";
 import { useMemo, useState } from "react";
 import Header from "../../(components)/Header";
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, Legend, Pie, ResponsiveContainer, Tooltip } from "recharts";
+import dynamic from "next/dynamic";
+
+const PieChart = dynamic(() =>
+  import('recharts').then((mod) => mod.PieChart),
+  {
+    ssr: false,
+    loading: () => <p>Loading chart...</p>,
+  }
+);
 
 type AggregatedData = {
   [category: string]: AggregatedDataItem;

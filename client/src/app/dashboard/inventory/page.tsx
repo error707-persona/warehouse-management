@@ -7,7 +7,7 @@ import {
   useUpdateSalesMutation,
 } from "@/state/api";
 import Header from "../../(components)/Header";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 import { Box } from "@mui/material";
 import {
   Minus,
@@ -21,6 +21,16 @@ import {
 
 import { useState } from "react";
 import CreateProductModal from "../products/CreateProductModal";
+import Loader from "@/app/(components)/Loader";
+import dynamic from "next/dynamic";
+
+const DataGrid = dynamic(() =>
+  import('@mui/x-data-grid').then((mod) => mod.DataGrid),
+  {
+    ssr: false,
+    loading: () => <p>Loading DataGrid...</p>,
+  }
+);
 
 const Inventory = () => {
   const { data: products, isError, isLoading } = useGetProductsQuery();
@@ -84,13 +94,15 @@ const Inventory = () => {
           <Box className="flex justify-center gap-1 items-center h-full w-full">
             <button
               className="text-blue-600 hover:bg-blue-100 p-2 rounded"
-              onClick={() => handleHelper(params.row)} title="Edit product details"
+              onClick={() => handleHelper(params.row)}
+              title="Edit product details"
             >
               <PencilIcon className="w-5 h-5" />
             </button>
             <button
               className="text-red-600 hover:bg-red-100 p-2 rounded"
-              onClick={() => handleDeleteHelper(params.row)} title="Delete product"
+              onClick={() => handleDeleteHelper(params.row)}
+              title="Delete product"
             >
               <Trash className="w-6 h-6" />
             </button>
@@ -109,12 +121,16 @@ const Inventory = () => {
                 </div>
                 <button
                   onClick={() => handleSales(params.row, true)}
-                  className="p-2" title="Execute orders"
+                  className="p-2"
+                  title="Execute orders"
                 >
                   <ShoppingCart className="w-5 h-5" />
                 </button>
 
-                <button onClick={() => handleSales(params.row, false)} title="Return orders">
+                <button
+                  onClick={() => handleSales(params.row, false)}
+                  title="Return orders"
+                >
                   <Undo2 className="w-5 h-5" />
                 </button>
               </div>
@@ -215,33 +231,36 @@ const Inventory = () => {
 
   return (
     <div className="flex flex-col dark:bg-slate-900">
-      <Header name="Inventory" />
-      <div className="w-full flex gap-2 mt-2 md:items-center rounded bg-white border-2 dark:bg-slate-900">
-        <SearchIcon className="w-5 h-5 text-gray-500 m-2 dark:text-white" />
-        <input
-          type="text"
-          className="w-full outline-none rounded bg-white dark:bg-slate-900 dark:text-white"
-          placeholder="Search products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
+      {(products)?<div>
+        <Header name="Inventory" />
+        <div className="w-full flex gap-2 mt-2 md:items-center rounded bg-white border-2 dark:bg-slate-900">
+          <SearchIcon className="w-5 h-5 text-gray-500 m-2 dark:text-white" />
+          <input
+            type="text"
+            className="w-full outline-none rounded bg-white dark:bg-slate-900 dark:text-white"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
 
-      <DataGrid
-        rows={updatedProducts}
-        columns={columns}
-        getRowId={(row) => row.productId}
-        // checkboxSelection
-        disableRowSelectionOnClick={false}
-        className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800"
-      />
-      <CreateProductModal
-        isOpen={isModalOpen}
-        onClose={() => setisModalOpen(false)}
-        onCreate={() => {}}
-        formValues={values}
-        handleEdit={handleEdit}
-      />
+        <DataGrid
+          rows={updatedProducts}
+          columns={columns}
+          getRowId={(row) => row.productId}
+          checkboxSelection={false}
+          // checkboxSelection
+          disableRowSelectionOnClick={false}
+          className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800"
+        />
+        <CreateProductModal
+          isOpen={isModalOpen}
+          onClose={() => setisModalOpen(false)}
+          onCreate={() => {}}
+          formValues={values}
+          handleEdit={handleEdit}
+        />
+      </div>:<Loader/>}
     </div>
   );
 };

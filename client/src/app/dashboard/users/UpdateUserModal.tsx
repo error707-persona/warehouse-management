@@ -108,6 +108,7 @@ const UpdateUserModal = ({
             <select
               name="role"
               id="role"
+              value={formData.role}
               onChange={handleChange}
               className="p-3 w-full outline-none my-3 border-2 dark:border-none rounded border-gray-600 dark:bg-gray-600 dark:border-gray-400 dark:text-white"
             >

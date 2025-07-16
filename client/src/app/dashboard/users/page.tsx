@@ -6,12 +6,21 @@ import {
   useGetusersQuery,
 } from "@/state/api";
 import Header from "../../(components)/Header";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 import { Box, Button } from "@mui/material";
 import { PencilIcon, SearchIcon, Trash } from "lucide-react";
 import { useState } from "react";
 import UpdateUserModal from "./UpdateUserModal";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const DataGrid = dynamic(() =>
+  import('@mui/x-data-grid').then((mod) => mod.DataGrid),
+  {
+    ssr: false,
+    loading: () => <p>Loading DataGrid...</p>,
+  }
+);
 
 const Users = () => {
   const { data: users, isError, isLoading } = useGetusersQuery();
