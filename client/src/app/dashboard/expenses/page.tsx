@@ -153,7 +153,7 @@ const Expenses = () => {
           </div>
           {/* pie chart */}
           <div className="flex-grow bg-white border-2 shadow rounded-lg p-4 md:p-6 dark:bg-slate-800">
-            <ResponsiveContainer width="100%" height={400}>
+           { (aggregatedData.length>0)? <ResponsiveContainer width="100%" height={400}>
               <PieChart>
                 <Pie
                   data={aggregatedData}
@@ -181,7 +181,7 @@ const Expenses = () => {
                 <Tooltip/>
                 <Legend/>
               </PieChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer>:<div className="w-full h-full flex justify-center items-center">No Data Found</div>}
           </div>
         </div>
       </div>

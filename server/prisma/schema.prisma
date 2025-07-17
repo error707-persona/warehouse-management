@@ -60,10 +60,19 @@ model Expenses {
 }
 
 model SalesSummary {
-  salesSummaryId   String   @id
+  salesSummaryId   String   @id 
   totalValue       Float
   changePercentage Float?
   date             DateTime
+}
+
+model ActivityLogs {
+  activityId   String   @id @default(uuid())
+  action    String
+  userId    String
+  userId2   String
+  username  String
+  timestamp DateTime
 }
 
 model PurchaseSummary {
