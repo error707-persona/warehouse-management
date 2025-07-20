@@ -137,7 +137,7 @@ const CreateProductModal = ({
             {...register("stockQuantity", {
               required: "Stock quantity is required",
               min: { value: 1, message: "Stock quantity must be a positive number" },
-              max: { value: 1000, message: "Stock quantity must be a positive number" },
+              max: { value: 100000, message: "Stock quantity must be a positive number" },
             })}
             type="number"
             name="stockQuantity"

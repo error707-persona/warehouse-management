@@ -64,7 +64,7 @@ export const createProduct = async (
     }
 
     // console.log("after product creation");
-    res.status(201).json([product]);
+    res.status(201).json(product);
   } catch (error: any) {
     console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
     res.status(500).json({ message: error.message || "Internal server error" });
@@ -104,7 +104,12 @@ export const deleteProduct = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-
+    console.log(id)
+    await prisma.purchases.deleteMany({
+      where: {
+        productId: id,
+      },
+    });
     const product = await prisma.products.delete({
       where: {
         productId: id,

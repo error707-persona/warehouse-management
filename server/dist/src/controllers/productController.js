@@ -67,7 +67,7 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             });
         }
         // console.log("after product creation");
-        res.status(201).json([product]);
+        res.status(201).json(product);
     }
     catch (error) {
         console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
@@ -101,6 +101,12 @@ exports.updateProduct = updateProduct;
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
+        console.log(id);
+        yield prisma.purchases.deleteMany({
+            where: {
+                productId: id,
+            },
+        });
         const product = yield prisma.products.delete({
             where: {
                 productId: id,

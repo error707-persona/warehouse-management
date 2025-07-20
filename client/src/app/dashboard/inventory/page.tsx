@@ -176,11 +176,11 @@ const Inventory = () => {
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
-    // console.log("entered DELETE call to api", params);
+    console.log("entered DELETE call to api", params);
     await deleteProduct({
       id: params?.productId,
     });
-    // console.log("call to delete api is done");
+    console.log("call to delete api is done");
   };
 
   if (isLoading) {

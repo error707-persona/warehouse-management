@@ -47,18 +47,21 @@ const Products = () => {
     if (selectedFile !== null) {
       const user = await supabase.auth.getUser();
       if (user) {
-        const { error } = await supabase.storage
-          .from("product-images") // your storage bucket name
-          .upload(filePath, selectedFile);
 
+        console.log("filePath before uploading: ", filePath);
+
+        const { error } = await supabase.storage
+          .from("product-images") 
+          .upload(filePath, selectedFile);
+        console.log("error: ", error)
         if (error) throw error;
 
-        await supabase
-          .from("products")
-          .update({
-            image_path: filePath,
-          })
-          .eq("id", product_id);
+        // await supabase
+        //   .from("products")
+        //   .update({
+        //     image_path: filePath,
+        //   })
+        //   .eq("id", product_id);
       }
     }
   };
@@ -78,23 +81,23 @@ const Products = () => {
   }
 
   if (products) {
-    // console.log("supabase: ", supabase);
-    // console.log("products: ",products)
+    console.log("supabase: ", supabase);
+    console.log("products: ",products)
     for (const product of products) {
-      // console.log("product.Url: ", product.imgUrl);
+      console.log("product.Url: ", product.imgUrl);
       if (product.imgUrl) {
         const filePath = `products/${product.productId}/${product?.imgUrl}`;
-        // console.log("filePath: ", filePath);
+        console.log("filePath: ", filePath, "product.productId: ",product.productId);
 
         const { data: urlData } = supabase.storage
           .from("product-images")
           .getPublicUrl(filePath);
-        // console.log(
-        //   "product id: ",
-        //   product.productId,
-        //   "url: ",
-        //   urlData.publicUrl
-        // );
+        console.log(
+          "product id: ",
+          product.productId,
+          "url: ",
+          urlData.publicUrl
+        );
         imageMap.set(product.productId, urlData.publicUrl);
       }
     }
