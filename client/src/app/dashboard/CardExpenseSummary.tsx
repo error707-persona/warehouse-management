@@ -2,7 +2,6 @@ import {
   ExpenseByCategorySummary,
   useGetDashboardMetricsQuery,
 } from "@/state/api";
-import { TrendingUp } from "lucide-react";
 import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import Loader from "../(components)/Loader";
@@ -42,7 +41,7 @@ const CardExpenseSummary = () => {
   );
 
   const formattedTotalExpenses = totalExpenses.toFixed(2);
-  const expenseSummary = dashboardMetrics?.expenseSummary[0];
+  // const expenseSummary = dashboardMetrics?.expenseSummary[0];
   return (
     <div className="shadow-md max-h-fit bg-white dark:text-white dark:border-none dark:bg-gray-800 flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 shadow-mf rounded-2xl">
       {isLoading ? (
