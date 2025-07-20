@@ -206,15 +206,15 @@ const Inventory = () => {
     // );
 
     let stockQuantity = 0;
-    let unitPrice = Number(params?.unitPrice);
+    let unitPrice = 0;
     let totalAmount = 0;
     if (isOrder) {
       stockQuantity = params?.stockQuantity - orders;
-      unitPrice = Number(params?.unitPrice);
+      unitPrice = Number(params?.price);
       totalAmount = orders * params?.price;
     } else {
       stockQuantity = params?.stockQuantity + orders;
-      unitPrice = -Number(params?.unitPrice);
+      unitPrice = -Number(params?.price);
       totalAmount = -(orders * params?.price);
     }
 

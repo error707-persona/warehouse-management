@@ -107,6 +107,11 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 productId: id,
             },
         });
+        yield prisma.sales.deleteMany({
+            where: {
+                productId: id,
+            },
+        });
         const product = yield prisma.products.delete({
             where: {
                 productId: id,
@@ -124,9 +129,8 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.deleteProduct = deleteProduct;
 const updateSales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e, _f, _g;
     try {
-        // console.log("req.body: ", req.body);
         const { id } = req.params;
         const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
         // console.log("req.body: ", req.body);
@@ -145,6 +149,22 @@ const updateSales = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 quantity: (_a = parseInt(quantity)) !== null && _a !== void 0 ? _a : 0,
                 unitPrice: (_b = parseFloat(unitPrice)) !== null && _b !== void 0 ? _b : 0,
                 totalAmount: (_c = parseFloat(totalAmount)) !== null && _c !== void 0 ? _c : 0,
+            },
+        });
+        const lastQuantity = yield prisma.salesSummary.findFirst({
+            orderBy: {
+                date: 'desc',
+            },
+        });
+        let changePercentage = ((Math.abs((_d = (lastQuantity === null || lastQuantity === void 0 ? void 0 : lastQuantity.totalValue)) !== null && _d !== void 0 ? _d : 0 - quantity)) / ((_e = (lastQuantity === null || lastQuantity === void 0 ? void 0 : lastQuantity.totalValue)) !== null && _e !== void 0 ? _e : 1)) * 100;
+        if ((_f = (lastQuantity === null || lastQuantity === void 0 ? void 0 : lastQuantity.totalValue)) !== null && _f !== void 0 ? _f : 0 > quantity)
+            changePercentage -= changePercentage;
+        console.log("calculated changepercentage for salessummary: ", changePercentage);
+        yield prisma.salesSummary.create({
+            data: {
+                date: new Date(),
+                changePercentage: changePercentage,
+                totalValue: (_g = parseInt(quantity)) !== null && _g !== void 0 ? _g : 0,
             },
         });
         res.status(200).json(sales);

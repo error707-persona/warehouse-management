@@ -105,11 +105,19 @@ export const deleteProduct = async (
   try {
     const { id } = req.params;
     console.log(id)
+
     await prisma.purchases.deleteMany({
       where: {
         productId: id,
       },
     });
+
+    await prisma.sales.deleteMany({
+      where: {
+        productId: id,
+      },
+    });
+
     const product = await prisma.products.delete({
       where: {
         productId: id,
@@ -131,7 +139,6 @@ export const updateSales = async (
   res: Response
 ): Promise<void> => {
   try {
-    // console.log("req.body: ", req.body);
     const { id } = req.params;
     const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
     // console.log("req.body: ", req.body);
@@ -151,6 +158,25 @@ export const updateSales = async (
         quantity: parseInt(quantity) ?? 0,
         unitPrice: parseFloat(unitPrice) ?? 0,
         totalAmount: parseFloat(totalAmount) ?? 0,
+      },
+    });
+
+     const lastQuantity = await prisma.salesSummary.findFirst({
+      orderBy: {
+        date: 'desc',
+      },
+    });
+
+    let changePercentage = ((Math.abs((lastQuantity?.totalValue) ?? 0 - quantity))/((lastQuantity?.totalValue) ?? 1))*100;
+    if ((lastQuantity?.totalValue)??0 > quantity)
+      changePercentage -= changePercentage;
+
+    console.log("calculated changepercentage for salessummary: ",changePercentage);
+    await prisma.salesSummary.create({
+      data: {
+        date: new Date(),
+        changePercentage:  changePercentage,
+        totalValue:  parseInt(quantity) ?? 0,
       },
     });
 

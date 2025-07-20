@@ -54,14 +54,14 @@ model Purchases {
 }
 
 model Expenses {
-  expenseId String   @id
+  expenseId String   @id @default(uuid())
   category  String
   amount    Float
   timestamp DateTime
 }
 
 model SalesSummary {
-  salesSummaryId   String   @id 
+  salesSummaryId   String   @id @default(uuid()) 
   totalValue       Float
   changePercentage Float?
   date             DateTime
@@ -84,14 +84,14 @@ model PurchaseSummary {
 }
 
 model ExpenseSummary {
-  expenseSummaryId  String              @id
+  expenseSummaryId  String              @id @default(uuid())
   totalExpenses     Float
   date              DateTime
   ExpenseByCategory ExpenseByCategory[]
 }
 
 model ExpenseByCategory {
-  expenseByCategoryId String         @id
+  expenseByCategoryId String         @id @default(uuid())
   expenseSummaryId    String
   category            String
   amount              BigInt
