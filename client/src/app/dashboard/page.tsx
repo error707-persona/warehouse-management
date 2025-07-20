@@ -33,8 +33,8 @@ const Dashboard = () => {
       <CardExpenseSummary />
       <StateCard
         title="Customer & Expenses"
-        primaryIcon={<Package className="text-bue-600 w-6 h-6" />}
-        dateRange="22 m- 29 October 2023"
+        primaryIcon={<Package className="text-blue-600 w-6 h-6" />}
+        dateRange="29 October 2023"
         details={[
           {
             title: "Customer Growth",
@@ -52,8 +52,8 @@ const Dashboard = () => {
       />
       <StateCard
         title="Dues & Pending Orders"
-        primaryIcon={<CheckCircle className="text-bue-600 w-6 h-6" />}
-        dateRange="22 m- 29 October 2023"
+        primaryIcon={<CheckCircle className="text-blue-600 w-6 h-6" />}
+        dateRange="29 October 2023"
         details={[
           {
             title: "Dues",
@@ -71,8 +71,8 @@ const Dashboard = () => {
       />
       <StateCard
         title="Sales & Discount"
-        primaryIcon={<Tag className="text-bue-600 w-6 h-6" />}
-        dateRange="22 m- 29 October 2023"
+        primaryIcon={<Tag className="text-blue-600 w-6 h-6" />}
+        dateRange="29 October 2023"
         details={[
           {
             title: "Sales",

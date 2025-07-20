@@ -23,10 +23,10 @@ const SignIn = () => {
   const router = useRouter();
 
   const onSubmit = async (data: SignInFormInputs) => {
-    console.log("SignUp Data:", data);
+    // console.log("SignUp Data:", data);
     const result = await createUser(data);
 
-    console.log("rtk query result: ", result);
+    // console.log("rtk query result: ", result);
   
     if ("error" in result) {
       alert("User already exists.");

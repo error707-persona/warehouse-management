@@ -64,12 +64,12 @@ const Products = () => {
   };
 
   if (!products) {
-    console.log(isError, "isError");
+    // console.log(isError, "isError");
     return <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>;
   }
 
   if (isError || !products) {
-    console.log(isError, "iserror");
+    // console.log(isError, "iserror");
     return (
       <div className="text-center text-red-500 py-4">
         Failed to fetch products
@@ -78,27 +78,27 @@ const Products = () => {
   }
 
   if (products) {
-    console.log("supabase: ", supabase);
-    console.log("products: ",products)
+    // console.log("supabase: ", supabase);
+    // console.log("products: ",products)
     for (const product of products) {
-      console.log("product.Url: ", product.imgUrl);
+      // console.log("product.Url: ", product.imgUrl);
       if (product.imgUrl) {
         const filePath = `products/${product.productId}/${product?.imgUrl}`;
-        console.log("filePath: ", filePath);
+        // console.log("filePath: ", filePath);
 
         const { data: urlData } = supabase.storage
           .from("product-images")
           .getPublicUrl(filePath);
-        console.log(
-          "product id: ",
-          product.productId,
-          "url: ",
-          urlData.publicUrl
-        );
+        // console.log(
+        //   "product id: ",
+        //   product.productId,
+        //   "url: ",
+        //   urlData.publicUrl
+        // );
         imageMap.set(product.productId, urlData.publicUrl);
       }
     }
-    console.log("imageMap: ", imageMap);
+    // console.log("imageMap: ", imageMap);
   }
 
   return (

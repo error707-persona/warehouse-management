@@ -28,7 +28,7 @@ const StateCard = ({
   const getChangeColor = (value: number) =>
     value >= 0 ? "text-green-500" : "text-red-500";
   return (
-    <div className="md:row-span-1 h-[25vh] xl:row-span-2 bg-white col-span-1 shadow-md rounded-2xl flex flex-col dark:text-white dark:bg-gray-800">
+    <div className="md:row-span-1 h-50 xl:row-span-2 bg-white col-span-1 shadow-md rounded-2xl flex flex-col dark:text-white dark:bg-gray-800">
       {/* header */}
       <div>
         <div className="flex justify-between items-center px-5">

@@ -44,14 +44,14 @@ const CardExpenseSummary = () => {
   const formattedTotalExpenses = totalExpenses.toFixed(2);
   const expenseSummary = dashboardMetrics?.expenseSummary[0];
   return (
-    <div className="shadow-md border-2 bg-white dark:text-white dark:border-none dark:bg-gray-800 flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 shadow-mf rounded-2xl">
+    <div className="shadow-md max-h-fit bg-white dark:text-white dark:border-none dark:bg-gray-800 flex flex-col justify-between row-span-2 xl:row-span-3 col-span-1 md:col-span-2 xl:col-span-1 shadow-mf rounded-2xl">
       {isLoading ? (
         <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>
       ) : (
         <>
           {/* HEADER */}
           <div>
-            <h2 className="text-md font-semibold mb-2 px-7 pt-2 ">
+            <h2 className="text-md font-semibold mb-2 px-7 mt-5">
               Expense Summary
             </h2>
             <hr />
@@ -59,7 +59,7 @@ const CardExpenseSummary = () => {
           {/* BODY */}
           <div className="justify-between">
             {/* chart */}
-            <div className="relative flex basis-1/2 ">
+            <div className="flex mb-3">
               <ResponsiveContainer width={180} height={130}>
                 <PieChart>
                   <Pie
@@ -107,8 +107,8 @@ const CardExpenseSummary = () => {
             {/* footer */}
             <div>
               <hr />
-              {expenseSummary && (
-                <div className="flex justify-between itemse-center px-7 mb-4">
+              {/* {expenseSummary && (
+                <div className="flex justify-between items-center px-7 mb-4">
                   <div className="pt-2">
                     <p className="text-sm">
                       Average:{" "}
@@ -122,7 +122,7 @@ const CardExpenseSummary = () => {
                     30%
                   </span>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </>

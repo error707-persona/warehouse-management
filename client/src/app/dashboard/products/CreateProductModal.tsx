@@ -60,7 +60,7 @@ const CreateProductModal = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedNameFile, setSelectedNameFile] = useState("");
   const onSubmit = (formData: FormData) => {
-    console.log(formData);
+    // console.log(formData);
     if (formValues && handleEdit) {
       handleEdit(formData, selectedNameFile, selectedFile);
     } else {

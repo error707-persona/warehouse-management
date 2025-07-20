@@ -160,8 +160,8 @@ const Inventory = () => {
     selectedFileName: string | null
     // selectedFile: File | null
   ) => {
-    console.log("entered call to api", params);
-    console.log("selectedFile: ", selectedFileName);
+    // console.log("entered call to api", params);
+    // console.log("selectedFile: ", selectedFileName);
     await editProduct({
       id: params?.productId,
       data: {
@@ -172,15 +172,15 @@ const Inventory = () => {
         imgUrl: selectedFileName?.split("\\")[-1],
       },
     });
-    console.log("call to api is done");
+    // console.log("call to api is done");
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
-    console.log("entered DELETE call to api", params);
+    // console.log("entered DELETE call to api", params);
     await deleteProduct({
       id: params?.productId,
     });
-    console.log("call to delete api is done");
+    // console.log("call to delete api is done");
   };
 
   if (isLoading) {
@@ -196,14 +196,14 @@ const Inventory = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSales = async (params: any, isOrder: boolean) => {
     const orders = orderedMap[params?.productId];
-    console.log("product id: ", params?.productId);
-    console.log(
-      "product id: ",
-      params?.stockQuantity,
-      orders,
-      params?.price,
-      orders * params?.price
-    );
+    // console.log("product id: ", params?.productId);
+    // console.log(
+    //   "product id: ",
+    //   params?.stockQuantity,
+    //   orders,
+    //   params?.price,
+    //   orders * params?.price
+    // );
 
     let stockQuantity = 0;
     let unitPrice = Number(params?.unitPrice);

@@ -21,7 +21,7 @@ export const getOneUsers = async (
 ): Promise<void> => {
   try {
     const { email, password } = req.body;
-    console.log("email for login: ", email);
+    // console.log("email for login: ", email);
 
     const user = await prisma.users.findUnique({
       where: {
@@ -53,7 +53,7 @@ export const getOneUsers = async (
         expiresIn: "1d",
       }
     );
-    console.log("token generated", token);
+    // console.log("token generated", token);
 
     res.cookie("token", token, {
       httpOnly: true,
@@ -104,7 +104,7 @@ export const updateUser = async (
 export const addUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const { name, email, password } = req.body;
-    console.log(name, email, password);
+    // console.log(name, email, password);
 
     const isUserExists = await prisma.users.findUnique({
       where: {
@@ -128,6 +128,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
         email,
         password: hashedPassword,
         role: "Admin",
+        salary:0
       },
     });
 
@@ -151,7 +152,7 @@ export const deleteUser = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const user = await prisma.users.delete({
       where: {
         userId: id,

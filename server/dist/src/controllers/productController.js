@@ -18,7 +18,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     var _a;
     try {
         const search = (_a = req.query.search) === null || _a === void 0 ? void 0 : _a.toString();
-        console.log("inside api");
+        // console.log("inside api");
         const products = yield prisma.products.findMany({
             where: {
                 name: {
@@ -27,7 +27,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 },
             },
         });
-        console.log(products, "backend products");
+        // console.log(products, "backend products");
         res.status(200).json(products);
     }
     catch (error) {
@@ -48,8 +48,26 @@ const createProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 imgUrl,
             },
         });
-        console.log("after product creation");
-        res.status(201).json(product);
+        if (product) {
+            const purchase = yield prisma.purchases.create({
+                data: {
+                    productId: product === null || product === void 0 ? void 0 : product.productId,
+                    timestamp: new Date(),
+                    quantity: parseInt(stockQuantity),
+                    unitCost: parseFloat(price),
+                    totalCost: stockQuantity * price,
+                },
+            });
+            const purchaseSummary = yield prisma.purchaseSummary.create({
+                data: {
+                    date: new Date(),
+                    totalPurchased: parseInt(stockQuantity),
+                    changePercentage: purchase.quantity,
+                },
+            });
+        }
+        // console.log("after product creation");
+        res.status(201).json([product]);
     }
     catch (error) {
         console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
@@ -102,10 +120,10 @@ exports.deleteProduct = deleteProduct;
 const updateSales = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     try {
-        console.log("req.body: ", req.body);
+        // console.log("req.body: ", req.body);
         const { id } = req.params;
         const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
-        console.log("req.body: ", req.body);
+        // console.log("req.body: ", req.body);
         yield prisma.products.update({
             where: {
                 productId: id,

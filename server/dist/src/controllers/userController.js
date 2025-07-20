@@ -31,7 +31,7 @@ exports.getUsers = getUsers;
 const getOneUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
-        console.log("email for login: ", email);
+        // console.log("email for login: ", email);
         const user = yield prisma.users.findUnique({
             where: {
                 email: email,
@@ -57,7 +57,7 @@ const getOneUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const token = jsonwebtoken_1.default.sign({ id: user === null || user === void 0 ? void 0 : user.userId, email: user.email }, JWT_SECRET, {
             expiresIn: "1d",
         });
-        console.log("token generated", token);
+        // console.log("token generated", token);
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -104,7 +104,7 @@ exports.updateUser = updateUser;
 const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password } = req.body;
-        console.log(name, email, password);
+        // console.log(name, email, password);
         const isUserExists = yield prisma.users.findUnique({
             where: {
                 email: email,
@@ -125,6 +125,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 email,
                 password: hashedPassword,
                 role: "Admin",
+                salary: 0
             },
         });
         res.status(200).json({
@@ -145,7 +146,7 @@ exports.addUser = addUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        console.log(id);
+        // console.log(id);
         const user = yield prisma.users.delete({
             where: {
                 userId: id,

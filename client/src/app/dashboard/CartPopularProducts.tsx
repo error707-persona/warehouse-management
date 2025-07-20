@@ -20,7 +20,7 @@ const CartPopularProducts = () => {
         imageMap.set(product.productId, urlData.publicUrl);
       }
     }
-    console.log("imageMap: ", imageMap);
+    // console.log("imageMap: ", imageMap);
   }
   return (
     <div className="row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16 dark:text-white dark:bg-gray-800">

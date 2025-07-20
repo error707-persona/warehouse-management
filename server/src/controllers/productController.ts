@@ -11,7 +11,7 @@ export const getProducts = async (
 ): Promise<void> => {
   try {
     const search = req.query.search?.toString();
-    console.log("inside api");
+    // console.log("inside api");
     const products = await prisma.products.findMany({
       where: {
         name: {
@@ -20,7 +20,7 @@ export const getProducts = async (
         },
       },
     });
-    console.log(products, "backend products");
+    // console.log(products, "backend products");
     res.status(200).json(products);
   } catch (error) {
     console.error("Error retrieving products:", error);
@@ -43,8 +43,28 @@ export const createProduct = async (
         imgUrl,
       },
     });
-    console.log("after product creation");
-    res.status(201).json(product);
+
+    if (product) {
+      const purchase = await prisma.purchases.create({
+        data: {
+          productId: product?.productId,
+          timestamp: new Date(),
+          quantity: parseInt(stockQuantity),
+          unitCost: parseFloat(price),
+          totalCost: stockQuantity * price,
+        },
+      });
+      const purchaseSummary = await prisma.purchaseSummary.create({
+        data: {
+          date: new Date(),
+          totalPurchased: parseInt(stockQuantity),
+          changePercentage: purchase.quantity,
+        },
+      });
+    }
+
+    // console.log("after product creation");
+    res.status(201).json([product]);
   } catch (error: any) {
     console.log("🔥 Prisma error:", JSON.stringify(error, null, 2));
     res.status(500).json({ message: error.message || "Internal server error" });
@@ -106,10 +126,10 @@ export const updateSales = async (
   res: Response
 ): Promise<void> => {
   try {
-    console.log("req.body: ", req.body);
+    // console.log("req.body: ", req.body);
     const { id } = req.params;
     const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
-    console.log("req.body: ", req.body);
+    // console.log("req.body: ", req.body);
     await prisma.products.update({
       where: {
         productId: id,
@@ -135,4 +155,3 @@ export const updateSales = async (
     res.status(500).json({ message: "Error updating Sales" });
   }
 };
-

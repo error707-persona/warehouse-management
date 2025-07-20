@@ -33,7 +33,7 @@ const Login = () => {
       alert(
         "Something went wrong when you were trying to login, Please try again later!"
       );
-      console.log(error);
+      // console.log(error);
     }
   };
   

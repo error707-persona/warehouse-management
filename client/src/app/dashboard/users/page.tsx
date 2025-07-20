@@ -43,15 +43,16 @@ const Users = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleHelper = (params: any) => {
     setisModalOpen(true);
-    console.log("params 1-2: ", params);
+    // console.log("params 1-2: ", params);
     setvalues(params);
-    console.log("onchange: ", values);
+    // console.log("onchange: ", values);
   };
 
   const columns: GridColDef[] = [
     { field: "userId", headerName: "ID", width: 300 },
     { field: "name", headerName: "Name", width: 100 },
     { field: "email", headerName: "Email", width: 220 },
+    { field: "salary", headerName: "Salary", width: 220 },
     {
       field: "role",
       headerName: "role",
@@ -113,7 +114,7 @@ const Users = () => {
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEdit = async (params: any) => {
-    console.log("entered call to api", params);
+    // console.log("entered call to api", params);
     await editUser({
       id: params?.userId,
       data: {
@@ -122,15 +123,15 @@ const Users = () => {
         role: params?.role,
       },
     });
-    console.log("call to api is done");
+    // console.log("call to api is done");
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDelete = async (params: any) => {
-    console.log("entered DELETE call to api", params?.userId);
+    // console.log("entered DELETE call to api", params?.userId);
     await deleteUser({
       id: params?.userId,
     });
-    console.log("call to delete api is done");
+    // console.log("call to delete api is done");
   };
 
   if (isLoading) {

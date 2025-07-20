@@ -19,6 +19,7 @@ model Users {
   email    String  @unique
   password String?
   role     String  @default("Inventory Clerk")
+  salary   Int
 }
 
 model Products {
@@ -76,7 +77,7 @@ model ActivityLogs {
 }
 
 model PurchaseSummary {
-  purchaseSummaryId String   @id
+  purchaseSummaryId String   @id @default(uuid())
   totalPurchased    Float
   changePercentage  Float?
   date              DateTime

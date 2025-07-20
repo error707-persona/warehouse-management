@@ -23,7 +23,7 @@ const Settings = () => {
   const [userSettings, setUserSettings] = useState<UserSetting[]>(mockSetting);
   const [dark, setDark] = useState(false);
 
-  console.log(userSettings);
+  // console.log(userSettings);
   const handleToggleChange = (index: number) => {
     const settingsCopy = [...userSettings];
     settingsCopy[index].value = !settingsCopy[index].value as boolean;

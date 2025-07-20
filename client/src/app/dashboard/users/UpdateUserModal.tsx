@@ -62,7 +62,7 @@ const UpdateUserModal = ({
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    console.log("name: ", name, "value: ", value);
+    // console.log("name: ", name, "value: ", value);
     setFormData({
       ...formData,
       [name]: value,
