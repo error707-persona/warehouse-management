@@ -66,7 +66,7 @@ Real-time alerts for stock updates or new orders
 
 Works smoothly across desktop and mobile devices
 
-#### 🧰 Tech Stack
+## 🧰 Tech Stack
 Frontend	Backend	Database	Others
 Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, TailwindCSS
 
