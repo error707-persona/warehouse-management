@@ -21,7 +21,7 @@ This Inventory Management System was developed to streamline the process of mana
 
 Whether you're managing a warehouse, retail store, or small business, this system aims to reduce complexity and improve efficiency.
 
-## Features
+## 🚀Features
 🔐 Authentication & Role Management
 
 Secure login/logout
