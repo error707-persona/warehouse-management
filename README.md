@@ -73,12 +73,9 @@ Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, Ta
 ## Installation
 Clone the repository
 
-bash
-Copy
-Edit
-`git clone https://github.com/yourusername/inventory-management.git`
+`git clone https://github.com/yourusername/inventory-management.git
 cd inventory-management
-Install dependencies
+Install dependencies`
 
 bash
 Copy
