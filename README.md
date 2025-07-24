@@ -73,16 +73,21 @@ Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, Ta
 ## Installation
 Clone the repository
 
-`git clone https://github.com/yourusername/inventory-management.git`
+```
+git clone https://github.com/yourusername/inventory-management.git
+```
 
 ### For backend
-```cd server
+```
+cd server
 npm install
 ```
 
 ### For frontend
-```cd ../client
-npm install```
+```
+cd ../client
+npm install
+```
 Setup environment variables
 
 Copy .env.example to .env and fill in your values.
@@ -90,12 +95,16 @@ Copy .env.example to .env and fill in your values.
 Run the application
 
 ### Backend
-```cd server
-npm run dev```
+```
+cd server
+npm run dev
+```
 
 ### Frontend
-```cd ../client
-npm run dev```
+```
+cd ../client
+npm run dev
+```
 
 ## 📎Usage
 
