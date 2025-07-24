@@ -1,10 +1,9 @@
-<img width="1912" height="955" alt="image" src="https://github.com/user-attachments/assets/99fcb2ca-e981-4c95-beb1-c40bef893041" />
-🗃️ Inventory Management System
+# 🗃️ Inventory Management System
 A powerful and intuitive Inventory Management System built to help businesses track stock, manage products, handle orders, and gain insights — all in one place.
 
 ⚡ Built with performance, scalability, and clean architecture in mind.
 
-📌 Table of Contents
+# 📌 Table of Contents
 📖 About the Project
 
 🚀 Features
@@ -25,12 +24,12 @@ A powerful and intuitive Inventory Management System built to help businesses tr
 
 📬 Contact
 
-📖 About the Project
+# 📖 About the Project
 This Inventory Management System was developed to streamline the process of managing stock and product data, enabling users to add, update, monitor, and analyze inventory in real time.
 
 Whether you're managing a warehouse, retail store, or small business, this system aims to reduce complexity and improve efficiency.
 
-🚀 Features
+# 🚀 Features
 🔐 Authentication & Role Management
 
 Secure login/logout
@@ -79,7 +78,7 @@ Works smoothly across desktop and mobile devices
 Frontend	Backend	Database	Others
 Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, TailwindCSS
 
-🛠️ Installation
+# 🛠️ Installation
 Clone the repository
 
 bash
@@ -116,7 +115,7 @@ npm run dev
 cd ../client
 npm run dev
 
-📎 Usage
+# 📎 Usage
 Sign up or log in as an admin.
 
 Add new products, certain pages can only be accessible by admin, inventory clerk and manager cannot access users page.
@@ -127,14 +126,14 @@ Receive low-stock alerts and restock as needed.
 
 Access logs and performance reports from the dashboard.
 
-📊 Screenshots
+# 📊 Screenshots
 <img width="1913" height="945" alt="image" src="https://github.com/user-attachments/assets/108b1e92-a49c-4b36-8b1d-c4ab67c22b82" />
 <img width="1917" height="953" alt="image" src="https://github.com/user-attachments/assets/2d326666-b3f6-4494-8ba3-6b63a85781f9" />
 <img width="1916" height="963" alt="image" src="https://github.com/user-attachments/assets/892bf76c-c8fc-4334-93de-20019f217746" />
 <img width="1893" height="931" alt="image" src="https://github.com/user-attachments/assets/30b1b0b1-83fa-4277-a8a5-9fecf5180da8" />
 
 
-📦 API Reference
+# 📦 API Reference
 
 h
 Copy
@@ -144,7 +143,7 @@ POST /api/orders
 PUT /api/products/:id
 DELETE /api/users/:id
 
-🧩 Future Enhancements
+# 🧩 Future Enhancements
 ✅ Barcode scanning support
 
 ✅ Export reports (PDF/Excel)
@@ -155,7 +154,7 @@ DELETE /api/users/:id
 
 ✅ Integration with third-party platforms (e.g., Shopify)
 
-📬 Contact
+# 📬 Contact
 Made with ❤️ by Areesha Sayed
 
 Have suggestions or want to collaborate? Feel free to reach out via areeshasayed786@gmail.com
