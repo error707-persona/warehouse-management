@@ -76,7 +76,7 @@ Clone the repository
 bash
 Copy
 Edit
-git clone https://github.com/yourusername/inventory-management.git
+`git clone https://github.com/yourusername/inventory-management.git`
 cd inventory-management
 Install dependencies
 
