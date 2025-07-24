@@ -87,7 +87,7 @@ Edit
 cd server
 npm install
 
-# For frontend
+### For frontend
 cd ../client
 npm install
 Setup environment variables
@@ -99,11 +99,11 @@ Run the application
 bash
 Copy
 Edit
-# Backend
+### Backend
 cd server
 npm run dev
 
-# Frontend
+### Frontend
 cd ../client
 npm run dev
 
