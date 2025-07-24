@@ -5,7 +5,7 @@ A powerful and intuitive Inventory Management System built to help businesses tr
 
 # 📌 Table of Contents
 
-📖 About the Project (#-About the Project)
+📖 About the Project (#-abouttheproject)
 
 🚀 Features
 
