@@ -4,7 +4,8 @@ A powerful and intuitive Inventory Management System built to help businesses tr
 ⚡ Built with performance, scalability, and clean architecture in mind.
 
 # 📌 Table of Contents
-📖 About the Project
+
+📖 About the Project (#-About the Project)
 
 🚀 Features
 
