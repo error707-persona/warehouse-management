@@ -70,7 +70,7 @@ Works smoothly across desktop and mobile devices
 Frontend	Backend	Database	Others
 Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, TailwindCSS
 
-## 🛠️Installation
+## Installation
 Clone the repository
 
 bash
