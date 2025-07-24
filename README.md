@@ -5,8 +5,8 @@ A powerful and intuitive Inventory Management System built to help businesses tr
 
 # 📌 Table of Contents
 
-- [📖 About the Project](#about-the-project)
-- [🚀 Features](#features)
+- [About the Project](#about-the-project)
+- [Features](#features)
 - [🧰 Tech Stack](#tech-stack)
 - [🛠️ Installation](#installation)
 - [📎 Usage](#usage)
@@ -16,12 +16,12 @@ A powerful and intuitive Inventory Management System built to help businesses tr
 - [🧩 Future Enhancements](#future-enhancements)
 - [📬 Contact](#contact)
 
-## 📖 About the Project
+## About the Project
 This Inventory Management System was developed to streamline the process of managing stock and product data, enabling users to add, update, monitor, and analyze inventory in real time.
 
 Whether you're managing a warehouse, retail store, or small business, this system aims to reduce complexity and improve efficiency.
 
-## 🚀 Features
+## Features
 🔐 Authentication & Role Management
 
 Secure login/logout
