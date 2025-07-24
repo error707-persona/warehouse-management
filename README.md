@@ -60,7 +60,7 @@ Track who made changes and when
 
 #### ✉️ Notification System (Optional with Kafka or WebSockets)
 
-Real-time alerts for stock updates or new orders
+Real-time alerts for stock updates or new orders using kafka.
 
 #### 🖼️ Responsive UI
 
