@@ -22,51 +22,51 @@ This Inventory Management System was developed to streamline the process of mana
 Whether you're managing a warehouse, retail store, or small business, this system aims to reduce complexity and improve efficiency.
 
 ## 🚀Features
-🔐 Authentication & Role Management
+#### 🔐 Authentication & Role Management
 
 Secure login/logout
 
 Admin vs. user access levels
 
-📦 Product Management
+#### 📦 Product Management
 
 Add, update, or delete products
 
 Track SKU, price, and descriptions
 
-📊 Inventory Tracking
+#### 📊 Inventory Tracking
 
 Monitor stock levels
 
 Low stock alerts
 
-🛒 Order Management
+#### 🛒 Order Management
 
 Create and fulfill purchase/sales orders
 
 Update inventory automatically
 
-🔍 Search and Filter
+#### 🔍 Search and Filter
 
 Fast lookup for products
 
-📈 Dashboard Insights
+#### 📈 Dashboard Insights
 
 Visual overview of key metrics (stock, orders, expense etc.)
 
-🧾 Audit Logs
+#### 🧾 Audit Logs
 
 Track who made changes and when
 
-✉️ Notification System (Optional with Kafka or WebSockets)
+#### ✉️ Notification System (Optional with Kafka or WebSockets)
 
 Real-time alerts for stock updates or new orders
 
-🖼️ Responsive UI
+#### 🖼️ Responsive UI
 
 Works smoothly across desktop and mobile devices
 
-🧰 Tech Stack
+#### 🧰 Tech Stack
 Frontend	Backend	Database	Others
 Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, TailwindCSS
 
