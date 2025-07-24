@@ -5,25 +5,25 @@ A powerful and intuitive Inventory Management System built to help businesses tr
 
 # 📌 Table of Contents
 
-📖 About the Project (#-abouttheproject)
+📖 About the Project (#about-the-project)
 
-🚀 Features
+🚀 Features (#features)
 
-🧰 Tech Stack
+🧰 Tech Stack (#tech-stack)
 
-🛠️ Installation
+🛠️ Installation (#installation)
 
-📎 Usage
+📎 Usage (#usage) 
 
-📊 Screenshots
+📊 Screenshots (#screenshots)
 
-🧪 Tests
+🧪 Tests (#tests)
 
-📦 API Reference
+📦 API Reference (#api-reference)
 
-🧩 Future Enhancements
+🧩 Future Enhancements (#future-enhancements)
 
-📬 Contact
+📬 Contact (#contact)
 
 # 📖 About the Project
 This Inventory Management System was developed to streamline the process of managing stock and product data, enabling users to add, update, monitor, and analyze inventory in real time.
