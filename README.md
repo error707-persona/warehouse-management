@@ -66,7 +66,7 @@ Real-time alerts for stock updates or new orders
 
 Works smoothly across desktop and mobile devices
 
-## 🧰 Tech Stack
+## 🧰Tech Stack
 Frontend	Backend	Database	Others
 Nextjs + TypeScript,	Node.js + Express	PostgreSQL,	JWT, Kafka, Redux Toolkit, TailwindCSS
 
@@ -83,6 +83,7 @@ Install dependencies
 bash
 Copy
 Edit
+
 ### For backend
 cd server
 npm install
@@ -107,7 +108,7 @@ npm run dev
 cd ../client
 npm run dev
 
-## 📎 Usage
+## 📎Usage
 Sign up or log in as an admin.
 
 Add new products, certain pages can only be accessible by admin, inventory clerk and manager cannot access users page.
