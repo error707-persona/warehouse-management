@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { serialize } from "cookie";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "mysecretkey";
@@ -63,6 +64,16 @@ export const getOneUsers = async (
       path: "/login",
     });
 
+    res.setHeader(
+      "Set-Cookie",
+      serialize("userId", user?.userId, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600,
+        path: "/",
+      })
+    );
+
     res.status(200).json({
       message: "Login user successfully",
       data: user,
@@ -79,7 +90,7 @@ export const updateUser = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { name, email, role } = req.body;
+    const { name, email, role, salary } = req.body;
     const user = await prisma.users.update({
       where: {
         userId: id,
@@ -88,6 +99,7 @@ export const updateUser = async (
         name,
         email,
         role,
+        salary: parseInt(salary) ?? 0,
       },
     });
 
@@ -120,6 +132,16 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    res.setHeader(
+      "Set-Cookie",
+      serialize("userId", name, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 3600,
+        path: "/",
+      })
+    );
+
     // password encrypt
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.users.create({
@@ -128,12 +150,44 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
         email,
         password: hashedPassword,
         role: "Admin",
-        salary:0
+        salary: 0,
       },
     });
 
     res.status(200).json({
       message: "User created successfully",
+      data: user,
+    });
+  } catch (error) {
+    console.error("Create error:", error);
+    res.status(500).json({
+      message: "An error occurred while creating the user in the database.",
+      // @ts-expect-error error can be undefined
+      error: error.message,
+    });
+  }
+};
+
+export const userActivity = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { action, userId, userId2, username1, username2  } = req.body;
+
+    const user = await prisma.activityLogs.create({
+      data: {
+        action,
+        userId,
+        userId2,
+        username1,
+        username2,
+        timestamp: new Date(),
+      },
+    });
+
+    res.status(200).json({
+      message: "Activity Logged successfully",
       data: user,
     });
   } catch (error) {

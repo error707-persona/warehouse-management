@@ -12,6 +12,7 @@ type UpdateUserFormData = {
   name: string;
   email: string;
   role?: string | undefined;
+  salary: number;
 };
 
 type UpdateUserModalProps = {
@@ -34,6 +35,7 @@ const UpdateUserModal = ({
     name: "",
     email: "",
     role: "",
+    salary:0
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -72,9 +74,9 @@ const UpdateUserModal = ({
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-slate-800">
-        <Header name="Create User" />
+        <Header name="Edit User" />
         <form onSubmit={handleSubmit} className="mt-5">
-          {/* product name */}
+          {/* user name */}
           <div className="flex flex-col ">
             <label htmlFor="Name" className={labelCssStyles}>
               Name{" "}
@@ -88,7 +90,7 @@ const UpdateUserModal = ({
               className={inputCssStyles}
               required
             />
-            {/* price  */}
+            {/* email  */}
             <label htmlFor="Email" className={labelCssStyles}>
               Email
             </label>
@@ -102,6 +104,21 @@ const UpdateUserModal = ({
               required
               disabled
             />
+            {/* salary  */}
+            <label htmlFor="salary" className={labelCssStyles}>
+              Salary
+            </label>
+            <input
+              type="number"
+              name="salary"
+              min={1000}
+              max={1000000}
+              placeholder="Salary"
+              onChange={handleChange}
+              value={formData.salary}
+              className={inputCssStyles}
+              required
+            />
             <label htmlFor="Role" className={labelCssStyles}>
               Role
             </label>
@@ -110,7 +127,7 @@ const UpdateUserModal = ({
               id="role"
               value={formData.role}
               onChange={handleChange}
-              className="p-3 w-full outline-none my-3 border-2 dark:border-none rounded border-gray-600 dark:bg-gray-600 dark:border-gray-400 dark:text-white"
+              className="p-3 pr-8 w-full outline-none my-3 border-2 dark:border-none rounded border-gray-600 dark:bg-gray-600 dark:border-gray-400 dark:text-white"
             >
               <option value="Inventory Clerk">Inventory Clerk</option>
               <option value="Admin">Admin</option>
@@ -122,7 +139,7 @@ const UpdateUserModal = ({
             className="px-4 mb-3 mt-5 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
             type="submit"
           >
-            Create
+            Update
           </button>
           <button
             className="ml-2 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700"

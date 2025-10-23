@@ -12,10 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logout = exports.verifyToken = exports.deleteUser = exports.addUser = exports.updateUser = exports.getOneUsers = exports.getUsers = void 0;
+exports.logout = exports.verifyToken = exports.deleteUser = exports.userActivity = exports.addUser = exports.updateUser = exports.getOneUsers = exports.getUsers = void 0;
 const client_1 = require("@prisma/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const cookie_1 = require("cookie");
 const prisma = new client_1.PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "mysecretkey";
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -65,6 +66,12 @@ const getOneUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             maxAge: 24 * 60 * 60 * 1000, // 1 day
             path: "/login",
         });
+        res.setHeader("Set-Cookie", (0, cookie_1.serialize)("userId", user === null || user === void 0 ? void 0 : user.userId, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 3600,
+            path: "/",
+        }));
         res.status(200).json({
             message: "Login user successfully",
             data: user,
@@ -77,9 +84,10 @@ const getOneUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.getOneUsers = getOneUsers;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
         const { id } = req.params;
-        const { name, email, role } = req.body;
+        const { name, email, role, salary } = req.body;
         const user = yield prisma.users.update({
             where: {
                 userId: id,
@@ -88,6 +96,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 name,
                 email,
                 role,
+                salary: (_a = parseInt(salary)) !== null && _a !== void 0 ? _a : 0,
             },
         });
         res.status(200).json({
@@ -117,6 +126,12 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             return;
         }
+        res.setHeader("Set-Cookie", (0, cookie_1.serialize)("userId", name, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 3600,
+            path: "/",
+        }));
         // password encrypt
         const hashedPassword = yield bcryptjs_1.default.hash(password, 10);
         const user = yield prisma.users.create({
@@ -125,7 +140,7 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 email,
                 password: hashedPassword,
                 role: "Admin",
-                salary: 0
+                salary: 0,
             },
         });
         res.status(200).json({
@@ -143,6 +158,34 @@ const addUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.addUser = addUser;
+const userActivity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { action, userId, userId2, username1, username2 } = req.body;
+        const user = yield prisma.activityLogs.create({
+            data: {
+                action,
+                userId,
+                userId2,
+                username1,
+                username2,
+                timestamp: new Date(),
+            },
+        });
+        res.status(200).json({
+            message: "Activity Logged successfully",
+            data: user,
+        });
+    }
+    catch (error) {
+        console.error("Create error:", error);
+        res.status(500).json({
+            message: "An error occurred while creating the user in the database.",
+            // @ts-expect-error error can be undefined
+            error: error.message,
+        });
+    }
+});
+exports.userActivity = userActivity;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;

@@ -72,7 +72,8 @@ model ActivityLogs {
   action    String
   userId    String
   userId2   String
-  username  String
+  username1  String
+  username2  String
   timestamp DateTime
 }
 

@@ -61,32 +61,40 @@ const Inventory = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "productId", headerName: "ID", width: 270 },
-    { field: "name", headerName: "Product Name", width: 170 },
+    { field: "productId", headerName: "ID", maxWidth: 250, minWidth: 250, flex:1 },
+    { field: "name", headerName: "Product Name", maxWidth: 250, minWidth: 150, flex:1 },
     {
       field: "price",
       headerName: "Price",
-      width: 70,
+      minWidth: 50,
+      maxWidth: 100,
+      flex:1,
       type: "number",
       valueGetter: (value, row) => `${row.price}`,
     },
     {
       field: "rating",
       headerName: "Rating",
-      width: 70,
+      minWidth: 50,
+      maxWidth: 100,
+      flex:1,
       type: "number",
       valueGetter: (value, row) => (row.rating ? row.rating : "N/A"),
     },
     {
       field: "stockQuantity",
       headerName: "Stock Quantity",
-      width: 100,
+      minWidth: 50,
+      maxWidth: 100,  
+      flex:1,
       type: "number",
     },
     {
       field: "actions",
       headerName: "Actions",
-      width: 220,
+      maxWidth: 300,
+      minWidth: 300,
+      flex:1,
       renderCell: (params) => {
         const ordered = orderedMap[params.row.productId] || 0;
 
@@ -113,7 +121,7 @@ const Inventory = () => {
                     className="w-5 h-5 hover:bg-black-100 cursor-pointer"
                     onClick={() => decrease(params.row.productId)}
                   />
-                  {ordered}
+                 {ordered}
                   <Plus
                     className="w-5 h-5 hover:bg-black-100 cursor-pointer"
                     onClick={() => increase(params.row.productId)}
@@ -255,6 +263,7 @@ const Inventory = () => {
         />
         <CreateProductModal
           isOpen={isModalOpen}
+          title = "Edit Product"
           onClose={() => setisModalOpen(false)}
           onCreate={() => {}}
           formValues={values}

@@ -121,6 +121,7 @@ const Users = () => {
         name: params?.name,
         email: params?.email,
         role: params?.role,
+        salary: params?.salary
       },
     });
     // console.log("call to api is done");

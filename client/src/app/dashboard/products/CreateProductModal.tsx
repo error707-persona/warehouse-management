@@ -21,6 +21,7 @@ type UpdateProductFormData = {
 
 type CreateProductModalProps = {
   isOpen: boolean;
+  title:string;
   onClose: () => void;
   onCreate: (formData: ProductFormData, selectedFileName: string, selectedFile: File | null) => void;
   formValues?: UpdateProductFormData;
@@ -37,6 +38,7 @@ type FormData = {
 
 const CreateProductModal = ({
   isOpen,
+  title,
   onClose,
   onCreate,
   formValues,
@@ -95,7 +97,7 @@ const CreateProductModal = ({
   return (
     <div className="fixed inset-0 g-gray-600 bg-opacity-50 overflow-y-auto hull w-full z-20">
       <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-slate-900">
-        <Header name="Create New Product" />
+        <Header name={title} />
         <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
           {/* product name */}
           <label htmlFor="productName" className={labelCssStyles}>

@@ -14,7 +14,8 @@ import Loader from "../(components)/Loader";
 
 const CardSalesSummary = () => {
   const { data, isLoading, isError } = useGetDashboardMetricsQuery();
-  const salesData = data?.salesSummary || [];
+  const salesRaw = data?.salesSummary || [];
+  const salesData = [...salesRaw].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   const [timeframe, setTimeframe] = useState("weekly");
 

@@ -81,23 +81,23 @@ const Products = () => {
   }
 
   if (products) {
-    console.log("supabase: ", supabase);
-    console.log("products: ",products)
+    // console.log("supabase: ", supabase);
+    // console.log("products: ",products)
     for (const product of products) {
-      console.log("product.Url: ", product.imgUrl);
+      // console.log("product.Url: ", product.imgUrl);
       if (product.imgUrl) {
         const filePath = `products/${product.productId}/${product?.imgUrl}`;
-        console.log("filePath: ", filePath, "product.productId: ",product.productId);
+        // console.log("filePath: ", filePath, "product.productId: ",product.productId);
 
         const { data: urlData } = supabase.storage
           .from("product-images")
           .getPublicUrl(filePath);
-        console.log(
-          "product id: ",
-          product.productId,
-          "url: ",
-          urlData.publicUrl
-        );
+        // console.log(
+        //   "product id: ",
+        //   product.productId,
+        //   "url: ",
+        //   urlData.publicUrl
+        // );
         imageMap.set(product.productId, urlData.publicUrl);
       }
     }
@@ -179,6 +179,7 @@ const Products = () => {
       {/* modal */}
       <CreateProductModal
         isOpen={isModalOpen}
+        title = "Create New Product"
         onClose={() => setisModalOpen(false)}
         onCreate={handleCreateProduct}
         handleEdit={() => {}}

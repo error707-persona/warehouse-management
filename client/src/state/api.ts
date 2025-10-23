@@ -81,6 +81,15 @@ export interface NewUser {
   name: string;
   email: string;
   role?: string;
+  salary?: number;
+}
+
+export interface ActivityLogs {
+  action: string | null | undefined;
+  userId: string | null | undefined;
+  userId2: string | null | undefined;
+  username1: string | null | undefined;
+  username2: string | null | undefined;
 }
 // console.log("Base URL:", process.env.NEXT_PUBLIC_API_BASE_URL);
 export const api = createApi({
@@ -119,6 +128,15 @@ export const api = createApi({
       invalidatesTags: ["Users"],
     }),
 
+    userActivity: build.mutation<ActivityLogs, ActivityLogs>({
+      query: (activity) => ({
+        url: "/users/userActivity",
+        method: "POST",
+        body: activity,
+      }),
+      invalidatesTags: ["Users"],
+    }),
+
     editProduct: build.mutation<
       Product,
       { id: string; data: Partial<NewProduct> }
@@ -145,7 +163,7 @@ export const api = createApi({
     }),
 
     updateSales: build.mutation<Product, UpdateSalesPayload>({
-      query: ({id, data}) => ({
+      query: ({ id, data }) => ({
         url: `/products/updateSales/${id}`,
         method: "PUT",
         body: data,
@@ -208,4 +226,5 @@ export const {
   useGetOneUserMutation,
   useLogoutMutation,
   useUpdateSalesMutation,
+  useUserActivityMutation,
 } = api;

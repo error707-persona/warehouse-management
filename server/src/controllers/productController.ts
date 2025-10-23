@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+import { sendProductNotification } from "../../kafka/producer";
+import * as cookie from 'cookie';
+import {startConsumer} from "../../kafka/consumer"
+import WebSocket, { WebSocketServer } from 'ws';
+import http from 'http';
 
 const prisma = new PrismaClient({
   log: ["query", "info", "warn", "error"], // ✅ Enable detailed logs
@@ -34,6 +39,8 @@ export const createProduct = async (
 ): Promise<void> => {
   try {
     const { name, price, rating, stockQuantity, imgUrl } = req.body;
+    const cookies = cookie.parse(req.headers.cookie || "");
+    const userId = cookies.userId;
     const product = await prisma.products.create({
       data: {
         name,
@@ -54,13 +61,19 @@ export const createProduct = async (
           totalCost: stockQuantity * price,
         },
       });
-      const purchaseSummary = await prisma.purchaseSummary.create({
+      await prisma.purchaseSummary.create({
         data: {
           date: new Date(),
           totalPurchased: parseInt(stockQuantity),
           changePercentage: purchase.quantity,
         },
       });
+    }
+
+    try {
+      await sendProductNotification(name);
+    } catch (error) {
+      console.error("❌ Kafka Error:", error);
     }
 
     // console.log("after product creation");
@@ -104,7 +117,7 @@ export const deleteProduct = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    console.log(id)
+    console.log(id);
 
     await prisma.purchases.deleteMany({
       where: {
@@ -142,6 +155,7 @@ export const updateSales = async (
     const { id } = req.params;
     const { stockQuantity, quantity, unitPrice, totalAmount } = req.body;
     // console.log("req.body: ", req.body);
+    
     await prisma.products.update({
       where: {
         productId: id,
@@ -161,22 +175,28 @@ export const updateSales = async (
       },
     });
 
-     const lastQuantity = await prisma.salesSummary.findFirst({
+    const lastQuantity = await prisma.salesSummary.findFirst({
       orderBy: {
-        date: 'desc',
+        date: "desc",
       },
     });
 
-    let changePercentage = ((Math.abs((lastQuantity?.totalValue) ?? 0 - quantity))/((lastQuantity?.totalValue) ?? 1))*100;
-    if ((lastQuantity?.totalValue)??0 > quantity)
+    let changePercentage =
+      (Math.abs(lastQuantity?.totalValue ?? 0 - quantity) /
+        (lastQuantity?.totalValue ?? 1)) *
+      100;
+    if (lastQuantity?.totalValue ?? 0 > quantity)
       changePercentage -= changePercentage;
 
-    console.log("calculated changepercentage for salessummary: ",changePercentage);
+    console.log(
+      "calculated changepercentage for salessummary: ",
+      changePercentage
+    );
     await prisma.salesSummary.create({
       data: {
         date: new Date(),
-        changePercentage:  changePercentage,
-        totalValue:  parseInt(quantity) ?? 0,
+        changePercentage: changePercentage,
+        totalValue: parseInt(quantity) ?? 0,
       },
     });
 

@@ -1,9 +1,9 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
-import { useLogoutMutation } from "@/state/api";
+import { useLogoutMutation, useUserActivityMutation } from "@/state/api";
 import { Bell, Menu } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 //  import { Settings } from "lucide-react";
 
@@ -12,9 +12,65 @@ const Navbar = () => {
   const [triggerLogout] = useLogoutMutation();
   const router = useRouter();
   const [notifyOpen, setNotifyOpen] = useState<boolean>(false);
+  const username = localStorage.getItem("username");
+  const [userActivity] = useUserActivityMutation();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
   );
+  const wsRef = useRef<WebSocket | null>(null);
+  const [notification, setNotification] = useState<{ [key: string]: string }>(
+    {}
+  );
+
+  const addLogs = async (action: string | null | undefined, userId: string | null | undefined, userId2: string | null | undefined, username1: string | null | undefined, username2: string | null | undefined) => {
+    await userActivity({
+      action,
+      userId,
+      userId2,
+      username1,
+      username2,
+    });
+  };
+
+  useEffect(() => {
+    const ws = new WebSocket("ws://localhost:8000");
+    wsRef.current = ws;
+    ws.onopen = () => {
+      console.log("✅ WebSocket connected");
+    };
+
+    ws.onmessage = (event) => {
+      var curDate = new Date();
+      const timestamp = curDate.toISOString();
+      console.log("Date: ", timestamp);
+
+      setNotification((prev) => ({
+        ...prev,
+        [timestamp]: event.data + username,
+      }));
+      console.log("🔔 Notification:", event.data + username);
+      // addLogs(event.data + username, "", "", username, "");
+    };
+
+    ws.onerror = (error) => {
+      console.error("❌ WebSocket error:", error);
+    };
+
+    ws.onclose = () => {
+      console.log("❌ WebSocket closed");
+    };
+
+    // Cleanup on unmount
+    // return () => {
+    //   if (wsRef.current) {
+    //     wsRef.current.close();
+    //   }
+    // };
+  }, []);
+
+  useEffect(() => {
+    console.log("🆕 Notification updated: ", notification);
+  }, [notification]);
 
   const toggleSidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
@@ -23,7 +79,7 @@ const Navbar = () => {
     await triggerLogout().unwrap();
     router.push("/login");
   };
-  const username = localStorage.getItem("username");
+
   return (
     <div className="flex dark:bg-slate-800 justify-between items-center w-full mb-7">
       {/* LEFT SIDE */}
@@ -59,7 +115,12 @@ const Navbar = () => {
               }`}
               style={{ width: "200px" }}
             >
-              hello world
+              {Object.entries(notification).map(([key, value]) => (
+                <div key={key}>
+                  <div className="py-3">{value}</div>
+                  <hr />
+                </div>
+              ))}
             </div>
           </div>
           <hr className="w-0 h-7 border border-solid border-l border-gray-300 mx-3" />
