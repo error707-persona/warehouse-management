@@ -1,17 +1,18 @@
-# 1. Start with a Node image
 FROM node:20-slim
 
-# 2. Set the working directory
-WORKDIR /usr/src/app
+RUN apt-get update && apt-get install -y openssl git && rm -rf /var/lib/apt/lists/*
 
-# 3. Copy only the files needed for installation (for caching)
-COPY package.json package-lock.json ./
+WORKDIR /app
 
-# 4. Install dependencies
+COPY package*.json ./
+COPY prisma ./prisma
+COPY kafka ./kafka
+COPY tsconfig.json ./ 
+
 RUN npm install
+RUN npx prisma generate
 
-# 5. Copy the rest of the application code
-COPY . .
+COPY src ./src
+RUN npm run build
 
-# 6. Define the command to run the application
-CMD [ "node", "server.js" ]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
