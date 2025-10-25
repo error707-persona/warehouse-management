@@ -1,17 +1,17 @@
-FROM node:18-alpine
+# 1. Start with a Node image
+FROM node:20-slim
 
-WORKDIR /app
+# 2. Set the working directory
+WORKDIR /usr/src/app
 
-COPY package*.json ./
+# 3. Copy only the files needed for installation (for caching)
+COPY package.json package-lock.json ./
+
+# 4. Install dependencies
 RUN npm install
 
+# 5. Copy the rest of the application code
 COPY . .
 
-# Set your database connection (use your actual connection string or secret)
-ENV DATABASE_URL="postgresql://inventory_db_oxg5_user:jaeRgrrPCktonHEWYUdSmbGu2eUo7rKS@dpg-d3t6762li9vc73dpp4j0-a.oregon-postgres.render.com/inventory_db_oxg5"
-
-# Generate Prisma client only (skip pushing during build)
-RUN npx prisma generate
-
-EXPOSE 8000
-CMD ["npm", "run", "dev"]
+# 6. Define the command to run the application
+CMD [ "node", "server.js" ]
