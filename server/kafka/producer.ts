@@ -2,7 +2,7 @@ import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
   clientId: 'notification-service',
-  brokers: ['localhost:9094'], // Use Bitnami's EXTERNAL port
+  brokers: [process.env.KAFKA_BROKER || "https://warehouse-management-1-6uys.onrender.com:9094"], // Use Bitnami's EXTERNAL port
 });
 
 const producer = kafka.producer();

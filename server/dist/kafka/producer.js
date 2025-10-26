@@ -13,7 +13,7 @@ exports.sendProductNotification = exports.connectProducer = void 0;
 const kafkajs_1 = require("kafkajs");
 const kafka = new kafkajs_1.Kafka({
     clientId: 'notification-service',
-    brokers: ['localhost:9094'], // Use Bitnami's EXTERNAL port
+    brokers: [process.env.KAFKA_BROKER], // Use Bitnami's EXTERNAL port
 });
 const producer = kafka.producer();
 const connectProducer = () => __awaiter(void 0, void 0, void 0, function* () {

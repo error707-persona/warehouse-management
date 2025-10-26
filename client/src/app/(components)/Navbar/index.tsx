@@ -22,15 +22,15 @@ const Navbar = () => {
     {}
   );
 
-  const addLogs = async (action: string | null | undefined, userId: string | null | undefined, userId2: string | null | undefined, username1: string | null | undefined, username2: string | null | undefined) => {
-    await userActivity({
-      action,
-      userId,
-      userId2,
-      username1,
-      username2,
-    });
-  };
+  // const addLogs = async (action: string | null | undefined, userId: string | null | undefined, userId2: string | null | undefined, username1: string | null | undefined, username2: string | null | undefined) => {
+  //   await userActivity({
+  //     action,
+  //     userId,
+  //     userId2,
+  //     username1,
+  //     username2,
+  //   });
+  // };
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:8000");

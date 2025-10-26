@@ -13,7 +13,7 @@ exports.startConsumer = void 0;
 const kafkajs_1 = require("kafkajs");
 const kafka = new kafkajs_1.Kafka({
     clientId: 'notification-listener',
-    brokers: ['localhost:9094'],
+    brokers: [process.env.KAFKA_BROKER],
 });
 const consumer = kafka.consumer({ groupId: 'notif-group' });
 const startConsumer = (onMessage) => __awaiter(void 0, void 0, void 0, function* () {

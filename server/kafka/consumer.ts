@@ -2,7 +2,7 @@ import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
   clientId: 'notification-listener',
-  brokers: ['localhost:9094'],
+  brokers: [process.env.KAFKA_BROKER || "https://warehouse-management-1-6uys.onrender.com:9094"],
 });
 
 const consumer = kafka.consumer({ groupId: 'notif-group' });
