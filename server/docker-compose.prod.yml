@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: inventory_db_oxg5_user
+      POSTGRES_PASSWORD: jaeRgrrPCktonHEWYUdSmbGu2eUo7rKS
+      POSTGRES_DB: inventory_db
+    volumes:
+      - prod_pgdata:/var/lib/postgresql/data
+    networks:
+      - prod_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://inventory_db_oxg5_user:jaeRgrrPCktonHEWYUdSmbGu2eUo7rKS@dpg-d3t6762li9vc73dpp4j0-a.oregon-postgres.render.com/inventory_db_oxg5
+    ports:
+      - "3000:3000"
+    networks:
+      - prod_network
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed && npm start"
+
+volumes:
+  prod_pgdata:
+
+networks:
+  prod_network:
