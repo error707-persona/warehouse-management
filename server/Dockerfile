@@ -15,4 +15,4 @@ RUN npx prisma generate
 COPY src ./src
 RUN npm run build
 
-CMD ["sh", "-c", "npx prisma migrate reset --force && npx prisma db seed && npm start"]
+CMD ["sh", "-c", "npx prisma migrate resolve --applied 0_init || true && npx prisma generate && npx prisma migrate deploy && npm start"]
