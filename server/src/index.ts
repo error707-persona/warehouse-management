@@ -5,11 +5,11 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import { connectProducer } from "../kafka/producer";
+// import { connectProducer } from "../kafka/producer";
 import WebSocket, { WebSocketServer } from 'ws';
 import http from 'http';
 
-import {startConsumer} from "../kafka/consumer"
+// import {startConsumer} from "../kafka/consumer"
 
 // ROUTE IMPORTS
 import dashboardRoutes from "./routes/dashboardRoutes";
@@ -33,8 +33,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const allowedOrigins = [
   "https://inventory-management-kappa-red.vercel.app",
+  "https://inventory-management-kappa-red.vercel.app/",
   "http://localhost:3000",
 ];
+
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
+
+app.options("*", cors());
 
 const clients = new Set<WebSocket>();
 
@@ -54,32 +64,32 @@ const clients = new Set<WebSocket>();
 //   console.log('🔗 WebSocket client connected');
 //   ws.send('👋 Hello from server!');
 // });
+// main changes uncomment from here ================================================================================
+// wss.on('connection', (ws) => {
+//   console.log('🔗 WebSocket client connected');
+//   clients.add(ws);
+//   ws.on('close', () => {
+//     clients.delete(ws); // Clean up closed clients
+//   });
+// });
 
-wss.on('connection', (ws) => {
-  console.log('🔗 WebSocket client connected');
-  clients.add(ws);
-  ws.on('close', () => {
-    clients.delete(ws); // Clean up closed clients
-  });
-});
+// startConsumer((msg: string) => {
+//   console.log("number of clients", clients);
+//   clients.forEach((ws) => {
+//     console.log("number of clients", ws);
+//     if (ws.readyState === WebSocket.OPEN) {
+//       ws.send(msg);
+//     }
+//   });
 
-startConsumer((msg: string) => {
-  console.log("number of clients", clients);
-  clients.forEach((ws) => {
-    console.log("number of clients", ws);
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.send(msg);
-    }
-  });
-
-  setInterval(() => {
-  clients.forEach((ws) => {
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.ping();
-    }
-  });
-}, 30000);
-});
+//   setInterval(() => {
+//   clients.forEach((ws) => {
+//     if (ws.readyState === WebSocket.OPEN) {
+//       ws.ping();
+//     }
+//   });
+// }, 30000);
+// });
 
 app.use(
   cors({
@@ -110,11 +120,11 @@ app.use("/health", healthCheck);
 // server
 const port = process.env.PORT || 3001;
 server.listen(port, async () => {
-  try {
-    await connectProducer();
-  } catch (error) {
-    console.log("kafka error: ",error);
-  }
+  // try {
+  //   await connectProducer();
+  // } catch (error) {
+  //   console.log("kafka error: ",error);
+  // }
   
   console.log(`server + WS running on port ${port}`);
 });

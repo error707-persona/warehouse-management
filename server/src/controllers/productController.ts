@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { sendProductNotification } from "../../kafka/producer";
+// import { sendProductNotification } from "../../kafka/producer";
 import * as cookie from 'cookie';
-import {startConsumer} from "../../kafka/consumer"
-import WebSocket, { WebSocketServer } from 'ws';
-import http from 'http';
+// import {startConsumer} from "../../kafka/consumer"
+// import WebSocket, { WebSocketServer } from 'ws';
+// import http from 'http';
 
 const prisma = new PrismaClient({
   log: ["query", "info", "warn", "error"], // ✅ Enable detailed logs
@@ -70,11 +70,11 @@ export const createProduct = async (
       });
     }
 
-    try {
-      await sendProductNotification(name);
-    } catch (error) {
-      console.error("❌ Kafka Error:", error);
-    }
+    // try {
+    //   await sendProductNotification(name);
+    // } catch (error) {
+    //   console.error("❌ Kafka Error:", error);
+    // }
 
     // console.log("after product creation");
     res.status(201).json(product);
