@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
+import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 
@@ -34,10 +34,16 @@ export const getOneUsers = async (
       res.status(401).json({ message: "User Not found" }); // ✅ return
       return;
     }
+    console.log("user: ", user);
     if (user && user.password) {
       let isMatch = false;
-      if (user.password.startsWith("$2")) {
-        isMatch = await bcrypt.compare(password, user.password); // hashed comparison
+      console.log("inside", user.password);
+      console.log(JSON.stringify(user.password));
+      console.log(user.password.charCodeAt(0));
+      
+
+      if (user.password.startsWith("$")) {
+        isMatch = await argon2.verify(user.password, password); // hashed comparison
       } else {
         isMatch = password === user.password; // plain text fallback
       }
@@ -143,7 +149,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     );
 
     // password encrypt
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await argon2.hash(password);
     const user = await prisma.users.create({
       data: {
         name,

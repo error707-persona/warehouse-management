@@ -2,8 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 const prisma = new PrismaClient();
-import dotenv from "dotenv";
-dotenv.config();
+import { config } from "dotenv"; 
+config();
 
 console.log("Database URL:", process.env.DATABASE_URL);
 
