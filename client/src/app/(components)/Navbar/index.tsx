@@ -1,9 +1,10 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
-import { useLogoutMutation, useUserActivityMutation } from "@/state/api";
+import { useLogoutMutation } from "@/state/api";
 import { Bell, Menu } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 //  import { Settings } from "lucide-react";
 
@@ -13,12 +14,12 @@ const Navbar = () => {
   const router = useRouter();
   const [notifyOpen, setNotifyOpen] = useState<boolean>(false);
   const username = localStorage.getItem("username");
-  const [userActivity] = useUserActivityMutation();
+  // const [userActivity] = useUserActivityMutation();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
   );
-  const wsRef = useRef<WebSocket | null>(null);
-  const [notification, setNotification] = useState<{ [key: string]: string }>(
+  // const wsRef = useRef<WebSocket | null>(null);
+  const [ notification ] = useState<{ [key: string]: string }>(
     {}
   );
 
@@ -31,7 +32,7 @@ const Navbar = () => {
   //     username2,
   //   });
   // };
-
+/*
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:8000");
     wsRef.current = ws;
@@ -40,7 +41,7 @@ const Navbar = () => {
     };
 
     ws.onmessage = (event) => {
-      var curDate = new Date();
+      let curDate = new Date();
       const timestamp = curDate.toISOString();
       console.log("Date: ", timestamp);
 
@@ -71,7 +72,7 @@ const Navbar = () => {
   useEffect(() => {
     console.log("🆕 Notification updated: ", notification);
   }, [notification]);
-
+*/
   const toggleSidebar = () => {
     dispatch(setIsSidebarCollapsed(!isSidebarCollapsed));
   };
