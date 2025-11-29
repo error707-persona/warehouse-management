@@ -11,8 +11,9 @@ COPY tsconfig.json ./
 
 RUN npm install
 RUN npx prisma generate
+ARG DATABASE_URL
 
 COPY src ./src
-RUN npm run build
+RUN DATABASE_URL=${DATABASE_URL} npm run build
 
 CMD ["sh", "-c", "npx prisma migrate resolve --applied 0_init || true && npx prisma generate && npx prisma migrate deploy && npm start"]
