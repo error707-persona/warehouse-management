@@ -99,7 +99,7 @@ const Login = () => {
           </div>
         </form>
         <div className="mt-2">© 2025 EDSTOCK. All rights reserved. </div>
-        <div className="text-sm text-gray-400 max-w-sm text-center">The Accounts have already filled with dummy data as this product is a for demonstration purpose only. In real world the website won't be designed like this.</div>
+        <div className="text-sm text-gray-400 max-w-sm text-center">The Accounts have already filled with dummy data as this product is a for demonstration purpose only. In real world the website won&apos;t be designed like this.</div>
       </div>
     </div>
   );
