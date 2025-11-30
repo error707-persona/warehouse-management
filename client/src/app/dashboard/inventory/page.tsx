@@ -68,24 +68,20 @@ const Inventory = () => {
     {
       field: "productId",
       headerName: "ID",
-      maxWidth: 250,
-      minWidth: 250,
-      flex: 1,
+      flex: 2,
       headerAlign: "left",
     },
     {
       field: "name",
       headerName: "Product Name",
-      maxWidth: 250,
-      minWidth: 150,
+
       flex: 1,
       headerAlign: "left",
     },
     {
       field: "price",
       headerName: "Price",
-      minWidth: 50,
-      maxWidth: 100,
+
       headerAlign: "left",
       flex: 1,
       type: "number",
@@ -95,8 +91,7 @@ const Inventory = () => {
       field: "rating",
       headerName: "Rating",
       headerAlign: "left",
-      minWidth: 50,
-      maxWidth: 100,
+
       flex: 1,
       type: "number",
       valueGetter: (value, row) => (row.rating ? row.rating : "N/A"),
@@ -105,8 +100,7 @@ const Inventory = () => {
       field: "stockQuantity",
       headerName: "Stock Quantity",
       headerAlign: "left",
-      minWidth: 50,
-      maxWidth: 120,
+
       flex: 1,
       type: "number",
     },
@@ -115,7 +109,7 @@ const Inventory = () => {
       headerName: "Actions",
       headerAlign: "left",
 
-      flex: 2,
+      flex: 3,
       renderCell: (params) => {
         const ordered = orderedMap[params.row.productId] || 0;
 
@@ -262,6 +256,10 @@ const Inventory = () => {
         totalAmount: totalAmount,
       },
     });
+     setOrderedMap((prev) => ({
+      ...prev,
+      [params?.productId]: 0,
+    }));
   };
 
   return (
