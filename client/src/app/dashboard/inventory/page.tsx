@@ -24,11 +24,15 @@ import CreateProductModal from "../products/CreateProductModal";
 import Loader from "@/app/(components)/Loader";
 import dynamic from "next/dynamic";
 
-const DataGrid = dynamic(() =>
-  import('@mui/x-data-grid').then((mod) => mod.DataGrid),
+const DataGrid = dynamic(
+  () => import("@mui/x-data-grid").then((mod) => mod.DataGrid),
   {
     ssr: false,
-    loading: () => <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>,
+    loading: () => (
+      <div className="m-5 w-full h-full flex justify-center items-center">
+        <Loader />
+      </div>
+    ),
   }
 );
 
@@ -61,78 +65,97 @@ const Inventory = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: "productId", headerName: "ID", maxWidth: 250, minWidth: 250, flex:1 },
-    { field: "name", headerName: "Product Name", maxWidth: 250, minWidth: 150, flex:1 },
+    {
+      field: "productId",
+      headerName: "ID",
+      maxWidth: 250,
+      minWidth: 250,
+      flex: 1,
+      headerAlign: "left",
+    },
+    {
+      field: "name",
+      headerName: "Product Name",
+      maxWidth: 250,
+      minWidth: 150,
+      flex: 1,
+      headerAlign: "left",
+    },
     {
       field: "price",
       headerName: "Price",
       minWidth: 50,
       maxWidth: 100,
-      flex:1,
+      headerAlign: "left",
+      flex: 1,
       type: "number",
       valueGetter: (value, row) => `${row.price}`,
     },
     {
       field: "rating",
       headerName: "Rating",
+      headerAlign: "left",
       minWidth: 50,
       maxWidth: 100,
-      flex:1,
+      flex: 1,
       type: "number",
       valueGetter: (value, row) => (row.rating ? row.rating : "N/A"),
     },
     {
       field: "stockQuantity",
       headerName: "Stock Quantity",
+      headerAlign: "left",
       minWidth: 50,
-      maxWidth: 100,  
-      flex:1,
+      maxWidth: 120,
+      flex: 1,
       type: "number",
     },
     {
       field: "actions",
       headerName: "Actions",
-      maxWidth: 300,
-      minWidth: 300,
-      flex:1,
+      headerAlign: "left",
+
+      flex: 2,
       renderCell: (params) => {
         const ordered = orderedMap[params.row.productId] || 0;
 
         return (
-          <Box className="flex justify-center gap-1 items-center h-full w-full">
-            <button
-              className="text-blue-600 hover:bg-blue-100 p-2 rounded"
-              onClick={() => handleHelper(params.row)}
-              title="Edit product details"
-            >
-              <PencilIcon className="w-5 h-5" />
-            </button>
-            <button
-              className="text-red-600 hover:bg-red-100 p-2 rounded"
-              onClick={() => handleDeleteHelper(params.row)}
-              title="Delete product"
-            >
-              <Trash className="w-6 h-6" />
-            </button>
+          <Box className="flex justify-center gap-1 xl:gap-10 items-center h-full w-full">
+            <div className="flex">
+              <button
+                className="text-blue-600 hover:bg-blue-100 p-2 rounded"
+                onClick={() => handleHelper(params.row)}
+                title="Edit product details"
+              >
+                <PencilIcon className="w-5 h-5" />
+              </button>
+              <button
+                className="text-red-600 hover:bg-red-100 p-2 rounded"
+                onClick={() => handleDeleteHelper(params.row)}
+                title="Delete product"
+              >
+                <Trash className="w-6 h-6" />
+              </button>
+            </div>
             <div className="flex ml-5">
               <div className="flex">
                 <div className="flex justify-center items-center gap-3 ">
                   <Minus
-                    className="w-5 h-5 hover:bg-black-100 cursor-pointer"
+                    className="w-5 h-5 hover:bg-black-100 cursor-pointer text-white bg-red-600 rounded hover:bg-red-300"
                     onClick={() => decrease(params.row.productId)}
                   />
-                 {ordered}
+                  {ordered}
                   <Plus
-                    className="w-5 h-5 hover:bg-black-100 cursor-pointer"
+                    className="w-5 h-5 hover:bg-black-100 cursor-pointer text-white bg-green-600 hover:bg-green-300 rounded"
                     onClick={() => increase(params.row.productId)}
                   />
                 </div>
                 <button
                   onClick={() => handleSales(params.row, true)}
-                  className="p-2"
+                  className="p-2  bg-orange-600 rounded-full m-5 hover:bg-orange-300"
                   title="Execute orders"
                 >
-                  <ShoppingCart className="w-5 h-5" />
+                  <ShoppingCart className="w-5 h-5 text-white" />
                 </button>
 
                 <button
@@ -192,7 +215,11 @@ const Inventory = () => {
   };
 
   if (isLoading) {
-    return <div className="m-5 w-full h-full flex justify-center items-center"><Loader/></div>;
+    return (
+      <div className="m-5 w-full h-full flex justify-center items-center">
+        <Loader />
+      </div>
+    );
   }
   if (isError || !products) {
     return (
@@ -239,37 +266,41 @@ const Inventory = () => {
 
   return (
     <div className="flex flex-col dark:bg-slate-900">
-      {(products)?<div>
-        <Header name="Inventory" />
-        <div className="w-full flex gap-2 mt-2 md:items-center rounded bg-white border-2 dark:bg-slate-900">
-          <SearchIcon className="w-5 h-5 text-gray-500 m-2 dark:text-white" />
-          <input
-            type="text"
-            className="w-full outline-none rounded bg-white dark:bg-slate-900 dark:text-white"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+      {products ? (
+        <div>
+          <Header name="Inventory" />
+          <div className="w-full flex gap-2 mt-2 md:items-center rounded bg-white border-2 dark:bg-slate-900">
+            <SearchIcon className="w-5 h-5 text-gray-500 m-2 dark:text-white" />
+            <input
+              type="text"
+              className="w-full outline-none rounded bg-white dark:bg-slate-900 dark:text-white"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
+          <DataGrid
+            rows={updatedProducts}
+            columns={columns}
+            getRowId={(row) => row.productId}
+            checkboxSelection={false}
+            // checkboxSelection
+            disableRowSelectionOnClick={false}
+            className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800"
+          />
+          <CreateProductModal
+            isOpen={isModalOpen}
+            title="Edit Product"
+            onClose={() => setisModalOpen(false)}
+            onCreate={() => {}}
+            formValues={values}
+            handleEdit={handleEdit}
           />
         </div>
-
-        <DataGrid
-          rows={updatedProducts}
-          columns={columns}
-          getRowId={(row) => row.productId}
-          checkboxSelection={false}
-          // checkboxSelection
-          disableRowSelectionOnClick={false}
-          className="bg-white shadow rounded-lg border border-gray-200 mt-5 !text-gray-700 dark:bg-slate-800"
-        />
-        <CreateProductModal
-          isOpen={isModalOpen}
-          title = "Edit Product"
-          onClose={() => setisModalOpen(false)}
-          onCreate={() => {}}
-          formValues={values}
-          handleEdit={handleEdit}
-        />
-      </div>:<Loader/>}
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };

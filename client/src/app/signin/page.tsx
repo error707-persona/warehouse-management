@@ -34,12 +34,12 @@ const SignIn = () => {
     if (
       result &&
       result.data &&
-      result.data.message === "User created successfully"
+      result.data.message === "User created successfully" &&
+      result.data.data
     ) {
-      localStorage.setItem("username", result.data.name);
-      localStorage.setItem("email", result.data.email);
-      // @ts-expect-error result type is unknown
-      localStorage.setItem("role", result.data.role);
+      localStorage.setItem("username", result.data.data.name);
+      localStorage.setItem("email", result.data.data.email);
+      localStorage.setItem("role", result.data.data.role);
       router.push("/dashboard");
     }
   };
@@ -105,10 +105,11 @@ const SignIn = () => {
             {isLoading ? <Loader className="animate-spin" /> : "Sign In"}
           </button>
           <div className="text-center">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <a href="/login" className="font-bold hover:underline">Login</a>
           </div>
         </form>
         <div className="mt-2">© 2025 EDSTOCK. All rights reserved. </div>
+        <div className="text-sm text-gray-400 max-w-sm text-center">The Accounts have already filled with dummy data as this product is a for demonstration purpose only. In real world the website won't be designed like this.</div>
       </div>
     </div>
   );

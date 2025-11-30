@@ -95,10 +95,11 @@ const Login = () => {
             {isLoading ? <Loader className="animate-spin" /> : "Login"}
           </button>
           <div className="text-center">
-            Dont have an account? <a href="/signin">Sign In</a>
+            Dont have an account? <a href="/signin" className="font-bold hover:underline">Sign In</a>
           </div>
         </form>
         <div className="mt-2">© 2025 EDSTOCK. All rights reserved. </div>
+        <div className="text-sm text-gray-400 max-w-sm text-center">The Accounts have already filled with dummy data as this product is a for demonstration purpose only. In real world the website won't be designed like this.</div>
       </div>
     </div>
   );

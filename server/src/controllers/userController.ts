@@ -115,7 +115,7 @@ export const updateUser = async (
     });
   } catch (error) {
     console.error("Update error:", error);
-    res.status(500).json({ message: "Error updating product" });
+    res.status(500).json({ message: "Error updating product", error: error });
   }
 };
 
